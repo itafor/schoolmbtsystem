@@ -8,12 +8,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Add new student</h1>
+            <h1 class="m-0 text-dark">Teacher</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">New Student</li>
+              <li class="breadcrumb-item active">Teacher</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -30,7 +30,7 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h5 class="card-title">Add Student</h5>
+                <h5 class="card-title">Add teacher</h5>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-widget="collapse">
@@ -53,18 +53,18 @@
               <!-- /.card-header -->
               <div class="card-body  offset-1">
                
-        <form action="{{route('addNewstudent')}}" method="POST" enctype="multipart/form-data" novalidate>
+        <form action="{{route('addNewTeacher')}}" method="POST" enctype="multipart/form-data" novalidate>
        <input type="hidden" name="_token" value="{{csrf_token()}}">
         <div class="row">
           <div class="col-md-6 mb-3">
-            <label for="firstName">First name</label>
+            <label for="firstName">First name  <span style="color: red;">*</span></label>
             <input type="text" name="firstName" class="form-control" id="firstName" placeholder="First Name" value="" >
             <div class="invalid-feedback">
               Valid first name is required.
             </div>
           </div>
           <div class="col-md-6 mb-3">
-            <label for="lastName">Last name</label>
+            <label for="lastName">Last name  <span style="color: red;">*</span></label>
             <input type="text" name="lastName" class="form-control" id="lastName" placeholder="Last Name" value="" required>
             <div class="invalid-feedback">
               Valid last name is required.
@@ -74,7 +74,7 @@
 
  <div class="row">
         <div class="col-md-6 mb-3">
-          <label for="username">Username</label>
+          <label for="username">Username <span style="color: red;">*</span></label>
           <div class="input-group">
             <div class="input-group-prepend">
               <span class="input-group-text">@</span>
@@ -87,7 +87,7 @@
         </div>
 
         <div class="col-md-6 mb-3">
-          <label for="email">Email <span class="text-muted">(Optional)</span></label>
+          <label for="email">Email <span style="color: red;">*</span></label>
           <input type="email" name="email" class="form-control" id="email" placeholder="you@example.com">
           <div class="invalid-feedback">
             Please enter a valid email address for shipping updates.
@@ -96,37 +96,18 @@
 </div>
 <div class="row">
   <div class="col-md-6 mb-3">
-          <label for="password">Password</label>
+          <label for="password">Password  <span style="color: red;">*</span></label>
           <input type="text" name="password" class="form-control" id="password" placeholder="1234 Main St">
           <div class="invalid-feedback">
             Please enter your password.
           </div>
         </div>
-         <div class="col-md-6 mb-3">
-          <label for="address2">Registration Number <span class="text-muted"></span></label>
-          <input type="text" name="studentRegNumber" class="form-control" id="regNumber" placeholder="Registration Number">
-        </div>
-</div>
-
-<div class="row">
-    <div class="col-md-6 d-block my-3">
-          <label for="address">Gender</label>
+         <div class="col-md-6 d-block my-3">
+          <label for="address">Gender  <span style="color: red;">*</span></label>
          <select name="gender" class="form-control">
            <option value="0">Select Gender</option>
            <option value="Male">Male</option>
            <option value="Female">Female</option>
-         </select>
-        </div>
-
-         <div class="col-md-6 d-block my-3">
-          <label for="address">Class</label>
-         <select name="studentClass" class="form-control">
-           <option value="0">Select Student Class</option>
-           @if(count($classes) >=1)
-           @foreach($classes as $class)
-           <option value="{{$class->className}}">{{$class->className}}</option>
-           @endforeach
-           @endif
          </select>
         </div>
 </div>
@@ -142,7 +123,7 @@
         </div>
 
           <div class="col-md-6 mb-3">
-            <label for="cc-name">Date of Birth</label>
+            <label for="cc-name">Date of Birth  <span style="color: red;">*</span></label>
             <input type="date" class="form-control" id="cc-name" placeholder="" name="birthday">
             <small class="text-muted">Full name as displayed on card</small>
             <div class="invalid-feedback">
@@ -162,7 +143,7 @@
             </div>
           </div>
           <div class="col-md-6 mb-3">
-            <label for="cc-cvv">Phone Number <span class="text-muted">(Optional)</span></label>
+            <label for="cc-cvv">Phone Number <span style="color: red;">*</span></label>
             <input type="text" name="phoneNo" class="form-control" id="cc-cvv" placeholder="" >
             <div class="invalid-feedback">
               Security code required

@@ -11,18 +11,24 @@
     <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <div class="image">
-                <img src="/img/profile.png" class="img-circle elevation-2" alt="User Image">
+           @if(auth::user()->photo !=null)
+             <div class="image">
+                <img src="/upload/{{auth::user()->photo}}" class="img-circle elevation-4" alt="User Image">
             </div>
+            @else
+             <div class="image">
+                <img src="/img/profile.png" class="img-circle elevation-4" alt="User Image">
+            </div>
+           @endif
             <div class="info">
-                <a href="#" class="d-block"> {{auth()->user()->name!=null ? auth()->user()->name : "Administrator"}} </a>
+                <a href="#" class="d-block"> {{auth()->user()->firstName!=null ? auth()->user()->firstName: "Administrator"}} </a>
             </div>
         </div>
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                <li class="nav-item has-treeview {!! classActivePath(1,'dashboard') !!}">
+          <!--       <li class="nav-item has-treeview {!! classActivePath(1,'dashboard') !!}">
                     <a href="{!! route('home') !!}" class="nav-link {!! classActiveSegment(1, 'dashboard') !!}">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
@@ -50,41 +56,54 @@
                   </a>
                         </li>
                     </ul>
-                </li>
+                </li> -->
                 <li class="nav-item">
-                    <a href="pages/widgets.html" class="nav-link">
-                <i class="nav-icon fa fa-th"></i>
+                    <a href="/dashboard/home" class="nav-link">
+               <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
-                  Widgets
+                 Dashboard
                   <span class="right badge badge-danger">New</span>
                 </p>
               </a>
                 </li>
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-chart-pie"></i>
+                <i class="nav-icon fas fa-plus"></i>
                 <p>
-                  Charts
+                  Add / Create
                   <i class="right fa fa-angle-left"></i>
                 </p>
               </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="pages/charts/chartjs.html" class="nav-link">
+                            <a href="/add-students" class="nav-link">
                     <i class="fa fa-circle-o nav-icon"></i>
-                    <p>ChartJS</p>
+                    <p>Add student</p>
                   </a>
                         </li>
                         <li class="nav-item">
-                            <a href="pages/charts/flot.html" class="nav-link">
+                            <a href="/add-class" class="nav-link">
                     <i class="fa fa-circle-o nav-icon"></i>
-                    <p>Flot</p>
+                    <p>Add class</p>
                   </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="pages/charts/inline.html" class="nav-link">
+                <li class="nav-item">
+                            <a href="/show-term" class="nav-link">
                     <i class="fa fa-circle-o nav-icon"></i>
-                    <p>Inline</p>
+                    <p>Add Term</p>
+                  </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="/add-teacher" class="nav-link">
+                    <i class="fa fa-circle-o nav-icon"></i>
+                    <p>Add teaching Staff</p>
+                  </a>
+                        </li>
+                          <li class="nav-item">
+                            <a href="/add-admin" class="nav-link">
+                    <i class="fa fa-circle-o nav-icon"></i>
+                    <p>Create Admin</p>
                   </a>
                         </li>
                     </ul>

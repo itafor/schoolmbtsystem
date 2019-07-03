@@ -10,19 +10,27 @@ use Session;
 use Auth;
 use App\User;
 use Hash;
+use Excel;
+use DB;
+use App\Term;
 class StudentsController extends Controller
 {
 
+public function listStudents(){
+	$students=User::where('role','student')->get();
+	return view('students.list-students',compact(['students']));
+}
+
     public function getStudentForm(){
     	$classes=Classes::all();
-        return view('admin.add-student',compact(['classes']));
+        return view('students.add-student',compact(['classes']));
     }
 
     	public function createStudent(Request $request){
-		if(auth::user()->role != "admin") {
-			 return back()->withInput()->with('errors','Forbiden only admin can');
-			exit;
-}
+// 		if(auth::user()->role != "admin") {
+// 			 return back()->withInput()->with('errors','Forbiden only admin can');
+// 			exit;
+// }
 		if(User::where('username',trim(Input::get('username')))->count() >=1){
        return back()->withInput()->with('errors','The username you entered already exist');
 			exit;
@@ -37,6 +45,20 @@ class StudentsController extends Controller
 			exit;
 		}
 
+ 	$val =	$this->validate($request,[
+            'firstName' => 'required|max:255',
+            'lastName' => 'required|max:255',
+            'username' => 'required|max:255',
+             'email' => 'required|email|max:255|regex:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/|unique:users',
+            'gender' => 'required|max:255',
+            'password' => 'required|max:255',
+            'address' => 'required|max:255',
+            'birthday' => 'required|max:255',
+            ]);
+ 		if(!$val){
+ 			 return back()->withInput()->with('errors',$val);
+			exit;
+ 		}
 		$User = new User();
 		$User->firstName = Input::get('firstName');
 		$User->lastName = Input::get('lastName');
@@ -64,4 +86,95 @@ class StudentsController extends Controller
 		
 	}
 
+public function importExcelFile(Request $request){
+	$val =	$this->validate($request,[
+            'select_file' => 'required|mimes:xls,xlsx'
+            ]);
+
+ 		if(!$val){
+ 			 return back()->withInput()->with('errors',$val);
+			exit;
+ 		}
+ 		$path=$request->file('select_file')->getRealPath();
+ 		$data=Excel::load($path)->get();
+ 		//  var_dump(json_decode($data));
+ 		// exit;
+ 		if($data->count() > 0) {
+ 		$arrays=array();
+ 		$arrays=$data;
+			
+
+ 		
+ 		foreach($arrays as  $key => $arr){
+ 			$enter[]=array(
+ 				    'firstName'    => $arr['first_name'],
+ 					'lastName'     => $arr['last_name'],
+ 					'username'     => $arr['username'],
+ 					'email'        => $arr['email'],
+ 					'password'     =>Hash::make($arr['password']),
+ 					'studentRegNumber' => $arr['reg_no'],
+ 					'gender'        => $arr['gender'],
+ 					'address'       => $arr['address'],
+ 					'role'          => $arr['role'],
+ 					'birthday'      => $arr['birthday'],
+ 					'studentClass'  => $arr['student_class'],
+ 					'phoneNo'  => $arr['phone_number']
+ 				);
+ 		}
+ 		  
+
+ 				$alluser=User::all();
+ 				if(count($alluser) >=1){
+ 				for ($i=0; $i<count($alluser); $i++) {
+ 					for($j=0; $j<count($enter); $j++){
+ 						if($enter[$j]['email'] == $alluser[$i]['email'] || $enter[$j]['username'] == $alluser[$i]['username'] || $enter[$j]['reg_no'] == $alluser[$i]['studentRegNumber'] ){
+ 						 return back()->withInput()->with('errors','The Email or username or reg. number  you entered already exist');
+						exit;
+ 						}
+ 					}
+ 				}
+ 				}
+ 			
+ 				if(!empty($enter)){
+ 				$User=DB::table('users')->insert($enter);
+ 				if($User){
+		  return back()->with('success','You have successfully uploaded your file');
+				}
+				  return back()->withInput()->with('errors','Excel upload failed');
+			exit;
+ 			}
+ 			}
+
+		}
+
+		
+		public function getTermForm(){
+			return view('students.term');
+		}
+
+		public function createTerm(Request $request){
+
+		$val =	$this->validate($request,[
+            'termName' => 'required|max:255',
+            ]);
+ 		if(!$val){
+ 			 return back()->withInput()->with('errors',$val);
+			exit;
+ 		}
+ 		
+		$term=Term::where('termName', $request->termName)->first();
+		if($term){
+       return back()->withInput()->with('errors','The term you are about to add already exist');
+		}
+
+		
+		$term = new Term();
+		$term->termName = Input::get('termName');
+		$term->save();
+		  if($term){
+         return back()->with('success','You have successfully added a new term');
+ 
+        }
+        return back()->withInput()->with('errors','An attempt to add a new term failed');
+	}
 }

@@ -29,7 +29,17 @@ Route::post('/create-class', 'ClassesController@createClass')->name('createNewCl
 
 //students routes
 Route::get('/add-students', 'StudentsController@getStudentForm')->name('addstudent');
+Route::get('/all-students', 'StudentsController@listStudents')->name('listAllStudents');
 Route::post('/add-student', 'StudentsController@createStudent')->name('addNewstudent');
+Route::post('/import-excel', 'StudentsController@importExcelFile')->name('importExcel');
+Route::get('/show-term', 'StudentsController@getTermForm');
+Route::post('/add-term', 'StudentsController@createTerm')->name('addNewTerm');
+
+
+
+//Teachers route
+Route::get('/add-teacher', 'TeachersController@getTeacherForm');
+Route::post('/create-teacher', 'TeachersController@createTeacher')->name('addNewTeacher');
 
 
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');

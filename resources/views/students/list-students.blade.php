@@ -8,12 +8,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">New Class</h1>
+            <h1 class="m-0 text-dark">Students</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">New Class</li>
+              <li class="breadcrumb-item active">Student List</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -30,9 +30,10 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h5 class="card-title">Add new Class</h5>
+                <h5 class="card-title">Students List</h5>
 
                 <div class="card-tools">
+                   <a href="/add-students">  <button class="btn btn-sm btn-primary">Add Student</button></a>
                   <button type="button" class="btn btn-tool" data-widget="collapse">
                     <i class="fa fa-minus"></i>
                   </button>
@@ -45,38 +46,81 @@
                       <a href="#" class="dropdown-item">Add Staff</a>
                       <a href="#" class="dropdown-item">Add Admin</a>
                       <a class="dropdown-divider"></a>
-                      <a href="#" class="dropdown-item">Separated link</a>
+                       <form action="{{route('importExcel')}}" method="POST" enctype="multipart/form-data" novalidate>
+       <input type="hidden" name="_token" value="{{csrf_token()}}">
+        <div class="input-group input-group-sm">
+            <input class="form-control form-control-navbar" name="select_file" type="file" placeholder="Search" aria-label="Search">
+            <div class="input-group-append">
+                <button class="btn btn-info" type="submit">
+    <i class="fa fa-upload"></i>
+  </button>
+            </div>
+        </div>
+    </form>
                     </div>
                   </div>
                 </div>
               </div>
               <!-- /.card-header -->
-              <div class="card-body  offset-1 col-md-12 ">
-              <!--   <div class="row col-md-12"> -->
-      <form action="{{route('createNewClass')}}" method="POST" enctype="multipart/form-data" novalidate>
-       <input type="hidden" name="_token" value="{{csrf_token()}}">
-        <div class="mb-3 col-md-6 ">
-          <label for="address2">Class Name <span class="text-muted"></span></label>
-          <input type="text" class="form-control" id="className" placeholder="Class Name" name="className" required="required">
+              <div class="card-body  offset-0">
+                 <!-- SEARCH FORM -->
+    <form class="form-inline ml-3">
+        <div class="input-group input-group-sm">
+            <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+            <div class="input-group-append">
+                <button class="btn btn-info" type="submit">
+    <i class="fa fa-search"></i>
+  </button>
+            </div>
         </div>
-
-        <h4 class="mb-3">Class Teacher</h4>
-
-        <div class="d-block my-3 col-md-6 ">
-         <select name="classTeacher" class="form-control" required="required">
-           <option value="0">Select class  teacher</option>
-           @foreach($getClassTeacher as $teacher)
-           <option value="{{$teacher->firstName}} {{$teacher->lastName}}">{{$teacher->firstName}} {{$teacher->lastName}}</option>
-           @endforeach
-         </select>
-        </div>
-           <hr class="mb-3 col-md-6 ">
- <div class="col-md-3 my-3">
-        <button class="btn btn-primary btn-lg btn-block" type="submit">Add Class</button>
-      </div>
-      </form>
-                </div>
-                <!-- /.row -->
+    </form>
+        <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">S/N</th>
+      <th scope="col">Full Name</th>
+      <th scope="col">Gender</th>
+      <th scope="col">Class</th>
+      <th scope="col">Reg. No</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    @if(count($students) >=1)
+    <tr>
+      <?php $id=1?>
+@foreach($students as $student)
+      <th scope="row">{{$id}}</th>
+      <td>
+      {{$student->firstName}}
+      {{$student->lastName}}
+    </td>
+      <td>{{$student->gender}}</td>
+      <td>{{$student->studentClass}}</td>
+      <td>{{$student->studentRegNumber}}</td>
+  <td>
+  <a href=""><button class="btn btn-success"><i class="fa fa-eye"></i></button></a>
+  <a href=""><button class="btn btn-info"><i class="fa fa-edit "></i></button></a>
+  <a href=""><button class="btn btn-danger"><i class="fa fa-remove"></i></button></a>
+  <a href=""><button class="btn btn-primary"><i class="fa fa-money"></i></button></a>
+  <a href=""><button class="btn btn-warning">Result</button></a>
+</td>
+    </tr> 
+   <?php $id++ ?>
+    @endforeach
+   @else
+     <tr>
+   <td>
+   <h5>
+     No student found
+   </h5>
+   @endif
+   </td>
+    </tr>
+  </tbody>
+</table>
+               
+               
               </div>
               <!-- ./card-body -->
                          </div>
@@ -84,19 +128,15 @@
           </div>
           <!-- /.col -->
         </div>
-     
-
         <!-- /.row -->
 
         <!-- Main row -->
       
         <!-- /.row -->
       </div><!--/. container-fluid -->
-
     </section>
     <!-- /.content -->
   </div>
-
   <!-- /.content-wrapper -->
 @endsection
 

@@ -23,6 +23,8 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
         <!-- Messages Dropdown Menu -->
+            <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
+        
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
   <i class="fa fa-comments-o"></i>
@@ -77,10 +79,12 @@
                     <!-- Message End -->
                 </a>
                 <div class="dropdown-divider"></div>
+
                 <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
             </div>
         </li>
         <!-- Notifications Dropdown Menu -->
+       
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
   <i class="fa fa-bell-o"></i>
@@ -107,6 +111,7 @@
                 <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
             </div>
         </li>
+
     </ul>
 </nav>
 <!-- /.navbar -->

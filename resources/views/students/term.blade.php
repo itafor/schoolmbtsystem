@@ -8,12 +8,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">New Class</h1>
+            <h1 class="m-0 text-dark">Term</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">New Class</li>
+              <li class="breadcrumb-item active">New Term</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -30,7 +30,7 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h5 class="card-title">Add new Class</h5>
+                <h5 class="card-title">Add new term</h5>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-widget="collapse">
@@ -53,26 +53,15 @@
               <!-- /.card-header -->
               <div class="card-body  offset-1 col-md-12 ">
               <!--   <div class="row col-md-12"> -->
-      <form action="{{route('createNewClass')}}" method="POST" enctype="multipart/form-data" novalidate>
+      <form action="{{route('addNewTerm')}}" method="POST" enctype="multipart/form-data" novalidate>
        <input type="hidden" name="_token" value="{{csrf_token()}}">
         <div class="mb-3 col-md-6 ">
-          <label for="address2">Class Name <span class="text-muted"></span></label>
-          <input type="text" class="form-control" id="className" placeholder="Class Name" name="className" required="required">
-        </div>
-
-        <h4 class="mb-3">Class Teacher</h4>
-
-        <div class="d-block my-3 col-md-6 ">
-         <select name="classTeacher" class="form-control" required="required">
-           <option value="0">Select class  teacher</option>
-           @foreach($getClassTeacher as $teacher)
-           <option value="{{$teacher->firstName}} {{$teacher->lastName}}">{{$teacher->firstName}} {{$teacher->lastName}}</option>
-           @endforeach
-         </select>
+          <label for="address2">Term Name <span class="text-muted"></span></label>
+          <input type="text" class="form-control" id="termName" placeholder="Term" name="termName" required="required">
         </div>
            <hr class="mb-3 col-md-6 ">
  <div class="col-md-3 my-3">
-        <button class="btn btn-primary btn-lg btn-block" type="submit">Add Class</button>
+        <button class="btn btn-primary btn-lg btn-block" type="submit">Submit</button>
       </div>
       </form>
                 </div>
