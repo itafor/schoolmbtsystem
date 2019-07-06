@@ -34,6 +34,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <!-- IonIcons -->
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -53,4 +54,193 @@ scratch. This page gets rid of all links and provides the needed markup only.
     @endguest @yield('javascript')
     
 </body>
+
+
+<script type="text/javascript">
+  
+  
+    $('.studentClass').on('change', function(e){
+    let stdClass=e.target.value;
+      $('.studentRegNumber').val('');
+    $.get('/get-student/' + stdClass, function(details){
+     $('.fullName').empty();
+      $.each(details,function(index,detail){
+         console.log(detail);
+         $('.studentRegNumber').val('');
+      $('.fullName').append(' <option value="'+detail.id+'">'+detail.firstName + ' ' + detail.lastName + '</option>')
+      });
+    });
+    
+  });
+
+      $('.studentClass').on('change', function(e){
+    let studentclass=e.target.value;
+   
+ var dataId = {'studentClass':studentclass};
+      $.ajax({
+   headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    url: "{{url('/findclass/')}}" + '/' + studentclass,
+    method: 'POST',
+    data: dataId,
+    dataType:'json',
+    success: function(result){
+     console.log(result);
+  $.get('/enter-result',function(data){
+    
+  });
+    }
+    });
+  });
+
+//-------enter student reg no------------
+$('body').delegate('.fullName','change',function(){
+    var tr =$(this).parent().parent();
+    var id = tr.find('.fullName').val();
+    var dataId = {'id':id};
+    $.ajax({
+   headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    url: "{{route('findRegNumber')}}",
+    method: 'POST',
+    data: dataId,
+    dataType:'json',
+    success: function(result){
+     console.log(result.studentRegNumber);
+   tr.find('.studentRegNumber').val(result.studentRegNumber);
+    }
+    });
+});
+  //-------enter student reg no end------------
+
+
+//-----------check if class teachere has been assigned to a class-----------
+$('#message').hide();
+$('#classTeacher').on('change', function(e){
+console.log(e.target.value);
+let teacherId=e.target.value;
+$.get('/find-classteacher/' + teacherId, function(data){
+    console.log(data);
+if(data){
+    $('#message').show();
+    $("#message").css({"background-color": "red", "font-size": "20px", "font-family": "roboto", "margin-left": "20px","padding": "10px","border-radius": "5px","width": "auto","color": "white"});
+    $('#message').html('The selected teacher has already been assigned to '+ data.className +' class');
+}else{
+    $('#message').hide();
+}
+
+});
+});
+
+//-----------end class teacher check -----------
+
+//remove row
+$('body').delegate('.remove','click',function(){
+    let l=$('tbody tr').length;
+    if(l===1){
+        alert('You cannot romve this');
+    }else{
+    $(this).parent().parent().remove();
+    }
+});
+//end remove row
+//-------check for valid input----
+$('.testscore,.examscore, .points').on('keyup',function(e){
+let Valu = e.target.value;
+if(Valu<=-1){
+   // $('.testscore,.examscore,.points').val('');
+   alert('Invalid input (Negative number) detected');
+}
+});
+
+$('.testscore').on('keyup',function(e){
+let Valu = e.target.value;
+if(Valu > 40){
+alert('Test maximum score exceeded');
+ // $('.examscore').val('');
+}else if(Valu == ''){
+alert('Test Score field cannot be empty');
+}
+});
+
+$('.examscore').on('keyup',function(e){
+let Valu = e.target.value;
+if(Valu > 60){
+alert('Exam maximum score exceeded');
+  // $('.examscore').val('');
+}
+});
+// ende validation
+
+
+$('body').delegate('.testscore,.examscore,.points','keyup',function(){
+var tr = $(this).parent().parent();
+var testscore =tr.find('.testscore').val();
+var examscore =tr.find('.examscore').val();
+var total = Number(testscore) + Number(examscore);
+// tr.find('.points').val(total);
+if(total <=0 || total <=39){
+    tr.find('.points').val(9);
+    tr.find('.remark').val('Fail');
+}else if(total <= 40 || total <=45){
+    tr.find('.points').val(8);
+    tr.find('.remark').val('Pass');
+}else if(total <= 46 || total <=50){
+    tr.find('.points').val(7);
+    tr.find('.remark').val('Pass');
+}else if(total <= 51 || total <=54){
+    tr.find('.points').val(6);
+    tr.find('.remark').val('Credit');
+}else if(total <= 55 || total <=60){
+    tr.find('.points').val(5);
+    tr.find('.remark').val('Credit');
+}else if(total <= 61 || total <=64){
+    tr.find('.points').val(4);
+    tr.find('.remark').val('Strong credit');
+}else if(total <= 65 || total <=69){
+    tr.find('.points').val(3);
+    tr.find('.remark').val('Strong credit');
+}else if(total <= 70 || total <=74){
+    tr.find('.points').val(2);
+    tr.find('.remark').val('Distinction');
+}else if(total <= 75 || total <=100){
+    tr.find('.points').val(1);
+    tr.find('.remark').val('Distinction');
+}else{
+     tr.find('.remark').val(' ');
+      tr.find('.points').val(' ');
+}
+});
+
+</script>
+<script>
+$(document).ready(function(){
+
+ fetch_customer_data();
+
+ function fetch_customer_data(query = '')
+ {
+  $.ajax({
+   url:"{{ route('live_search') }}",
+   method:'GET',
+   data:{query:query},
+   dataType:'json',
+   success:function(data)
+   {
+    $('tbody').html(data.table_data);
+    $('#total_count').text(data.total_data);
+   }
+  })
+ }
+
+ $(document).on('keyup', '#search', function(){
+  var query = $(this).val();
+  fetch_customer_data(query);
+ });
+});
+</script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+
 </html>

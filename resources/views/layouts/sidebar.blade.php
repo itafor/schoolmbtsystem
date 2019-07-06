@@ -28,35 +28,7 @@
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!--       <li class="nav-item has-treeview {!! classActivePath(1,'dashboard') !!}">
-                    <a href="{!! route('home') !!}" class="nav-link {!! classActiveSegment(1, 'dashboard') !!}">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
-                <p>
-                  Dashboard
-                  <i class="right fa fa-angle-left"></i>
-                </p>
-              </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('home') }}" class="nav-link {!! classActiveSegment(2, 'home') !!}">
-                    <i class="fas fa-circle"></i>
-                    <p>Dashboard v1</p>
-                  </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('v2') }}" class="nav-link {!! classActiveSegment(2, 'v2') !!}">
-                    <i class="fas fa-circle"></i>
-                    <p>Dashboard v2</p>
-                  </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('v3') }}" class="nav-link {!! classActiveSegment(2, 'v3') !!}">
-                    <i class="fas fa-circle"></i>
-                    <p>Dashboard v3</p>
-                  </a>
-                        </li>
-                    </ul>
-                </li> -->
+        
                 <li class="nav-item">
                     <a href="/dashboard/home" class="nav-link">
                <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -81,6 +53,20 @@
                     <p>Add student</p>
                   </a>
                         </li>
+
+                       <li class="nav-item">
+                            <a href="/add-teacher" class="nav-link">
+                    <i class="fa fa-circle-o nav-icon"></i>
+                    <p>Add teaching Staff</p>
+                  </a>
+                        </li>
+
+                           <li class="nav-item">
+                            <a href="/add-admin" class="nav-link">
+                    <i class="fa fa-circle-o nav-icon"></i>
+                    <p>Create Admin</p>
+                  </a>
+                        </li>
                         <li class="nav-item">
                             <a href="/add-class" class="nav-link">
                     <i class="fa fa-circle-o nav-icon"></i>
@@ -93,34 +79,34 @@
                     <p>Add Term</p>
                   </a>
                         </li>
-
-                        <li class="nav-item">
-                            <a href="/add-teacher" class="nav-link">
+              <li class="nav-item">
+                            <a href="/add-subject" class="nav-link">
                     <i class="fa fa-circle-o nav-icon"></i>
-                    <p>Add teaching Staff</p>
+                    <p>Add Subject</p>
                   </a>
                         </li>
-                          <li class="nav-item">
-                            <a href="/add-admin" class="nav-link">
+                         <li class="nav-item">
+                            <a href="/add-session" class="nav-link">
                     <i class="fa fa-circle-o nav-icon"></i>
-                    <p>Create Admin</p>
+                    <p>Add Session</p>
                   </a>
                         </li>
+                       
                     </ul>
                 </li>
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
                 <i class="nav-icon fa fa-tree"></i>
                 <p>
-                  UI Elements
+                 Results
                   <i class="fa fa-angle-left right"></i>
                 </p>
               </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="pages/UI/general.html" class="nav-link">
+                            <a href="/enter-result" class="nav-link">
                     <i class="fa fa-circle-o nav-icon"></i>
-                    <p>General</p>
+                    <p>Enter result</p>
                   </a>
                         </li>
                         <li class="nav-item">

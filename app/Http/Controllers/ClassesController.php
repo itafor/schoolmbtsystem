@@ -46,4 +46,12 @@ class ClassesController extends Controller
         }
         return back()->withInput()->with('errors','An attempt to add a new class failed');
 	}
+
+	public function findTeacher($id){
+		$teacher =Classes::where('classTeacher',$id)->first();
+		if($teacher){
+		return $teacher;
+		// back()->withInput()->with('errors','The selected teacher has been assigned to a class')
+	}
+}
 }

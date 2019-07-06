@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Results extends Migration
+class Sessions extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,11 @@ class Results extends Migration
      */
     public function up()
     {
-        //
+         Schema::create('sessions', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('sessionName');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -23,6 +27,6 @@ class Results extends Migration
      */
     public function down()
     {
-        //
+         Schema::dropIfExists('sessions');
     }
 }

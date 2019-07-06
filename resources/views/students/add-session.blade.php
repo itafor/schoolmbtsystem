@@ -8,12 +8,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-           <div id="message"></div>
+            <h1 class="m-0 text-dark">Add new Session</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">New Class</li>
+              <li class="breadcrumb-item active">New Session</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -30,9 +30,10 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h5 class="card-title">Add new Class</h5>
+                <h5 class="card-title">Add Session (e.g. 2019)</h5>
 
                 <div class="card-tools">
+                 <a href="/all-students">  <button class="btn btn-sm btn-primary">List subjects</button></a>
                   <button type="button" class="btn btn-tool" data-widget="collapse">
                     <i class="fa fa-minus"></i>
                   </button>
@@ -51,31 +52,37 @@
                 </div>
               </div>
               <!-- /.card-header -->
-              <div class="card-body  offset-1 col-md-12 ">
-              <!--   <div class="row col-md-12"> -->
-      <form action="{{route('createNewClass')}}" method="POST" enctype="multipart/form-data" novalidate>
+         
+              <div class="card-body  offset-0">
+               
+        <form action="{{route('addNewSession')}}" method="POST" enctype="multipart/form-data" novalidate>
        <input type="hidden" name="_token" value="{{csrf_token()}}">
-        <div class="mb-3 col-md-6 ">
-          <label for="address2">Class Name <span class="text-muted"></span></label>
-          <input type="text" class="form-control" id="className" placeholder="Class Name" name="className" required="required">
+       <div class="col-lg-12 col-sm-12">
+        <div class="form-group">
+          <table class="table table-bordered">
+            <thead>
+             
+              <th>Sessions</th>
+                <th><a class="btn btn-sm btn-success addRow"><i class="fa fa-plus"></i></a></th>
+            </thead>
+           
+            <tr>
+          <td>
+         <input type="text" name="sessionName[]" class="form-control sessionName" >
+              </td>
+            
+  <td><a  class="btn btn-sm btn-danger remove"><i class="fa fa-remove"></i></a></td>
+            </tr>
+          </table>
         </div>
-
-        <h4 class="mb-3">Class Teacher</h4>
-
-        <div class="d-block my-3 col-md-6 ">
-         <select name="classTeacher" class="form-control" id="classTeacher">
-           <option value="0">Select class  teacher</option>
-           @foreach($getClassTeacher as $teacher)
-           <option value="{{$teacher->id}}">{{$teacher->firstName}} {{$teacher->lastName}}</option>
-           @endforeach
-         </select>
-        </div>
-           <hr class="mb-3 col-md-6 ">
- <div class="col-md-3 my-3">
-        <button class="btn btn-primary btn-lg btn-block" type="submit">Add Class</button>
+         
+       </div>
+       
+        <div class="col-md-3 my-3">
+        <button class="btn btn-primary btn-lg btn-block" type="submit"> Submit</button>
       </div>
       </form>
-                </div>
+               
                 <!-- /.row -->
               </div>
               <!-- ./card-body -->
@@ -84,23 +91,42 @@
           </div>
           <!-- /.col -->
         </div>
-     
-
         <!-- /.row -->
 
         <!-- Main row -->
       
         <!-- /.row -->
       </div><!--/. container-fluid -->
-
     </section>
     <!-- /.content -->
   </div>
-
   <!-- /.content-wrapper -->
 @endsection
 
 @section('javascript')
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+  $('.addRow').on('click',function(){
+    addRow();
+  });
+  function addRow(){
+var tr = '<tr>' +
+               '<td>'+
+               ' <input type="text" name="sessionName[]" class="form-control sessionName">'+
+            '</td>'+
+             
+              '<td><a class="btn btn-sm btn-danger remove"><i class="fa fa-remove"></i></a></td>'+
+
+'</tr>';
+
+$('tbody').append(tr);
+  }
+
+</script>
+
+
+
 <!-- jQuery -->
 <script src="/dist/plugins/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->

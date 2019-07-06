@@ -33,9 +33,9 @@
                 <h5 class="card-title">Students List </h5>
 
                 <div class="card-tools">
-                  
+                  <a href="/add-students">  <button class="btn btn-sm btn-primary">Print</button></a>
                    <a href="/add-students">  <button class="btn btn-sm btn-primary">Add Student</button></a>
-                  <a href="{{route('exportAllStudents')}}" >  <button class="btn btn-sm btn-primary">Print</button></a>
+                  <a href="/add-students">  <button class="btn btn-sm btn-primary">Print</button></a>
                   <div class="btn-group">
                     <button type="button" class="btn  dropdown-toggle btn-primary btn-sm " data-toggle="dropdown">
                       <!-- <i class="fa fa-wrench"></i> --> Import
@@ -60,56 +60,35 @@
                   </div>
 
                    <div class="btn-group">
-                     <a href="{{route('exportAllStudents')}}" >  <button class="btn btn-sm btn-primary">Export all</button></a>
-                    
-                  </div>
-
-                   <div class="btn-group">
-                    <button type="button" class="btn btn-sm  btn-primary  ">
-
-                       <form action="{{route('exportToExcel')}}" method="POST" enctype="multipart/form-data" novalidate>
-       <input type="hidden" name="_token" value="{{csrf_token()}}">
-       <div class="input-group input-group-sm">
-        <select name="student_class" class="form-control" id="student_class">
-          <option value="">select</option>
-          @foreach($classes as $stdclass)
-          <option value="{{$stdclass->className}}">{{$stdclass->className}}</option>
-          @endforeach
-        </select>
-       </div>
-        <div class="input-group input-group-sm">
-            <div class="input-group-append">
-                <button class="btn btn-info btn-sm" type="submit">
-    <i class="fa fa-download"></i>
-  </button>
-            </div>
-        </div>
-    </form>
-                                        
+                    <button type="button" class="btn  dropdown-toggle btn-primary btn-sm " data-toggle="dropdown">
+                      <!-- <i class="fa fa-wrench"></i> --> Export
                     </button>
-                   
+                    <div class="dropdown-menu dropdown-menu-right" role="menu">
+                      <a href="{{route('exportToExcel')}}" class="dropdown-item"> Export as Excel</a>
+                      <a href="{{route('exportAsPdf')}}" class="dropdown-item">Export as pdf</a>
+                      <a href="#" class="dropdown-item">Add Admin</a>
+                      <a class="dropdown-divider"></a>
+                      
+                    </div>
                   </div>
-                 
+                   <button type="button" class="btn btn-tool" data-widget="collapse">
+                    <i class="fa fa-minus"></i>
+                  </button>
                 </div>
               </div>
               <!-- /.card-header -->
-              <div class="card-body  offset-0" style="background: white;">
+              <div class="card-body  offset-0">
                  <!-- SEARCH FORM -->
-    <div class="row">
-      <div class="col-sm-6">
-     <form class="form-inline ml-3">
+    <form class="form-inline ml-3">
         <div class="input-group input-group-sm">
-            <input class="form-control form-control-navbar" name="searchItem" type="text" placeholder="Search" aria-label="Search">
+            <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
             <div class="input-group-append">
-                <button class="btn btn-primary" type="submit">
+                <button class="btn btn-info" type="submit">
     <i class="fa fa-search"></i>
   </button>
             </div>
         </div>
     </form>
-</div>
-    <div class="form-group input-group-sm col-sm-6">   <h3 >Total: <span id="total_count">{{$total}}</span></h3> </div>
-</div>
         <table class="table">
   <thead>
     <tr>
@@ -144,7 +123,6 @@
     </tr> 
    <?php $id++ ?>
     @endforeach
-
    @else
      <tr>
    <td>
@@ -154,13 +132,7 @@
    @endif
    </td>
     </tr>
-    <tr  rowspan="10">
-     <td>
-        <span class="pagination">{{$students->links()}}</span>
-     </td>
-   </tr>
   </tbody>
- 
 </table>
                
                
