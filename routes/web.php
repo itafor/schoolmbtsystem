@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
+Route::middleware(['auth'])->group(function(){
 Route::get('/dashboard/home', 'DashboardController@versionone')->name('home');
 Route::get('/dashboard/v2', 'DashboardController@versiontwo')->name('v2');
 Route::get('/dashboard/v3', 'DashboardController@versionthree')->name('v3');
@@ -75,13 +75,10 @@ Route::post('/add-subject', 'ResultController@addSubject')->name('addNewSubject'
 Route::get('/add-session', 'AdminsController@displaySession');
 Route::post('/add-session', 'AdminsController@addSession')->name('addNewSession');
 
+
+
+Route::get('/home', 'HomeController@index')->name('home');
+});
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-// function(){
-// 	$reg_no =Input::get('reg_no');
-// 	$regNumber=User::where('id',$reg_no)->first();
-// 	return response::json($regNumber);
-// };
