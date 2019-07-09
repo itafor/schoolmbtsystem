@@ -48,8 +48,10 @@ public function ressultFormData(Request $request){
 		 return back()->withInput()->with('errors','Ooops!! all fields requred');
 		exit;
 	}
-
-	
+			$theSession=$request->sessionName;
+			$theSubject=$request->subjectName;
+			$theTerm=$request->term;
+			$theClass=$request->studentClass;
 
 	
  		if(!isset($request->studentClass) || !isset($request->term )){
@@ -71,7 +73,7 @@ public function ressultFormData(Request $request){
     $terminal =$termi->termName;
     
 	$byClasses=User::where('studentclass',$request->studentClass)->get();
-	return view('students.enter-result',compact(['students','usedClass','classes','terminal','terms','byClasses','sessions','subjects','subj','section']));
+	return view('students.enter-result',compact(['students','usedClass','classes','terminal','terms','byClasses','sessions','subjects','subj','section','theSession','theSubject','theTerm','theClass']));
 }
 
 }
@@ -92,13 +94,26 @@ public function getStudents($stdClass){
 
 public function storeResult(Request $request){
 
-$data=$request->studentRegNumber;
+$subject=$request->subject;
+$totalmark=$request->totalmark;
+$session=$request->session;
+$term=$request->term;
+$registrationNumber=$request->studentRegNumber;
 $exScore=$request->examscore;
 $userId =$request->studentId;
 if(is_array($exScore)){
 	for($i=0; $i<count($exScore); $i++){
 		if($exScore[$i] === null){
 			 return back()->withInput()->with('errors','Exam Score field cannot be empty, its requred!!');
+		exit;
+		}
+	}
+}
+
+if(is_array($session)){
+	for($i=0; $i<count($session); $i++){
+		if($session[$i] === null){
+			 return back()->withInput()->with('errors','Please select Class,Term,Session and subject before you proceed');
 		exit;
 		}
 	}
@@ -113,7 +128,34 @@ if(is_array($exScore)){
 	}
 }
 
-	$uniqueArrayVal = $this->arrayUniqe($data);
+if(is_array($term)){
+	for($i=0; $i<count($term); $i++){
+		if($term[$i] === null){
+			 return back()->withInput()->with('errors','Term field cannot be empty, its requred!!');
+		exit;
+		}
+	}
+}
+if(is_array($subject)){
+	for($i=0; $i<count($subject); $i++){
+		if($subject[$i] === null){
+			 return back()->withInput()->with('errors','Subject field cannot be empty, its requred!!');
+		exit;
+		}
+	}
+}
+
+if(is_array($totalmark)){
+	for($i=0; $i<count($totalmark); $i++){
+		if($totalmark[$i] === null){
+			 return back()->withInput()->with('errors','Total mark field cannot be empty, its requred!!');
+		exit;
+		}
+	}
+}
+
+
+	$uniqueArrayVal = $this->arrayUniqe($registrationNumber);
 	 if($uniqueArrayVal){
 	 	 return back()->withInput()->with('errors','Duplicate registration number detected!!');
 		exit;
@@ -126,6 +168,7 @@ if(is_array($exScore)){
  					'studentRegNumber'     => $request->studentRegNumber[$key],
  					'testscore'            => $request->testscore[$key],
  					'examscore'            => $request->examscore[$key],
+ 					'totalmark'            => $request->totalmark[$key],
  					'points'               => $request->points[$key],
  					'remark'               => $request->remark[$key],
  					'subject'              => $request->subject[$key],
@@ -253,6 +296,7 @@ public function displaySubform(){
  					'studentClass'     => $arr['student_class'],
  					'testscore'     => $arr['test_score'],
  					'examscore'        => $arr['exam_score'],
+ 					'totalmark'        => $arr['total_mark'],
  					'points'     => $arr['points'],
  					'remark' => $arr['remark'],
  					'subject'        => $arr['subject'],

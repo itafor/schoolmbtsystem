@@ -67,11 +67,15 @@
               <!-- /.card-header -->
      <form action="{{route('ressultFormData')}}" method="POST" name="initCheckResult" onsubmit="return validateForm()">
        <input type="hidden" name="_token" value="{{csrf_token()}}">
-              <div class="row">
+              <div class="row ctss">
 
               <div class="col-md-3 mb-3">
             <select name="studentClass" class="form-control studentClass">
-           <option value=" ">Select Student Class</option>
+             @if(isset($theClass))
+                 <option value="{{$theClass}}">{{$theClass}}</option>
+                @else
+           <option value=" ">Select Class</option>
+              @endif
            @if(count($classes) >=1)
            @foreach($classes as $class)
            <option value="{{$class->className}}">{{$class->className}}</option>
@@ -83,8 +87,12 @@
 
 
               <div class="col-md-2 mb-3">
-              <select name="term" id="term" class="form-control">
-           <option value=" ">Select term</option>
+              <select name="term" id="term" class="form-control theTerm" id="theTerm">
+           @if(isset($theTerm))
+                 <option value="{{$theTerm}}">{{$theTerm}}</option>
+                @else
+           <option value=" ">Select Term</option>
+              @endif
            @if(count($terms) >=1)
            @foreach($terms as $term)
            <option value="{{$term->termName}}">{{$term->termName}}</option>
@@ -94,8 +102,12 @@
           </div>
 
            <div class="col-md-2 mb-3">
-              <select name="sessionName" id="term" class="form-control sessionName">
+              <select name="sessionName" id="term" class="form-control theSssionName">
+                @if(isset($theSession))
+                 <option value="{{$theSession}}">{{$theSession}}</option>
+                @else
            <option value=" ">Select session</option>
+              @endif
            @if(count($sessions) >=1)
            @foreach($sessions as $session)
            <option value="{{$session->sessionName}}">{{$session->sessionName}}</option>
@@ -105,8 +117,12 @@
           </div>
 
 <div class="col-md-3">
-              <select name="subjectName" id="term" class="form-control subjectName">
+              <select name="subjectName" id="term" class="form-control theSubjectName">
+             @if(isset($theSubject))
+                 <option value="{{$theSubject}}">{{$theSubject}}</option>
+                @else
            <option value=" ">Select Subject</option>
+              @endif
            @if(count($subjects) >=1)
            @foreach($subjects as $sub)
            <option value="{{$sub->subjectName}}">{{$sub->subjectName}}</option>
@@ -116,7 +132,7 @@
           </div>
 
                   <div class="col-sm-2 mb-3">
-        <input class="btn btn-info btn-sm" type="submit" value="Submit">
+        <input class="btn btn-info btn-sm" type="submit" value="Submit" id="submitSubject">
       </div>
               </div>
 
@@ -136,6 +152,7 @@
               <th>Reg. Number</th>
               <th>Test score</th>
               <th>Exam score</th>
+              <th>Total Mark</th>
               <th>Points</th>
               <th>Remark</th>
            
@@ -164,6 +181,9 @@
               </td>
                <td>
                 <input type="number" name="examscore[]" class="form-control examscore" id="examscore">
+              </td>
+                <td>
+                <input type="number" name="totalmark[]" class="form-control totalmark" id="totalmark" readonly="readonly">
               </td>
                <td>
                 <input type="number" name="points[]" class="form-control points" readonly="readonly">

@@ -35,6 +35,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- IonIcons -->
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+     <link href="{{ asset('css/layout.css') }}" rel="stylesheet">
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -57,7 +58,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
 <script type="text/javascript">
-  
+
+var stdRegNumber=[];
+ let marksToRank=[];
   
     $('.studentClass').on('change', function(e){
     let stdClass=e.target.value;
@@ -65,7 +68,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     $.get('/get-student/' + stdClass, function(details){
      $('.fullName').empty();
       $.each(details,function(index,detail){
-         console.log(detail);
+         // console.log(detail);
          $('.studentRegNumber').val('');
       $('.fullName').append(' <option value="'+detail.id+'">'+detail.firstName + ' ' + detail.lastName + '</option>')
       });
@@ -86,7 +89,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     data: dataId,
     dataType:'json',
     success: function(result){
-     console.log(result);
+     // console.log(result);
   $.get('/enter-result',function(data){
     
   });
@@ -108,11 +111,35 @@ $('body').delegate('.fullName','change',function(){
     data: dataId,
     dataType:'json',
     success: function(result){
-     console.log(result.studentRegNumber);
    tr.find('.studentRegNumber').val(result.studentRegNumber);
+   stdRegNumber.push(tr.find('.studentRegNumber').val());
+    let totalMarks=$('.totalmark').val();
+
+// var all = $(".totalmark").map(function(e,va) {
+//     return va.target;
+// }).get();
+
+console.log('marks', all);
+
+
+$("p").html(all.join());
+ var recipientsArray = stdRegNumber.sort(); 
+
+var reportRecipientsDuplicate = [];
+for (var i = 0; i < recipientsArray.length - 1; i++) {
+    if (recipientsArray[i + 1] == recipientsArray[i]) {
+       alert('Repeated Reg. Number detected');
+       stdRegNumber.pop(recipientsArray[i]);
+       stdRegNumber[i]=null;
+    }
+}
+ console.log(stdRegNumber);
+
     }
     });
+
 });
+
   //-------enter student reg no end------------
 
 
@@ -122,7 +149,7 @@ $('#classTeacher').on('change', function(e){
 console.log(e.target.value);
 let teacherId=e.target.value;
 $.get('/find-classteacher/' + teacherId, function(data){
-    console.log(data);
+    // console.log(data);
 if(data){
     $('#message').show();
     $("#message").css({"background-color": "red", "font-size": "20px", "font-family": "roboto", "margin-left": "20px","padding": "10px","border-radius": "5px","width": "auto","color": "white"});
@@ -180,7 +207,7 @@ var tr = $(this).parent().parent();
 var testscore =tr.find('.testscore').val();
 var examscore =tr.find('.examscore').val();
 var total = Number(testscore) + Number(examscore);
-// tr.find('.points').val(total);
+ tr.find('.totalmark').val(total);
 if(total <=0 || total <=39){
     tr.find('.points').val(9);
     tr.find('.remark').val('Fail');

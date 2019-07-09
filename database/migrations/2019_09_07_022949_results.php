@@ -20,6 +20,7 @@ class Results extends Migration
             $table->string('studentRegNumber');
             $table->integer('testscore');
             $table->integer('examscore');
+            $table->integer('totalmark');
             $table->integer('points');
             $table->string('remark');
             $table->string('subject');
