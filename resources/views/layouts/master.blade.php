@@ -115,14 +115,7 @@ $('body').delegate('.fullName','change',function(){
    stdRegNumber.push(tr.find('.studentRegNumber').val());
     let totalMarks=$('.totalmark').val();
 
-// var all = $(".totalmark").map(function(e,va) {
-//     return va.target;
-// }).get();
 
-console.log('marks', all);
-
-
-$("p").html(all.join());
  var recipientsArray = stdRegNumber.sort(); 
 
 var reportRecipientsDuplicate = [];
@@ -267,7 +260,11 @@ $(document).ready(function(){
   fetch_customer_data(query);
  });
 });
+
+$(document).ready(function(){
+  $('.btnPrint').printPage();
+});
 </script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-
+<script type="text/javascript" src="http://www.position-absolute.com/creation/print/jquery.printPage.js"></script>
 </html>

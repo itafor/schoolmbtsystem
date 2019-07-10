@@ -23,11 +23,10 @@ Route::get('/dashboard/v3', 'DashboardController@versionthree')->name('v3');
 //admin routes
 Route::get('/add-students', 'AdminsController@getStudentForm')->name('addstudent');
 Route::post('/edit-student-profile', 'AdminsController@editStudentProfilePix')->name('editStudentProfilePix');
-Route::post('/check-student-result', 'AdminsController@checkStudentResult')->name('checkStudentResult');
+Route::get('/check-student-result', 'AdminsController@checkStudentResult')->name('checkStudentResult');
 Route::get('/student-profile/{id}', 'AdminsController@displayStudentDetail')->name('studentProfile');
 Route::post('/update-student-profile', 'AdminsController@updateStudentProfile')->name('updateStudentProfile');
-
-Route::post('/store-student-rank', 'AdminsController@studentsRank')->name('studentsRank');
+Route::post('/store-student-rank', 'AdminsController@studentsResultRanking')->name('studentsRank');
 
 
 //class route

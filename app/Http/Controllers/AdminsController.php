@@ -84,7 +84,71 @@ public function editStudentProfilePix(Request $request){
         exit;
 }
 
-public function studentsRank(Request $request){
+
+public function checkStudentResult(Request $request){
+
+	$val =	$this->validate($request,[
+            'studentRegNumber' => 'required|max:255',
+            'studentClass' => 'required|max:255',
+            'term' => 'required|max:255',
+            'sessionName' => 'required|max:255',
+            ]);
+ 		if(!$val){
+ 			 return back()->withInput()->with('errors',$val);
+			exit;
+ 		}
+
+$score_board_list = DB::select("SELECT *, totalmark,subject,studentRegNumber, CASE WHEN @l=total THEN @r ELSE @r:=@r+1 END as rank,
+  @l:=total FROM ( select results.studentRegNumber, results.studentclass, results.term, 
+           results.session, results.totalmark,results.subject,  sum(testscore + examscore) as total from results
+           LEFT JOIN users ON results.studentRegNumber = users.studentRegNumber
+    where 
+    results.studentclass = '$request->studentClass' AND
+    results.term = '$request->term' AND 
+    results.session = '$request->sessionName'
+
+        group by results.studentRegNumber  order by total desc )
+            totals, (SELECT @r:=0, @l:=NULL) rank" );
+
+$numberOfStudent=count($score_board_list);
+
+$studentDetails = User::join('results','users.studentRegNumber','=','results.studentRegNumber')
+        ->selectRaw('users.firstName, users.lastName, users.gender,users.phoneNo,users.address,users.photo,users.email,results.term,results.session, results.studentclass,results.studentRegNumber
+        ')
+   ->where('results.studentRegNumber',$request->studentRegNumber)
+   ->where('results.studentclass',$request->studentClass)
+   ->where('results.term',$request->term)
+   ->where('results.session',$request->sessionName)
+   ->first();
+
+   $position =Rank::where('studentRegNumber',$request->studentRegNumber)
+   ->where('studentclass',$request->studentClass)
+   ->where('term',$request->term)
+   ->where('sessionName',$request->sessionName)
+   ->first();
+// var_dump($studentDetails);
+// exit();
+	$fetchResults=Result::where('studentRegNumber',$request->studentRegNumber)
+				->where('studentclass',$request->studentClass)
+				->where('term',$request->term)
+				->where('session',$request->sessionName)
+				->get();
+				if($fetchResults && $studentDetails){
+					return view('students.result',compact(['fetchResults','studentDetails','score_board_list','position','numberOfStudent']));
+				}
+				return back()->withInput()->with('errors','No result found for the selected term or session');
+        exit;
+}
+
+public function updateStudentProfile(Request $request){
+	if(User::where('email',$request->email)->first()){
+}
+var_dump('email');
+exit();
+	}	
+
+
+public function studentsResultRanking(Request $request){
 
 	$totalmark=$request->totalMark;
 	$rank=$request->rank;
@@ -114,7 +178,7 @@ $ranks=Rank::all();
 		&& $finalArrays[$j]['term']             == $ranks[$i]['term']
 		&& $finalArrays[$j]['studentclass']     == $ranks[$i]['studentclass']
 						){		
- 						 return back()->withInput()->with('errors','The Rank you are about to set already exist');
+ 						 return back()->withInput()->with('errors','Position already set');
 						exit;
  						}
  					}
@@ -125,7 +189,7 @@ $ranks=Rank::all();
 		if(!empty($finalArrays)){
  				$storeRank=DB::table('ranks')->insert($finalArrays);
  				if($storeRank){
-		  return back()->with('success','Rank stored successfully');
+		  return back()->with('success','Position set successfully');
 				}
 				  return back()->withInput()->with('errors','rank storage failed');
 			exit;
@@ -133,61 +197,4 @@ $ranks=Rank::all();
 }
 	
 }
-
-public function checkStudentResult(Request $request){
-
-	$val =	$this->validate($request,[
-            'studentRegNumber' => 'required|max:255',
-            'studentClass' => 'required|max:255',
-            'term' => 'required|max:255',
-            'sessionName' => 'required|max:255',
-            ]);
- 		if(!$val){
- 			 return back()->withInput()->with('errors',$val);
-			exit;
- 		}
-
-$score_board_list = DB::select("SELECT *, totalmark,subject,studentRegNumber, @r:=@r+1 as rank,
-           @l:=totalmark FROM ( select results.studentRegNumber, results.studentclass, results.term, 
-           results.session, results.totalmark,results.subject,  sum(testscore + examscore) as total from results
-           LEFT JOIN users ON results.studentRegNumber = users.studentRegNumber
-    where 
-    results.studentclass = '$request->studentClass' AND
-    results.term = '$request->term' AND 
-    results.session = '$request->sessionName'
-
-        group by results.studentRegNumber  order by total desc )
-            totals, (SELECT @r:=0, @l:=NULL) rank" );
-
-
-
-$studentDetails = User::join('results','users.studentRegNumber','=','results.studentRegNumber')
-        ->selectRaw('users.firstName, users.lastName, users.gender,users.phoneNo,users.address,users.photo,users.email,results.term,results.session, results.studentclass,results.studentRegNumber
-        ')
-   ->where('results.studentRegNumber',$request->studentRegNumber)
-   ->where('results.studentclass',$request->studentClass)
-   ->where('results.term',$request->term)
-   ->where('results.session',$request->sessionName)
-   ->first();
-// var_dump($studentDetails);
-// exit();
-	$fetchResults=Result::where('studentRegNumber',$request->studentRegNumber)
-				->where('studentclass',$request->studentClass)
-				->where('term',$request->term)
-				->where('session',$request->sessionName)
-				->get();
-				if($fetchResults && $studentDetails){
-					return view('students.result',compact(['fetchResults','studentDetails','score_board_list']));
-				}
-				return back()->withInput()->with('errors','No result found for the selected term or session');
-        exit;
-}
-
-public function updateStudentProfile(Request $request){
-	if(User::where('email',$request->email)->first()){
-}
-var_dump('email');
-exit();
-	}	
-
 }

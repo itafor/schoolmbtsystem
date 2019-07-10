@@ -33,6 +33,12 @@
                 <h5 class="card-title">Add new term {{$studentDetails->term}} {{$studentDetails->gender}}</h5>
 
                 <div class="card-tools">
+                   <button type="button" class="btn btn-tool">
+                   <a href="{{URL::to('check-student-result')}}" class="btnPrint">Print</a>
+                  </button>
+                   <button type="button" class="btn btn-tool">
+                   <a href="/all-students">List students</a>
+                  </button>
                   <button type="button" class="btn btn-tool" data-widget="collapse">
                     <i class="fa fa-minus"></i>
                   </button>
@@ -52,63 +58,102 @@
               </div>
               <!-- /.card-header -->
    
-              <div class="card-body col-md-12 ">
-            <div class="row">
-        <div class="col-md-6  pull-left">
- <img class="card-img-top" src="/upload/{{$studentDetails->photo == '' && $studentDetails->gender =='Female' ? 'female.png':$studentDetails->photo == '' && $studentDetails->gender =='Male' ?'male.png' : $studentDetails->photo}}" style="width: 50px; height: 50px; border-radius: 100%;"> <span>{{$studentDetails->term}}  {{$studentDetails->lastName}}</span>
-</div>
-<div class="col-md-4 pull-right">
-
-     </div>   
-     </div>   
-     <hr>
-      <form action="{{route('studentsRank')}}" method="POST"  enctype="multipart/form-data" novalidate>
+              <div class="card-body col-md-12 theResult">
+ 
+      <form action="{{route('studentsRank')}}" method="POST"  novalidate>
        <input type="hidden" name="_token" value="{{csrf_token()}}">
        <div class="col-lg-6 col-sm-6">
         <div class="form-group">
 <table>
-  <tr>
-    <th>total</th>
-    <th>Rank</th>
-    <th>Reg. No</th>
-    <th>Session</th>
-    <th>term</th>
-    <th>class</th>
-  </tr>
-
   @foreach($score_board_list as $rank)
 <tr>
   <td>
-<input type="text" name="totalMark[]" class="form-control totalMark" readonly="readonly" value=" {{$rank->total}}">
+<input type="hidden" name="totalMark[]" class="form-control totalMark" readonly="readonly" value=" {{$rank->total}}">
   </td>
   <td>
-<input type="text" name="rank[]" class="form-control rank" readonly="readonly" value="  {{$rank->rank}}">
+<input type="hidden" name="rank[]" class="form-control rank" readonly="readonly" value="  {{$rank->rank}}">
   </td>
   <td>
-<input type="text" name="studentRegNumber[]" class="form-control studentRegNumber" readonly="readonly" value="  {{$rank->studentRegNumber}}">
+<input type="hidden" name="studentRegNumber[]" class="form-control studentRegNumber" value="  {{$rank->studentRegNumber}}">
   </td>
   <td>
-    <input type="text" name="sessionName[]" class="form-control sessionName" readonly="readonly" value="{{$rank->session}}">
+    <input type="hidden" name="sessionName[]" class="form-control sessionName" readonly="readonly" value="{{$rank->session}}">
   </td>
   <td>
-     <input type="text" name="term[]" class="form-control term" readonly="readonly" value="{{$rank->term}}">
+     <input type="hidden" name="term[]" class="form-control term" readonly="readonly" value="{{$rank->term}}">
   </td>
   <td>
-      <input type="text" name="studentclass[]" class="form-control studentclass" readonly="readonly" value=" {{$rank->studentclass}}">
+      <input type="hidden" name="studentclass[]" class="form-control studentclass" readonly="readonly" value=" {{$rank->studentclass}}">
   </td>
 </tr>
 @endforeach
 </table>
- <div class="col-md-3 my-3">
-        <button class="btn btn-primary btn-lg btn-block" type="submit"> Submit </button>
+@if(!isset($position))
+ <div class="col-md-6">
+        <button class="btn btn-sm  " type="submit"> Set <span>{{$studentDetails->firstName}}  {{$studentDetails->lastName}}</span> position in class  </button>
       </div>
-
+@endif
       </div>
 </div>
 </form>
-     <hr>
+<div class="studentResultDetailContainer">
 
-             <table class="table table-bordered table-stripped" >
+  <div class="container letterHeading">
+  <div class="row">
+    <div class="col schoolName">
+   <h3> <strong>CHILICHAO ACADEMY</strong> </h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col pobox">
+   <strong> P.O. BOX 40, NSANJE</strong>
+    </div>
+  </div>
+   <div class="row">
+    <div class="col schoolEmails">
+    <strong>itaforfrancis@gmail.com</strong>
+    </div>
+  </div>
+   <div class="row">
+    <div class="col schollPhones">
+    <strong>TEL: 01 456 604; CELL: 0 999 23 18 52/0 888 19 44 67/0 999 27 14 28</strong>
+    </div>
+  </div>
+</div>
+
+ <div class="container">
+  <div class="row">
+    <div class="col-8">
+      <strong class="progresReport">
+        PROGRESS REPORT
+  </strong>
+    </div>
+    @if($studentDetails->photo)
+    <div class="col-4 resultsudentPix">
+        <img class="card-img-top" src="/upload/{{$studentDetails->photo == '' && $studentDetails->gender =='Female' ? 'female.png':$studentDetails->photo == '' && $studentDetails->gender =='Male' ?'male.png' : $studentDetails->photo}}" style="width: 70px; height: 70px; border-radius: 100%;"> 
+    </div>
+    @endif
+     <div class="row" id="studentResultDetail">
+      <div class="col-12">
+      <strong>NAME: <span>{{$studentDetails->firstName}}  {{$studentDetails->lastName}}</strong>
+  </h5>
+    </div>
+    <div class="col-12">
+      <strong>
+    TERM: <span>{{$studentDetails->term}}</span>
+  </strong>
+    </div>
+     <div class="col-12">
+      <strong>
+      CLASS: <span>{{$studentDetails->studentclass}}</span>
+  </strong>
+    </div>
+  </div>
+  </div>
+</div>
+     </div>   
+
+             <table  border="1" width="650px">
               <tr>
                <thead>
                  <th>SUBJECT</th>
@@ -133,6 +178,76 @@
                @endforeach
              </tbody>
                </table>
+
+ @if(isset($position))
+@endif
+<div class="container" style="margin-top: 20px;">
+  <div class="row">
+    <div class="col-4">
+     <strong>STUDENT’S AGGREGATE: 
+     @if(isset($position)) 
+      {{$position->totalMark}}
+      @endif
+    </strong>
+    </div>
+    <div class="col-2">
+   <strong>POSITION:
+@if(isset($position)) 
+    {{$position->rank}}</strong>
+    @endif
+    </div>
+    <div class="col-4">
+  <strong>OUT OF:  {{$numberOfStudent}}</strong>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 10px;">
+    <div class="col-2">
+     <strong>FORM: {{$studentDetails->studentclass}} </strong>
+    </div>
+    <div class="col">
+   <strong>TEACHER’S</strong>
+    </div>
+    <div class="col">
+  <strong>COMMENTS: </strong>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 10px;">
+    <div class="col">
+    …………………………………………………………………………… ………………………………
+    </div>
+    <div class="col">
+  …………………………………………………………………………… ………………………………
+    </div>
+  </div>
+
+   <div class="row" style="margin-top: 10px;">
+    <div class="col">
+   <strong>HEADTEACHER’S</strong>
+    </div>
+    <div class="col">
+  <strong>COMMENTS: </strong>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 10px;">
+    <div class="col">
+    …………………………………………………………………………… …………………………………
+    </div>
+    <div class="col">
+  …………………………………………………………………………… …………………………………
+    </div>
+  </div>
+   <div class="row" style="margin-top: 10px;">
+    <div class="col-8">
+ <strong>KEY:   1 = 75 – 100; 2 = 70 – 74;  3 = 65– 69; 4 = 60 – 64; 5 = 55 –59 ; 6 = 50 – 54; 7 = 45 – 49; 8 = 40 – 44;
+9 = 0-39 
+1 – 2 DISTINCTION; 3 – 6 CREDIT; 7 – 8 PASS; 9 FAIL
+</strong>
+    </div>
+    
+  </div>
+</div>
 
 
                 </div>
@@ -161,6 +276,7 @@
 @endsection
 
 @section('javascript')
+
 <!-- jQuery -->
 <script src="/dist/plugins/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->

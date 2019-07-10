@@ -146,7 +146,7 @@
                     <p class="text-center">
                       <strong>Check Result</strong>
                     </p>
- <form action="{{route('checkStudentResult')}}" method="POST" name="initCheckResult" onsubmit="return validateForm()">
+ <form action="{{route('checkStudentResult')}}" method="GET" name="initCheckResult" onsubmit="return validateForm()">
        <input type="hidden" name="_token" value="{{csrf_token()}}">
        <input type="hidden" name="studentRegNumber" value="{{$student->studentRegNumber}}"  class="form-control">
                     <div class="form-group">

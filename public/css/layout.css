@@ -9,3 +9,34 @@ padding: 20px;
 #editStudentProfilePixLink{
 	margin-left: 20px;
 }
+#studentResultDetail{
+	width:800px;
+	 font-size: 16px;
+	 font-family: 'Times new roman';
+	 margin-bottom: 10px;
+}
+.progresReport{
+	margin-top: 10px;
+	 font-family: 'Times new roman';
+	 font-size: 20px;
+}
+.schoolName{
+	text-align: center;
+	 font-family: 'Times new roman';
+}
+.pobox,.schollPhones,.schoolEmails{
+	text-align: center;
+	 font-family: roboto;
+
+}
+.theResult{
+	
+	/*background: blue;*/
+	padding: 10px 100px 10px 150px;
+}
+.letterHeading{
+	margin-left: -30px;
+}
+.resultsudentPix{
+}
+/*http://www.position-absolute.com/creation/print/jQuery.printPage.js*/
