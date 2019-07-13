@@ -393,7 +393,7 @@ $getRelatedResult=Result::join('Users','results.studentRegNumber','=','users.stu
   
 }
 public function saveEditedResult(Request $request){
-dd($request->all());
+
 $subject=$request->subject;
 $position=$request->position;
 $totalmark=$request->totalmark;
@@ -409,7 +409,9 @@ $userId =$request->studentId;
  
 foreach ($userId as $key => $value) {
 $array_of_ids= explode(',', $value);
-$uodateResult = DB::table('results')->whereIn('user_id', $array_of_ids)->update(
+$updateResult = DB::table('results')->whereIn('user_id', $array_of_ids)
+->where('subject',$request->subject[$key])
+->update(
 	array(
 		 			'studentclass'         => $request->studentClass[$key],
  					'studentRegNumber'     => $request->studentRegNumber[$key],
@@ -423,12 +425,17 @@ $uodateResult = DB::table('results')->whereIn('user_id', $array_of_ids)->update(
  					'term'                 => $request->term[$key],
  				)
 			);
+
    }
 
-if($uodateResult){
-	echo 'updated';
-}
 
+if($updateResult){
+	$this->getTermSessionSubject();
+	exit();
+}
+		//return redirect()->route('update-result');
+		  //return back()->with('success','Subjects uploaded successfully');
+	
 
    }
 

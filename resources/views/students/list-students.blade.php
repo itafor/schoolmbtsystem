@@ -35,15 +35,12 @@
                 <div class="card-tools">
                   
                    <a href="/add-students">  <button class="btn btn-sm btn-primary">Add Student</button></a>
-                  <a href="{{route('exportAllStudents')}}" >  <button class="btn btn-sm btn-primary">Print</button></a>
+                  
                   <div class="btn-group">
                     <button type="button" class="btn  dropdown-toggle btn-primary btn-sm " data-toggle="dropdown">
-                      <!-- <i class="fa fa-wrench"></i> --> Import
+                      <i class="fa fa-upload"></i> Import students from excel
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" role="menu">
-                      <a href="#" class="dropdown-item">Add Student</a>
-                      <a href="#" class="dropdown-item">Add Staff</a>
-                      <a href="#" class="dropdown-item">Add Admin</a>
                       <a class="dropdown-divider"></a>
                        <form action="{{route('importExcel')}}" method="POST" enctype="multipart/form-data" novalidate>
        <input type="hidden" name="_token" value="{{csrf_token()}}">
@@ -60,7 +57,7 @@
                   </div>
 
                    <div class="btn-group">
-                     <a href="{{route('exportAllStudents')}}" >  <button class="btn btn-sm btn-primary">Export all</button></a>
+                     <a href="{{route('exportAllStudents')}}" >  <button class="btn btn-sm btn-primary">Export all students to excel</button></a>
                     
                   </div>
 

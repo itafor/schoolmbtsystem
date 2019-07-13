@@ -131,9 +131,9 @@
                 </li>
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
-                <i class="nav-icon fa fa-edit"></i>
+                <i class="nav-icon  fa fa-google-wallet"></i>
                 <p>
-                  Forms
+                 Payment
                   <i class="fa fa-angle-left right"></i>
                 </p>
               </a>

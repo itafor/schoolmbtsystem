@@ -39,10 +39,9 @@
                  
         <div class="btn-group">
                     <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
-                      <i class="fa fa-upload"></i> Excel
+                      <i class="fa fa-upload"></i> Upload result in excel
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" role="menu">
-                      <a href="#" class="dropdown-item">Add Admin</a>
                       <a class="dropdown-divider"></a>
                       <a href="#" class="dropdown-item">
                         <form action="{{route('importResult')}}" method="POST" enctype="multipart/form-data" novalidate>

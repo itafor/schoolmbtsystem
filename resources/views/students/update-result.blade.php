@@ -34,13 +34,13 @@
 
                 <div class="card-tools">
                  <a href="/all-students">  <button class="btn btn-sm btn-primary">List Students</button></a>
-                 
+                  <a href="/enter-result">  <button class="btn btn-sm btn-primary">Enter result</button></a>
         <div class="btn-group">
+          
                     <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
-                      <i class="fa fa-upload"></i> Excel
+                      <i class="fa fa-upload"></i>Upload result in excel
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" role="menu">
-                      <a href="#" class="dropdown-item">Add Admin</a>
                       <a class="dropdown-divider"></a>
                       <a href="#" class="dropdown-item">
                         <form action="{{route('importResult')}}" method="POST" enctype="multipart/form-data" novalidate>
@@ -177,7 +177,7 @@
           <input type="hidden" name="studentId[]" class="form-control fullName" value="{{$resultDate->user_id}}">
                     <!-- </td> -->
                <td>
-         <input type="text" name="studentRegNumber[]" class="form-control" readonly="readonly" value="{{$resultDate->studentRegNumber}}">
+         <input type="text" name="studentRegNumber[]" class="form-control"  value="{{$resultDate->studentRegNumber}}">
           
               </td>
               <td>
@@ -225,7 +225,7 @@
        </div>
        
         <div class="col-md-3 my-3">
-        <button class="btn btn-primary btn-lg btn-block" type="submit"> Submit</button>
+        <button class="btn btn-primary btn-lg btn-block" type="submit"> Update </button>
       </div>
       </form>
                
