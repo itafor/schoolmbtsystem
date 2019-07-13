@@ -34,5 +34,7 @@ class User extends Authenticatable
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    
+    public function results(){
+        return $this->hasMany('App\Result');
+    }
 }

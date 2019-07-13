@@ -264,7 +264,28 @@ $(document).ready(function(){
 $(document).ready(function(){
   $('.btnPrint').printPage();
 });
+
+function printReport()
+    {
+        var prtContent = document.getElementById("theResult");
+        var WinPrint = window.open();
+        WinPrint.document.write(prtContent.innerHTML);
+        WinPrint.document.write( '<style> href="./asset/css/layout.css" rel="stylesheet">');
+        WinPrint.document.close();
+        WinPrint.focus();
+        WinPrint.print();
+        WinPrint.close();
+    }
+
+    function printContent(el){
+	var restorepage = document.body.innerHTML;
+	var printcontent = document.getElementById(el).innerHTML;
+	document.body.innerHTML = printcontent;
+	window.print();
+	document.body.innerHTML = restorepage;
+}
 </script>
+
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 <script type="text/javascript" src="http://www.position-absolute.com/creation/print/jquery.printPage.js"></script>
 </html>

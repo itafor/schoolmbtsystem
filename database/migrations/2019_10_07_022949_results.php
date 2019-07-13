@@ -16,17 +16,18 @@ class Results extends Migration
        Schema::create('results', function (Blueprint $table) {
             $table->increments('id')->nullable();
              $table->string('studentclass');
-            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedInteger('user_id');
             $table->string('studentRegNumber');
             $table->integer('testscore');
             $table->integer('examscore');
             $table->integer('totalmark');
+            $table->integer('position');
             $table->integer('points');
             $table->string('remark');
             $table->string('subject');
             $table->string('session');
             $table->string('term');
-            //$table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->rememberToken();
             $table->timestamps();
         });

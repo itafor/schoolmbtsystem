@@ -95,6 +95,7 @@ public function getStudents($stdClass){
 public function storeResult(Request $request){
 
 $subject=$request->subject;
+$position=$request->position;
 $totalmark=$request->totalmark;
 $session=$request->session;
 $term=$request->term;
@@ -155,6 +156,17 @@ if(is_array($totalmark)){
 }
 
 
+if(is_array($position)){
+	for($i=0; $i<count($position); $i++){
+		if($position[$i] === null){
+			 return back()->withInput()->with('errors','Position  field cannot be empty, its requred!!');
+		exit;
+		}
+	}
+}
+
+
+
 	$uniqueArrayVal = $this->arrayUniqe($registrationNumber);
 	 if($uniqueArrayVal){
 	 	 return back()->withInput()->with('errors','Duplicate registration number detected!!');
@@ -170,6 +182,7 @@ if(is_array($totalmark)){
  					'examscore'            => $request->examscore[$key],
  					'totalmark'            => $request->totalmark[$key],
  					'points'               => $request->points[$key],
+ 					'position'			   => $request->position[$key],
  					'remark'               => $request->remark[$key],
  					'subject'              => $request->subject[$key],
  					'session'              =>$request->session[$key],
@@ -252,7 +265,8 @@ public function displaySubform(){
 	}
 
 
-	public function importResultAsExcelFile(Request $request){
+
+public function importResultAsExcelFile(Request $request){
 			$val =	$this->validate($request,[
             'result_file' => 'required|mimes:xls,xlsx'
             ]);
@@ -335,5 +349,87 @@ public function displaySubform(){
  			}
 
 		}
+
+		public function getTermSessionSubject(){
+			 $sessions=Session::all();
+			 $subjects=Subject::all();
+			 $terms=Term::all();
+			 $classes=Classes::all();
+	return view('students.update-result',compact(['classes','terms','sessions','subjects']));
+
+		}
+
+
+public function editResultsFormData(Request $request){
+
+			$sessions=Session::all();
+			 $subjects=Subject::all();
+			 $terms=Term::all();
+			 $classes=Classes::all();
+	if(
+		$request->sessionName===null || $request->subjectName===null || $request->term===null
+		 || $request->studentClass===null
+	){
+		 return back()->withInput()->with('errors','Ooops!! all fields requred');
+		exit;
+	}
+
+
+			$theSession=$request->sessionName;
+			$theSubject=$request->subjectName;
+			$theTerm=$request->term;
+			$theClass=$request->studentClass;
+
+$getRelatedResult=Result::join('Users','results.studentRegNumber','=','users.studentRegNumber')
+			 ->selectRaw('users.firstName, users.lastName, users.gender,users.phoneNo,users.address,users.photo,users.email,results.term,results.session, results.studentclass,results.studentRegNumber,results.subject,results.testscore,results.user_id,results.examscore,results.totalmark,results.points,results.position,results.remark 
+        ')
+						->where('results.studentclass',$theClass)
+						->where('results.term',$theTerm)
+						->where('results.session',$theSession)
+						->where('results.subject',$theSubject)
+						->get();
+	return view('students.update-result',compact(['getRelatedResult','theSession','theSubject','theTerm','theClass','classes','terms','sessions','subjects']));
+
   
+}
+public function saveEditedResult(Request $request){
+dd($request->all());
+$subject=$request->subject;
+$position=$request->position;
+$totalmark=$request->totalmark;
+$session=$request->session;
+$term=$request->term;
+$studentRegNumber=$request->studentRegNumber;
+$examscore=$request->examscore;
+$testscore=$request->testscore;
+$studentClass =$request->studentClass;
+$points =$request->points;
+$remark =$request->remark;
+$userId =$request->studentId;
+ 
+foreach ($userId as $key => $value) {
+$array_of_ids= explode(',', $value);
+$uodateResult = DB::table('results')->whereIn('user_id', $array_of_ids)->update(
+	array(
+		 			'studentclass'         => $request->studentClass[$key],
+ 					'studentRegNumber'     => $request->studentRegNumber[$key],
+ 					'testscore'            => $request->testscore[$key],
+ 					'examscore'            => $request->examscore[$key],
+ 					'totalmark'            => $request->totalmark[$key],
+ 					'points'               => $request->points[$key],
+ 					'position'			   => $request->position[$key],
+ 					'remark'               => $request->remark[$key],
+ 					'session'              =>$request->session[$key],
+ 					'term'                 => $request->term[$key],
+ 				)
+			);
+   }
+
+if($uodateResult){
+	echo 'updated';
+}
+
+
+   }
+
 }

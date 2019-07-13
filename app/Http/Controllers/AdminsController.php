@@ -100,7 +100,7 @@ public function checkStudentResult(Request $request){
 
 $score_board_list = DB::select("SELECT *, totalmark,subject,studentRegNumber, CASE WHEN @l=total THEN @r ELSE @r:=@r+1 END as rank,
   @l:=total FROM ( select results.studentRegNumber, results.studentclass, results.term, 
-           results.session, results.totalmark,results.subject,  sum(testscore + examscore) as total from results
+           results.session, results.totalmark,results.subject,  sum(testscore + examscore) as total, sum(points) as points from results
            LEFT JOIN users ON results.studentRegNumber = users.studentRegNumber
     where 
     results.studentclass = '$request->studentClass' AND
@@ -151,15 +151,39 @@ exit();
 public function studentsResultRanking(Request $request){
 
 	$totalmark=$request->totalMark;
+	$points=$request->points;
 	$rank=$request->rank;
 	$regNumber=$request->studentRegNumber;
 	$sessionName=$request->sessionName;
 	$term=$request->term;
 	$studentClass=$request->studentclass;
 
+	$check=Rank::where('studentclass',$studentClass[0])
+				->where('term',$term[0])
+				->where('sessionName',$sessionName[0])
+				->get();
+	$ids_array=array();
+
+		for($i=0; $i<count($check); $i++){
+			if($check){
+				$ids_array[]=$check[$i]['id'];
+		}
+				
+}
+
+foreach($ids_array as $id){
+	 $ids =explode(",", $id);
+        Rank::find($ids)->each(function ($rank, $key) {
+            $rank->delete();
+        });
+}
+
+
+
 	foreach ($totalmark as $key => $arr ){
 	$finalArrays[] =array(
 		 			'totalMark'         => $totalmark[$key],
+		 			'points'			=> $points[$key],
  				    'rank'              =>$rank[$key],
  					'studentRegNumber'  => $regNumber[$key],
  					'sessionName'       => $sessionName[$key],
@@ -180,16 +204,18 @@ $ranks=Rank::all();
 						){		
  						 return back()->withInput()->with('errors','Position already set');
 						exit;
- 						}
- 					}
+
+ 									}
+ 								}
+ 							}
  				}
- 				}
+
 
 
 		if(!empty($finalArrays)){
  				$storeRank=DB::table('ranks')->insert($finalArrays);
  				if($storeRank){
-		  return back()->with('success','Position set successfully');
+		  return back()->with('success','Position updated successfully');
 				}
 				  return back()->withInput()->with('errors','rank storage failed');
 			exit;
@@ -197,4 +223,6 @@ $ranks=Rank::all();
 }
 	
 }
+
+
 }

@@ -17,6 +17,7 @@ class Ranks extends Migration
             $table->increments('id')->nullable();
             $table->integer('totalMark');
             $table->integer('rank');
+            $table->integer('points');
             $table->string('studentRegNumber');
             $table->string('sessionName');
             $table->string('term');

@@ -62,8 +62,12 @@ Route::get('/get-student/{stdClass}','ResultController@getStudents');
 Route::post('/enter-result','ResultController@ressultFormData')->name('ressultFormData');
 Route::post('/save-result','ResultController@storeResult')->name('saveResult');
 Route::post('/import-result','ResultController@importResultAsExcelFile')->name('importResult');
-	
 
+Route::get('/update-result','ResultController@getTermSessionSubject')->name('getTermSessionSubject');
+
+Route::post('/edit-results','ResultController@editResultsFormData')->name('editResultsFormData');
+Route::post('/save-edit-results','ResultController@saveEditedResult')->name('saveEditedResult');
+	
 	//subject route
 Route::get('/add-subject', 'ResultController@displaySubform');
 Route::post('/add-subject', 'ResultController@addSubject')->name('addNewSubject');
@@ -78,6 +82,5 @@ Route::post('/add-session', 'AdminsController@addSession')->name('addNewSession'
 
 Route::get('/home', 'HomeController@index')->name('home');
 });
-Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 Auth::routes();

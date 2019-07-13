@@ -8,7 +8,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Upload Result</h1>
+            <h1 class="m-0 text-dark">Update Result</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -30,12 +30,10 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h5 class="card-title">Upload Result</h5>
+                <h5 class="card-title">Update Result</h5>
 
                 <div class="card-tools">
                  <a href="/all-students">  <button class="btn btn-sm btn-primary">List Students</button></a>
-
-                  <a href="/update-result">  <button class="btn btn-sm btn-primary">Update result</button></a>
                  
         <div class="btn-group">
                     <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
@@ -67,7 +65,7 @@
                 </div>
               </div>
               <!-- /.card-header -->
-     <form action="{{route('ressultFormData')}}" method="POST" name="initCheckResult" onsubmit="return validateForm()">
+     <form action="{{route('editResultsFormData')}}" method="POST" name="initCheckResult" onsubmit="return validateForm()">
        <input type="hidden" name="_token" value="{{csrf_token()}}">
               <div class="row ctss">
 
@@ -143,79 +141,82 @@
 
               <div class="card-body  offset-0">
                
-        <form action="{{route('saveResult')}}" method="POST"  enctype="multipart/form-data" novalidate>
+        <form action="{{route('saveEditedResult')}}" method="POST"  enctype="multipart/form-data" novalidate>
        <input type="hidden" name="_token" value="{{csrf_token()}}">
        <div class="col-lg-12 col-sm-12">
         <div class="form-group">
           <table class="table table-bordered">
             <thead>
              
+             <!--  <th>Class</th> -->
               <th>Name</th>
+             <!--  <th>ID</th> -->
               <th>Reg. Number</th>
               <th>Test score</th>
               <th>Exam score</th>
               <th>Total Mark</th>
               <th>Points</th>
               <th>Position</th>
-              <th>Remark</th>
+              <!-- <th>Remark</th> -->
+              <!-- <th>Subject</th>
+              <th>Session</th>
+              <th>Term</th> -->
            
             </thead>
           
-             @if(isset($byClasses) >=1)
-           @foreach($byClasses as $class)
+             @if(isset($getRelatedResult) >=1)
+           @foreach($getRelatedResult as $resultDate)
             <tr>
-       
-            <input type="hidden" name="studentClass[]" class="form-control studentClass" value="{{$usedClass}}">
-          
-        
+             
+            <input type="hidden" name="studentClass[]" class="form-control studentClass" value="{{$resultDate->studentclass}}">
 
-
-              <td>
-          <select name="studentId[]" class="form-control fullName" >
-           <option value="">Select Student Name</option>
-         </select>
-              </td>
+ <td>
+            <input type="text" name="studentName[]" class="form-control studentClass" value="{{$resultDate->firstName}} {{$resultDate->lastName}}">
+</td>
+             <!--  <td> -->
+          <input type="hidden" name="studentId[]" class="form-control fullName" value="{{$resultDate->user_id}}">
+                    <!-- </td> -->
                <td>
-         <input type="text" name="studentRegNumber[]" class="form-control studentRegNumber" readonly="readonly">
+         <input type="text" name="studentRegNumber[]" class="form-control" readonly="readonly" value="{{$resultDate->studentRegNumber}}">
           
               </td>
               <td>
-                <input type="number" name="testscore[]" class="form-control testscore">
+                <input type="text" name="testscore[]" class="form-control testscore" value="{{$resultDate->testscore}}">
               </td>
                <td>
-                <input type="number" name="examscore[]" class="form-control examscore" id="examscore">
+                <input type="text" name="examscore[]" class="form-control examscore" id="examscore" value="{{$resultDate->examscore}}">
               </td>
                 <td>
-                <input type="number" name="totalmark[]" class="form-control totalmark" id="totalmark" readonly="readonly">
+                <input type="text" name="totalmark[]" class="form-control totalmark" id="totalmark"  value="{{$resultDate->totalmark}}">
               </td>
                <td>
-                <input type="number" name="points[]" class="form-control points" readonly="readonly">
+                <input type="text" name="points[]" class="form-control points" value="{{$resultDate->points}}">
               </td>
                <td>
-                <input type="text" name="position[]" class="form-control position" >
+                <input type="text" name="position[]" class="form-control position" value="{{$resultDate->position}}" >
               </td>
-               <td>
-                <input type="text" name="remark[]" class="form-control remark" readonly="readonly">
-              </td>
+             <!--   <td> -->
+                <input type="hidden" name="remark[]" class="form-control remark" value="{{$resultDate->remark}}">
+             <!--  </td> -->
             
-                 @if(isset($subj))
-                <input type="hidden" name="subject[]" class="form-control" value="{{$subj}}">
-                 @endif
+                 <!-- <td> -->
+                <input type="hidden" name="subject[]" class="form-control" value="{{$resultDate->subject}}">
+               <!--  </td> -->
             
-                 @if(isset($section))
-                <input type="hidden" name="session[]" class="form-control" value="{{$section}}">
-                 @endif
+               <!--  <td> -->
+                <input type="hidden" name="session[]" class="form-control" value="{{$resultDate->session}}">
+                 <!-- </td> -->
           
-         @if(isset($terminal))
-    <input type="hidden" name="term[]" id="term" class="form-control" value="{{$terminal}}">
-          @endif
+        <!--  <td> -->
+    <input type="hidden" name="term[]" id="term" class="form-control" value="{{$resultDate->term}}">
+       <!--   </td> -->
           
             
             </tr>
              @endforeach
              @else
              <tr>
-               <td><h1>NO student found</h1></td>
+               <td colspan="8"><h1>NO student found</h1></td>
              </tr>
            @endif
           </table>
