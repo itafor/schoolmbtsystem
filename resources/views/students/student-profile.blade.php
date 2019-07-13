@@ -4,11 +4,15 @@
 <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
+    @if(isset($student))
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-              <h5 class="m-0 text-dark">{{$student->firstName}} {{$student->lastName}}'s Profile</h5>
+            
+              <h5 class="m-0 text-dark">{{$student->firstName}} {{$student->lastName}}'s Profile
+               
+              </h5>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -19,6 +23,7 @@
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
     </div>
+     
     <!-- /.content-header -->
 
     <!-- Main content -->
@@ -30,8 +35,10 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h5 class="card-title">{{$student->firstName}} {{$student->lastName}}'s Profile</h5>
-
+                 @if(isset($student))
+                <h5 class="card-title">{{$student->firstName}} {{$student->lastName}}'s Profile
+                </h5>
+        @endif
                 <div class="card-tools">
                 
                   <button type="button" class="btn btn-tool">
@@ -141,6 +148,7 @@
                       </tbody>
                     </table>
                   </div>
+
                   <!-- /.col -->
                   <div class="col-md-4">
                     <p class="text-center">
@@ -180,6 +188,7 @@
               <div class="col-sm-2 mb-3">
         <input class="btn btn-info btn-sm" type="submit" value="Submit">
       </div>
+
                     <!-- /.progress-group -->
                   </form>
                   </div>
@@ -400,7 +409,9 @@
     </div>
   </div>
 </div>
-
+@else
+<h3>The selected user is not a student</h3>
+ @endif
     </section>
     <!-- /.content -->
   </div>

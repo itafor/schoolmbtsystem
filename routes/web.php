@@ -80,6 +80,9 @@ Route::post('/add-session', 'AdminsController@addSession')->name('addNewSession'
 
 
 
+Route::get('/autocomplete/fetchskill', 'StudentsController@globalSearch')->name('autocomplete.fetchskill');
+
+route::post('/find-student','StudentsController@findStudent')->name('findStudent');
 Route::get('/home', 'HomeController@index')->name('home');
 });
 

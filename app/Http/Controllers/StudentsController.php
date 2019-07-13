@@ -7,13 +7,14 @@ use Illuminate\Support\Facades\Input;
 use Barryvdh\DomPDF\Facade as PDF;
 use App\Classes;
 use App\Admin;
-use Session;
+use App\Session;
 use Auth;
 use App\User;
 use Hash;
 use Excel;
 use DB;
 use App\Term;
+use App\Subject;
 class StudentsController extends Controller
 {
 
@@ -287,5 +288,36 @@ return $pdf->download('invoice.pdf');
         return back()->withInput()->with('errors','An attempt to add a new term failed');
 	}
 
-	
+	   function globalSearch(Request $request){
+     if($request->get('query2'))
+     {
+      $query2 = $request->get('query2');
+      $users = User::where('studentRegNumber','like',"%{$query2}%")
+      ->orwhere('firstName','like',"%{$query2}%")
+      ->orwhere('lastName','like',"%{$query2}%")
+      ->orwhere('studentClass','like',"%{$query2}%")
+    ->get();
+    $output = '<ul class="dropdown-menu" 
+    style="display: block; 
+    position: absolute; z-index: 1; width:300px; padding-left:20px; margin-left:10px;">';
+    foreach ($users as $row) {
+$output.='<li><a href="/student-profile/'.$row->id.'">'.$row->firstName.' '.$row->firstName.'</a></li>';
+    }
+   $output .='</ul>';
+   echo $output;
+    ;
+    }
+   }
+
+   public function findStudent(Request $request){
+   		$sessions=Session::all();
+  	$subjects=Subject::all();
+	$classes=Classes::all();
+	$terms=Term::all();
+
+	$student=User::where('studentRegNumber',$request->regNo)
+				 ->where('role','student')->first();
+	return view('students.student-profile',compact(['student','sessions','subjects','classes','terms']));
+   }
 }
+// href="/student-profile/{{$row->id}}"

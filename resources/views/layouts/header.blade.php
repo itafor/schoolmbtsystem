@@ -9,9 +9,11 @@
     </ul>
 
     <!-- SEARCH FORM -->
-    <form class="form-inline ml-3">
+ <form action="{{route('findStudent')}}" method="post" id="searchSkillForm"> 
+   <input type="hidden" name="_token" value="{{csrf_token()}}">
         <div class="input-group input-group-sm">
-            <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+            <input name="regNo" class="form-control form-control-navbar" type="text" placeholder="Search" aria-label="Search" autocomplete="off" id="searchskill">
+            <div id="skillList"></div>
             <div class="input-group-append">
                 <button class="btn btn-navbar" type="submit">
     <i class="fa fa-search"></i>

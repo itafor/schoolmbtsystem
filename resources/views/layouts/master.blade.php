@@ -284,6 +284,34 @@ function printReport()
 	window.print();
 	document.body.innerHTML = restorepage;
 }
+
+
+$(document).ready(function(){
+  $('#searchskill').keyup(function(){
+    var searchskills=document.querySelector('#searchskill')
+    
+    var query2=$(this).val();
+    if(query2!==''){
+      var _token = $('input[name="_token"').val();
+      $.ajax({
+        url:"{{ route('autocomplete.fetchskill')}}",
+        method:"get",
+        data:{query2:query2, _token:_token},
+        success:function(user){
+          console.log(user)
+          $('#skillList').fadeIn();
+          $('#skillList').html(user);
+        }
+      })
+    }
+  }); 
+
+  $(document).on('click', 'li', function(e){  
+        $('#searchskill').val($(this).text());  
+        $('#skillList').fadeOut();  
+    });  
+ 
+});
 </script>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
