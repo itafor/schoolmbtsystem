@@ -139,9 +139,9 @@
               </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="pages/forms/general.html" class="nav-link">
+                            <a href="#" class="nav-link">
                     <i class="fa fa-circle-o nav-icon"></i>
-                    <p>General Elements</p>
+                    <p>Make payment</p>
                   </a>
                         </li>
                         <li class="nav-item">
@@ -162,15 +162,15 @@
                     <a href="#" class="nav-link">
                 <i class="nav-icon fa fa-table"></i>
                 <p>
-                  Tables
+                 Settings
                   <i class="fa fa-angle-left right"></i>
                 </p>
               </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="pages/tables/simple.html" class="nav-link">
+                            <a href="/fee-settings" class="nav-link">
                     <i class="fa fa-circle-o nav-icon"></i>
-                    <p>Simple Tables</p>
+                    <p>Set fees</p>
                   </a>
                         </li>
                         <li class="nav-item">

@@ -40,7 +40,11 @@
                 </h5>
         @endif
                 <div class="card-tools">
-                
+                  <button type="button" class="btn btn-tool">
+                        <a href="/make-payment/{{$student->id}}" class="nav-link">
+                    Make payment
+                  </a>
+                </button>
                   <button type="button" class="btn btn-tool">
                    <a href="/all-students">List students</a>
                   </button>

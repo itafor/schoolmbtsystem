@@ -301,7 +301,7 @@ return $pdf->download('invoice.pdf');
     style="display: block; 
     position: absolute; z-index: 1; width:300px; padding-left:20px; margin-left:10px;">';
     foreach ($users as $row) {
-$output.='<li><a href="/student-profile/'.$row->id.'">'.$row->firstName.' '.$row->firstName.'</a></li>';
+$output.='<li><a href="/student-profile/'.$row->id.'">'.$row->firstName.' '.$row->lastName.'</a></li>';
     }
    $output .='</ul>';
    echo $output;

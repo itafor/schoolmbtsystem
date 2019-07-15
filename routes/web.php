@@ -78,7 +78,19 @@ Route::post('/add-subject', 'ResultController@addSubject')->name('addNewSubject'
 Route::get('/add-session', 'AdminsController@displaySession');
 Route::post('/add-session', 'AdminsController@addSession')->name('addNewSession');
 
+//settings route
+Route::get('/fee-settings', 'SettingsController@classSessionTerm');
+Route::post('/set-fee', 'SettingsController@feessetting')->name('setFee');
+Route::get('/view-fee-settings', 'SettingsController@viewFeSettings');
 
+//payment route
+Route::get('/make-payment/{id}', 'PaymentController@selectStudent');
+Route::post('/store-payment', 'PaymentController@recordPayment')->name('storePamyent');
+Route::get('/get-total-fee-amt/{feeclassName}/{feesessionName}/{feeterm}', 'PaymentController@fetctFeeAmount');
+
+Route::get('/get-fee-balance/{feeclassName}/{feesessionName}/{feeterm}/{id}', 'PaymentController@fetchFeeBal');
+
+Route::get('/view-student-payment-histories/{id}', 'PaymentController@studentPaymentHistory');
 
 Route::get('/autocomplete/fetchskill', 'StudentsController@globalSearch')->name('autocomplete.fetchskill');
 
