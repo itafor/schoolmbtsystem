@@ -62,175 +62,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
   var stdRegNumber=[];
  let marksToRank=[];
  
-var studentId =document.getElementById("user_id").value;
-
-// var feeAtm =document.getElementById("feeAmount").value;
-// console.log(feeAtm);
-// if(feeAtm == 0){
-//   document.getElementById("submitBtn").disabled = false
-// }else if(feeAtm >=1){
-//    $('#message').hide();
-//   document.getElementById("submitBtn").disabled = false;
-// }
-
-//fee payment
-  $('#message').hide();
-
-$('#otherItemDiv').hide();
-$('.paymentiTEM').on('change',function(event){
-  var item=event.target.value;
-  console.log(item)
-  if(item ==='Others'){
-$('#otherItemDiv').show();
-  }else if(item =='School Fee' || item ==''){
-$('#otherItemDiv').hide();
-  }
-})
-document.getElementById("feeterm").disabled = true;
-var feeClassName='';
-$('.feeclassName,.feesessionName').on('change',function(clasName){
-  feeclassName =clasName.target.value;
-  if(feeclassName ==''){
-document.getElementById("feeterm").disabled = true;
-$('.feeterm').val(0);
-  }else{
-document.getElementById("feeterm").disabled = false;
-  }
-console.log(feeclassName)
-});
-
-getBalance();
-
-function getBalance(){
- $('body').delegate('.feeterm','change',function(){
-  let tr=$(this).parent().parent();
-  var feeclassName=tr.find('.feeclassName').val();
-  var feesessionName=tr.find('.feesessionName').val();
-  var feeterm=tr.find('.feeterm').val();
-
-var feeAtm = tr.find('.feeAmount').val('8'); 
-
-console.log(feeAtm);
-
-
-
-var studentName=document.getElementById("stdName").textContent;
-
-  var feeterm=tr.find('.feeterm').val();
-$.get('/get-fee-balance/' + feeclassName + '/' + feesessionName + '/' + feeterm + '/' +studentId, function(data){
-   console.log(data.balance);
-
-  if(data ==''){
-    
-$.get('/get-total-fee-amt/' + feeclassName + '/' + feesessionName + '/' + feeterm, function(data){
-  if(data ==''){
-    alert('You have not set TOTAL FEE AMOUNT for the selected Term, Session and Class');
-    $('.feeAmount').val('');
-  }else{
-    $('.feeAmount').val(data.feeAmount);
-
-    $('.amountPaid').on('keyup',function(e){
-  var amountPaid=e.target.value;
-
-  var bal= data.feeAmount - Number(amountPaid);
-    $('.balance').val(bal);
-    if(bal === 0){
-      $('.feestatus').val('Cleared');
-    }else{
-      $('.feestatus').val('Owning');
-    }
-
-    if(bal <=-1){
-  alert('Invalid digit detected in balance, Amount Paid must not be more than Fee Amount');
-    $('.balance').val(0);
-    }
-    });
-
-  }
-})
-
-  }else{
-    $('.feeAmount').val(data.balance);
-  
-
- if(data.balance == 0){
-    $('#message').show();
-    $("#message").css({"background-color": "green", "font-size": "20px", "font-family": "roboto", "margin-left": "20px","padding": "10px","border-radius": "5px","width": "auto","color": "white"});
-    $('#message').html( studentName + ' is Cleared for the selected Term and Session');
-    // var feeAtm = tr.find('.feeAmount').val(data.feeAmount); 
-
-}else{
-    $('#message').hide();
-}
-
-    $('.amountPaid').on('keyup',function(e){
-  var amountPaid=e.target.value;
-  var mainBal=data.balance;
-  var bal=mainBal- Number(amountPaid);
-
-
-
-    $('.balance').val(bal);
-    if(bal === 0){
-      $('.feestatus').val('Cleared');
-    }else{
-      $('.feestatus').val('Owning');
-    }
-
-    if(bal <=-1){
-  alert('Invalid digit detected in balance, Amount Paid must not be more than Fee Amount');
-    $('.balance').val(0);
-    }
-    });
-
-  }
-})
- });
-  }
-
-
-
-
-function getTotalFee(){
- // $('body').delegate('.feeterm','change',function(){
- // let tr=$(this).parent().parent();
- //  var feeclassName=tr.find('.feeclassName').val();
- //  var feesessionName=tr.find('.feesessionName').val();
-   //var feeterm=tr.find('.feeterm').val();
-$.get('/get-total-fee-amt/' + feeclassName + '/' + feesessionName + '/' + feeterm, function(data){
-  if(data ==''){
-    alert('No amount found');
-  }else{
-    $('.feeAmount').val(data.feeAmount);
-
-    $('.amountPaid').on('keyup',function(e){
-  var amountPaid=e.target.value;
-
-  var bal= data.feeAmount - Number(amountPaid);
-    $('.balance').val(bal);
-    if(bal === 0){
-      $('.feestatus').val('Cleared');
-    }else{
-      $('.feestatus').val('Owning');
-    }
-
-    if(bal <=-1){
-  alert('Invalid digit detected in balance, Amount Paid must not be more than Fee Amount');
-    $('.balance').val(0);
-    }
-    });
-
-  }
-})
- // });
-  }
+   
     $('.studentClass').on('change', function(e){
     let stdClass=e.target.value;
       $('.studentRegNumber').val('');
     $.get('/get-student/' + stdClass, function(details){
      $('.fullName').empty();
       $.each(details,function(index,detail){
-         // console.log(detail);
+         console.log(detail);
          $('.studentRegNumber').val('');
       $('.fullName').append(' <option value="'+detail.id+'">'+detail.firstName + ' ' + detail.lastName + '</option>')
       });
@@ -474,6 +313,116 @@ $(document).ready(function(){
     });  
  
 });
+
+
+
+var studentId =document.getElementById("user_id").value;
+
+//fee payment
+  $('#message').hide();
+
+$('#otherItemDiv').hide();
+$('.paymentiTEM').on('change',function(event){
+  var item=event.target.value;
+  console.log(item)
+  if(item ==='Others'){
+$('#otherItemDiv').show();
+  }else if(item =='School Fee' || item ==''){
+$('#otherItemDiv').hide();
+  }
+})
+document.getElementById("feeterm").disabled = true;
+var feeClassName='';
+$('.feeclassName,.feesessionName').on('change',function(clasName){
+  feeclassName =clasName.target.value;
+  if(feeclassName ==''){
+document.getElementById("feeterm").disabled = true;
+$('.feeterm').val(0);
+  }else{
+document.getElementById("feeterm").disabled = false;
+  }
+console.log(feeclassName)
+});
+
+getBalance();
+
+function getBalance(){
+ $('body').delegate('.feeterm','change',function(){
+  let tr=$(this).parent().parent();
+  var feeclassName=tr.find('.feeclassName').val();
+  var feesessionName=tr.find('.feesessionName').val();
+  var feeterm=tr.find('.feeterm').val();
+
+
+var studentName=document.getElementById("stdName").textContent;
+
+  var feeterm=tr.find('.feeterm').val();
+$.get('/get-fee-balance/' + feeclassName + '/' + feesessionName + '/' + feeterm + '/' +studentId, function(data){
+   console.log(data.balance);
+
+  if(data ==''){
+    
+$.get('/get-total-fee-amt/' + feeclassName + '/' + feesessionName + '/' + feeterm, function(data){
+  if(data ==''){
+    alert('You have not set TOTAL FEE AMOUNT for the selected Term, Session and Class');
+    $('.feeAmount').val('');
+  }else{
+    $('.feeAmount').val(data.feeAmount);
+
+    $('.amountPaid').on('keyup',function(e){
+  var amountPaid=e.target.value;
+
+  var bal=$('.feeAmount').val() - Number(amountPaid);
+    $('.balance').val(bal);
+    if(bal === 0){
+      $('.feestatus').val('Cleared');
+    }else{
+      $('.feestatus').val('Owing');
+    }
+
+    if(bal <=-1){
+  alert('Invalid digit detected in balance, Amount Paid must not be more than Fee Amount');
+    $('.balance').val(0);
+    }
+    });
+
+  }
+})
+
+  }else{
+    $('.feeAmount').val(data.balance);
+  
+
+ if(data.balance == 0){
+    $('#message').show();
+    $("#message").css({"background-color": "green", "font-size": "20px", "font-family": "roboto", "margin-left": "20px","padding": "10px","border-radius": "5px","width": "auto","color": "white"});
+    $('#message').html( studentName + ' is Cleared for the selected Term and Session');
+
+}else{
+    $('#message').hide();
+}
+
+    $('.amountPaid').on('keyup',function(e){
+  var amountPaid=e.target.value;
+  var mainBal=data.balance;
+  var bal=mainBal- Number(amountPaid);
+    $('.balance').val(bal);
+    if(bal === 0){
+      $('.feestatus').val('Cleared');
+    }else{
+      $('.feestatus').val('Owning');
+    }
+
+    if(bal <=-1){
+  alert('Invalid digit detected in balance, Amount Paid must not be more than Fee Amount');
+    $('.balance').val(0);
+    }
+    });
+
+  }
+})
+ });
+  }
 </script>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>

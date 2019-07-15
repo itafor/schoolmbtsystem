@@ -93,7 +93,7 @@
               <div class="card-body  offset-0" style="background: white;">
                  <!-- SEARCH FORM -->
     <div class="row">
-      <div class="col-sm-6">
+   <!--    <div class="col-sm-6">
      <form class="form-inline ml-3">
         <div class="input-group input-group-sm">
             <input class="form-control form-control-navbar" name="searchItem" type="text" placeholder="Search" aria-label="Search">
@@ -104,14 +104,15 @@
             </div>
         </div>
     </form>
-</div>
+</div> -->
     <div class="form-group input-group-sm col-sm-6">   <h3 >Total: <span id="total_count">{{$total}}</span></h3> </div>
 </div>
-        <table class="table">
+        <table class="table table-hover table-responsive">
   <thead>
     <tr>
       <th scope="col">S/N</th>
-      <th scope="col">Full Name</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
       <th scope="col">Gender</th>
       <th scope="col">Class</th>
       <th scope="col">Reg. No</th>
@@ -123,20 +124,16 @@
     <tr>
       <?php $id=1?>
 @foreach($students as $student)
-      <th scope="row">{{$id}}</th>
-      <td>
-      {{$student->firstName}}
-      {{$student->lastName}}
-    </td>
+      <td colspan="1">{{$id}}</td>
+      <td>{{$student->firstName}}</td>
+      <td>{{$student->lastName}}  </td>
       <td>{{$student->gender}}</td>
       <td>{{$student->studentClass}}</td>
       <td>{{$student->studentRegNumber}}</td>
   <td>
   <a href="/student-profile/{{$student->id}}"><button class="btn btn-success"><i class="fa fa-eye"></i></button></a>
   <a href=""><button class="btn btn-info"><i class="fa fa-edit "></i></button></a>
-  <a href=""><button class="btn btn-danger"><i class="fa fa-remove"></i></button></a>
-  <a href=""><button class="btn btn-primary"><i class="fa fa-money"></i></button></a>
-  <a href=""><button class="btn btn-warning">Result</button></a>
+  <a href=""><button class="btn btn-danger"><i class="fa fa-remove "></i></button></a>
 </td>
     </tr> 
    <?php $id++ ?>
@@ -144,7 +141,7 @@
 
    @else
      <tr>
-   <td>
+   <td colspan="10">
    <h5>
      No student found
    </h5>

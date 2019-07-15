@@ -58,6 +58,9 @@ hr:after {
                    <button type="button" class="btn btn-tool">
                    <a href="/all-students">List students</a>
                   </button>
+                    <button type="button" class="btn btn-tool">
+                   <a href="/student-profile/{{$studentDetails->id}}">Back to {{$studentDetails->firstName}}'s profile</a>
+                  </button>
                   <button type="button" class="btn btn-tool" data-widget="collapse">
                     <i class="fa fa-minus"></i>
                   </button>

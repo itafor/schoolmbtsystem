@@ -8,7 +8,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">{{$studentDetail->firstName}}'s payment history <a href=""></a> </h1>
+            <h1 class="m-0 text-dark"> payment history <a href=""></a> </h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -34,7 +34,20 @@
 
                 <div class="card-tools">
                   <button onclick="printContent('paymentHistory')" class="btn btn-sm btn-warning"><i class="fa fa-print"></i> Print payment history</button>
-                  <a  href="/student-profile/{{$studentDetail->id}}">  <button class="btn btn-sm btn-primary"> Back to {{$studentDetail->firstName}}'s profile</button></a>
+                  <a  href="/student-profile/">  <button class="btn btn-sm btn-primary"> Back to </button></a>
+
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-tool dropdown-toggle btn-info text-dark" data-toggle="dropdown">
+                      Show payment history by class
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right" role="menu">
+                       <a href="/view-payment-history" class="dropdown-item">All Students</a>
+                      @foreach($classes as $form)
+                      <a href="/view-payment-history/{{$form->className}}" class="dropdown-item">{{$form->className}}</a>
+                      @endforeach
+                    </div>
+                  </div>
+
                 </div>
               </div>
               <!-- /.card-header -->
@@ -62,13 +75,19 @@
   </div>
 </div>
 <div class="card-body  offset-0" style="background: white;">
-<div class="row col-sm-6" style="text-align: center; margin:-40px 200px 10px 300px;font-weight:bold; text-transform: uppercase; font-family: 'TIMES NEW ROMANS'"> {{$studentDetail->firstName}} {{$studentDetail->lastName}}'s Payment History </div>
-                
+  @if(isset($theClass))
+<div class="row col-sm-6" style="text-align: center; margin:-40px 200px 10px 300px;font-weight:bold; text-transform: uppercase; font-family: 'TIMES NEW ROMANS'"> {{$theClass->className}}'s Payment History </div>
+          @endif      
+
+ @if(isset($allClasses))
+<div class="row col-sm-6" style="text-align: center; margin:-40px 200px 10px 300px;font-weight:bold; text-transform: uppercase; font-family: 'TIMES NEW ROMANS'"> {{$allClasses}}'s Payment History </div>
+          @endif
 
         <table class="table table-responsive table-hover">
   <thead>
     <tr>
       <th scope="col">S/N</th>
+      <th scope="col">Full name</th>
       <th scope="col">Class</th>
       <th scope="col">Session</th>
       <th scope="col">Term</th>
@@ -83,10 +102,12 @@
   </thead>
   <tbody>
      <?php $id=1?>
-    @if(count($studentPaymentHistories) >=1)
+     @if(isset($generalpaymentHistory))
+    @if(count($generalpaymentHistory) >=1)
     <tr>
-@foreach($studentPaymentHistories as $history)
+@foreach($generalpaymentHistory as $history)
       <td>{{$id}}</td>
+      <td><a href="/student-profile/{{$history->user_id}}">{{$history->firstName}} {{$history->lastName}}</a></td>
       <td>{{$history->className}}</td>
       <td>{{$history->sessionName}}</td>
       <td>{{$history->term}}</td>
@@ -112,13 +133,13 @@
    @endif
    </td>
     </tr>
-    <tr  rowspan="11">
+      <tr  rowspan="10">
      <td>
-        <span class="pagination">{{$studentPaymentHistories->links()}}</span>
+        <span class="pagination">{{$generalpaymentHistory->links()}}</span>
      </td>
    </tr>
   </tbody>
- 
+ @endif
 </table>
                
                

@@ -100,7 +100,35 @@ public function recordPayment(Request $request){
    }
    public function studentPaymentHistory($id){
    	$studentPaymentHistories=Feehistory::where('user_id',$id)
-   	->orderBy('datePaid','desc')->paginate(20);
-	return view('fees.student-payment-history',compact(['studentPaymentHistories']));
+   	->orderBy('datePaid','ASC')->paginate(20);
+   	$studentDetail=User::where('id',$id)->first();
+	return view('fees.student-payment-history',compact(['studentPaymentHistories','studentDetail']));
+   }
+
+ public function showPaymentHistoryByClass($classes){
+
+  	$generalpaymentHistory=User::join('feehistories','users.id','=','feehistories.user_id')
+        ->selectRaw('users.firstName, users.id, users.lastName, users.gender,users.phoneNo,users.address,users.photo,users.email,feehistories.term,feehistories.sessionName, feehistories.className,feehistories.feeAmount,feehistories.amountPaid,feehistories.item,feehistories.balance,feehistories.status,feehistories.datePaid,feehistories.user_id, feehistories.created_at,feehistories.id
+        ')
+   ->where('feehistories.className',$classes)
+   ->orderBy('datePaid','ASC')
+   ->paginate(20);
+
+   	$theClass=Feehistory::where('className',$classes)
+   ->first();
+   	$classes=Classes::all();
+	return view('fees.view-payment-history',compact(['generalpaymentHistory','classes','theClass']));
+   }
+
+  public function allPaymentHistory(){
+  	$generalpaymentHistory=User::join('feehistories','users.id','=','feehistories.user_id')
+        ->selectRaw('users.firstName, users.id, users.lastName, users.gender,users.phoneNo,users.address,users.photo,users.email,feehistories.term,feehistories.sessionName, feehistories.className,feehistories.feeAmount,feehistories.amountPaid,feehistories.item,feehistories.balance,feehistories.status,feehistories.datePaid,feehistories.user_id, feehistories.created_at,feehistories.id
+        ')
+   ->orderBy('datePaid','ASC')
+   ->paginate(20);
+  	$classes=Classes::all();
+  	$allClasses='All Classes';
+	return view('fees.view-payment-history',compact(['generalpaymentHistory','classes','allClasses']));
+
    }
 }

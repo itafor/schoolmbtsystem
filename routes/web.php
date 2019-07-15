@@ -91,6 +91,8 @@ Route::get('/get-total-fee-amt/{feeclassName}/{feesessionName}/{feeterm}', 'Paym
 Route::get('/get-fee-balance/{feeclassName}/{feesessionName}/{feeterm}/{id}', 'PaymentController@fetchFeeBal');
 
 Route::get('/view-student-payment-histories/{id}', 'PaymentController@studentPaymentHistory');
+Route::get('/view-payment-history/{classes}', 'PaymentController@showPaymentHistoryByClass');
+Route::get('/view-payment-history', 'PaymentController@allPaymentHistory');
 
 Route::get('/autocomplete/fetchskill', 'StudentsController@globalSearch')->name('autocomplete.fetchskill');
 

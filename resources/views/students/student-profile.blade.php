@@ -40,14 +40,11 @@
                 </h5>
         @endif
                 <div class="card-tools">
-                  <button type="button" class="btn btn-tool">
-                        <a href="/make-payment/{{$student->id}}" class="nav-link">
-                    Make payment
-                  </a>
-                </button>
-                  <button type="button" class="btn btn-tool">
-                   <a href="/all-students">List students</a>
-                  </button>
+                   <a href="/make-payment/{{$student->id}}">  <button class="btn btn-sm btn-primary"> Make payment</button></a>
+                  
+                   <a href="/view-student-payment-histories/{{$student->id}}">  <button class="btn btn-sm btn-primary"> Payment history</button></a>
+                      <a href="/all-students">  <button class="btn btn-sm btn-primary"> List students</button></a>
+               
                   <button type="button" class="btn btn-tool" data-widget="collapse">
                     <i class="fa fa-minus"></i>
                   </button>

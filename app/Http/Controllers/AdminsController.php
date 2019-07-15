@@ -113,7 +113,7 @@ $score_board_list = DB::select("SELECT *, totalmark,subject,studentRegNumber, CA
 $numberOfStudent=count($score_board_list);
 
 $studentDetails = User::join('results','users.studentRegNumber','=','results.studentRegNumber')
-        ->selectRaw('users.firstName, users.lastName, users.gender,users.phoneNo,users.address,users.photo,users.email,results.term,results.session, results.studentclass,results.studentRegNumber
+        ->selectRaw('users.firstName, users.id, users.lastName, users.gender,users.phoneNo,users.address,users.photo,users.email,results.term,results.session, results.studentclass,results.studentRegNumber
         ')
    ->where('results.studentRegNumber',$request->studentRegNumber)
    ->where('results.studentclass',$request->studentClass)

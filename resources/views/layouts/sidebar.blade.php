@@ -145,9 +145,9 @@
                   </a>
                         </li>
                         <li class="nav-item">
-                            <a href="pages/forms/advanced.html" class="nav-link">
+                            <a href="/view-payment-history" class="nav-link">
                     <i class="fa fa-circle-o nav-icon"></i>
-                    <p>Advanced Elements</p>
+                    <p>Payment histories</p>
                   </a>
                         </li>
                         <li class="nav-item">
@@ -160,7 +160,7 @@
                 </li>
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
-                <i class="nav-icon fa fa-table"></i>
+                <i class="nav-icon fa fa-cog"></i>
                 <p>
                  Settings
                   <i class="fa fa-angle-left right"></i>
@@ -170,13 +170,13 @@
                         <li class="nav-item">
                             <a href="/fee-settings" class="nav-link">
                     <i class="fa fa-circle-o nav-icon"></i>
-                    <p>Set fees</p>
+                    <p>Fees amount setting</p>
                   </a>
                         </li>
                         <li class="nav-item">
                             <a href="pages/tables/data.html" class="nav-link">
                     <i class="fa fa-circle-o nav-icon"></i>
-                    <p>Data Tables</p>
+                    <p>General Settings</p>
                   </a>
                         </li>
                     </ul>
