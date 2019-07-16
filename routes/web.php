@@ -94,6 +94,12 @@ Route::get('/view-student-payment-histories/{id}', 'PaymentController@studentPay
 Route::get('/view-payment-history/{classes}', 'PaymentController@showPaymentHistoryByClass');
 Route::get('/view-payment-history', 'PaymentController@allPaymentHistory');
 
+Route::get('/payment-receipt/{id}', 'PaymentController@paymentReceipt');
+
+
+
+
+
 Route::get('/autocomplete/fetchskill', 'StudentsController@globalSearch')->name('autocomplete.fetchskill');
 
 route::post('/find-student','StudentsController@findStudent')->name('findStudent');

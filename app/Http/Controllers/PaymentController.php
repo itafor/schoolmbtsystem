@@ -51,6 +51,13 @@ public function fetchFeeBal($feeclassName,$feesessionName,$feeterm,$id){
 }
 
 public function recordPayment(Request $request){
+	$checkreceiptNo=Feehistory::where('receiptNo',$request->receiptNo)->first();
+	if($checkreceiptNo){
+   		return back()->withInput()->with('errors','Ooops! Something unusual happened, please try again');
+			exit;
+   	
+	}
+
 	$otherItem=$request->otherItem;
 	$itemType=$request->item;
    	$checkFeehistory=Feehistory::where('className',$request->className)
@@ -73,6 +80,8 @@ public function recordPayment(Request $request){
             'item' => 'required|max:255',
             'user_id' => 'required|max:255',
             'feestatus' => 'required|max:255',
+            'receivedFrom' => 'required|max:255',
+            'receivedBy' => 'required|max:255',
             ]);
  		if(!$val){
  			 return back()->withInput()->with('errors',$val);
@@ -89,7 +98,9 @@ public function recordPayment(Request $request){
 		$recordfee->user_id = Input::get('user_id');
 		$recordfee->status = Input::get('feestatus');
 		$recordfee->datePaid =Carbon::now();
-
+		$recordfee->receivedFrom = Input::get('receivedFrom');
+		$recordfee->receivedBy = Input::get('receivedBy');
+		$recordfee->receiptNo = sprintf("00%4d", mt_rand(1000, 9999));
 		$recordfee->save();
 		if($recordfee){
 		  return back()->with('success','payment recorded successfully');
@@ -122,7 +133,7 @@ public function recordPayment(Request $request){
 
   public function allPaymentHistory(){
   	$generalpaymentHistory=User::join('feehistories','users.id','=','feehistories.user_id')
-        ->selectRaw('users.firstName, users.id, users.lastName, users.gender,users.phoneNo,users.address,users.photo,users.email,feehistories.term,feehistories.sessionName, feehistories.className,feehistories.feeAmount,feehistories.amountPaid,feehistories.item,feehistories.balance,feehistories.status,feehistories.datePaid,feehistories.user_id, feehistories.created_at,feehistories.id
+        ->selectRaw('users.firstName, users.id, users.lastName, users.gender,users.phoneNo,users.address,users.photo,users.email,feehistories.term,feehistories.sessionName, feehistories.className,feehistories.feeAmount,feehistories.amountPaid,feehistories.item,feehistories.balance,feehistories.status,feehistories.datePaid,feehistories.user_id, feehistories.created_at,feehistories.id,feehistories.receiptNo,feehistories.receivedBy,feehistories.receivedFrom
         ')
    ->orderBy('datePaid','ASC')
    ->paginate(20);
@@ -130,5 +141,12 @@ public function recordPayment(Request $request){
   	$allClasses='All Classes';
 	return view('fees.view-payment-history',compact(['generalpaymentHistory','classes','allClasses']));
 
+   }
+   public function paymentReceipt($id){
+   	$displayReceipt=User::join('feehistories','users.id','=','feehistories.user_id')
+        ->selectRaw('users.firstName, users.id, users.lastName, users.gender,users.phoneNo,users.address,users.photo,users.email,feehistories.term,feehistories.sessionName, feehistories.className,feehistories.feeAmount,feehistories.amountPaid,feehistories.item,feehistories.balance,feehistories.status,feehistories.datePaid,feehistories.user_id, feehistories.created_at,feehistories.id,feehistories.receiptNo,feehistories.receivedBy,feehistories.receivedFrom
+        ')
+        ->where('feehistories.id',$id)->first();
+   	return view('fees.receipt',compact(['displayReceipt']));
    }
 }

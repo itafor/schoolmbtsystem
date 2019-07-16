@@ -36,6 +36,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
      <link href="{{ asset('css/layout.css') }}" rel="stylesheet">
+     <link href="https://fonts.googleapis.com/css?family=Fira+Sans|Quattrocento+Sans|Quicksand&display=swap" rel="stylesheet">
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -423,6 +424,8 @@ $.get('/get-total-fee-amt/' + feeclassName + '/' + feesessionName + '/' + feeter
 })
  });
   }
+
+
 </script>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>

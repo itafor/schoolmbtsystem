@@ -116,9 +116,9 @@
       <td>{{$history->item}}</td>
       <td>{{$history->balance}}</td>
       <td>{{$history->status}}</td>
-      <td>{{$history->datePaid}}</td>
+      <td>{{Carbon\Carbon::parse($history->datePaid)->format('m/d/Y')}}</td>
   <td>
-  <a href=""><button class="btn btn-info"><i class="fa fa-eye "></i></button></a>
+  <a href="/payment-receipt/{{$history->id}}"><button class="btn btn-info"><i class="fa fa-eye "></i></button></a>
 </td>
     </tr> 
    <?php $id++ ?>

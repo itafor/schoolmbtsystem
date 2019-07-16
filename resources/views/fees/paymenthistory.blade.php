@@ -98,10 +98,12 @@
 
                <div class="row">
                <div class="d-block my-3 col-md-4 ">
-           <label for="paymentiTEM">Payment Item<span class="text-muted"></span></label>
+           <label for="paymentiTEM">In Payment of:<span class="text-muted"></span></label>
              <select name="item" class="form-control paymentiTEM">
-                  <option value="">select</option>
-                  <option value="School Fee">School Fee</option>
+                  <option value="">select payment item</option>
+                  <option value="Registration">Registration</option>
+                  <option value="School fees">School fees</option>
+                  <option value="Library fund">Library fund</option>
                   <option value="Others">Others</option>
                 </select>
                </div>
@@ -116,7 +118,7 @@
 
                 <div class="d-block my-3 col-md-4 ">
            <label for="address2">User ID<span class="text-muted"></span></label>
-                   <input type="text" name="user_id" class="form-control user_id" value="{{$sudentdetail->id}}" id="user_id">
+                   <input type="text" name="user_id" class="form-control user_id" value="{{$sudentdetail->id}}" id="user_id" readonly="readonly">
                </div>
              </div>
               <div class="row" id="otherItemDiv">
@@ -125,7 +127,21 @@
                 <input type="text" name="otherItem" class="form-control otherItem">
                </div>
               </div>
-                        
+                     <div class="row">
+
+
+                <div class="d-block my-3 col-md-6 ">
+           <label for="address2">Received from<span class="text-muted"></span></label>
+                <input type="text" name="receivedFrom" class="form-control receivedFrom" >
+
+               </div>
+
+
+                <div class="d-block my-3 col-md-6 ">
+           <label for="address2">Received By<span class="text-muted"></span></label>
+                   <input type="text" name="receivedBy" class="form-control receivedBy" >
+               </div>
+             </div>        
                
               
             </tr>

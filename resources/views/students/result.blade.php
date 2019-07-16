@@ -29,7 +29,7 @@ hr:after {
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Result</h1>
+            <h5 class="card-title">{{$studentDetails->firstName}} {{$studentDetails->term}}'s result</h5>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -50,32 +50,20 @@ hr:after {
         <div class="row">
           <div class="col-md-12">
             <div class="card">
-              <div class="card-header">
-                <h5 class="card-title">{{$studentDetails->firstName}} {{$studentDetails->term}}'s result</h5>
+              <div class="card-header" style="height: 50px;">
+               
+ <h5 class="card-title"></h5>
+                <div class="card-tools" >
+                  <a>  <button onclick="printContent('theResult')" class="btn btn-sm btn-warning"> <i class="fa fa-print"></i> Print result</button></a>
+                  <a  href="/all-students" >  <button onclick="printContent('theResult')" class="btn btn-sm  btn-info btn-tool"> List students</button></a>
 
-                <div class="card-tools">
-                  <button onclick="printContent('theResult')" class="btn btn-sm btn-warning"><i class="fa fa-print"></i> Print result</button>
-                   <button type="button" class="btn btn-tool">
-                   <a href="/all-students">List students</a>
-                  </button>
-                    <button type="button" class="btn btn-tool">
+                    <button type="button" class="btn btn-tool btn-info">
                    <a href="/student-profile/{{$studentDetails->id}}">Back to {{$studentDetails->firstName}}'s profile</a>
                   </button>
                   <button type="button" class="btn btn-tool" data-widget="collapse">
                     <i class="fa fa-minus"></i>
                   </button>
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
-                      <i class="fa fa-wrench"></i>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right" role="menu">
-                      <a href="#" class="dropdown-item">Add Student</a>
-                      <a href="#" class="dropdown-item">Add Staff</a>
-                      <a href="#" class="dropdown-item">Add Admin</a>
-                      <a class="dropdown-divider"></a>
-                      <a href="#" class="dropdown-item">Separated link</a>
-                    </div>
-                  </div>
+                 
                 </div>
               </div>
               <!-- /.card-header -->
@@ -122,7 +110,7 @@ hr:after {
       </div>
 </div>
 </form>
-<div class="studentResultDetailContainer" id="studentResultDetailContainer">
+<div class="studentResultDetailContainer " id="studentResultDetailContainer" class="responsive">
 
   <div class="letterHeading">
   <div class="row">
@@ -192,7 +180,7 @@ hr:after {
   </div>
 </div>
    
-             <table  border="1" id="reportTable">
+             <table  border="1" id="reportTable" >
               <tr>
                <thead>
                  <th>SUBJECT</th>

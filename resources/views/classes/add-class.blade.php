@@ -64,7 +64,7 @@
 
         <div class="d-block my-3 col-md-6 ">
          <select name="classTeacher" class="form-control" id="classTeacher">
-           <option value="0">Select class  teacher</option>
+           <option value="">Select class  teacher</option>
            @foreach($getClassTeacher as $teacher)
            <option value="{{$teacher->id}}">{{$teacher->firstName}} {{$teacher->lastName}}</option>
            @endforeach

@@ -65,4 +65,64 @@ margin-left: 100px;
 margin-right: 100px;
 width: 650px;
 }
-/*http://www.position-absolute.com/creation/print/jQuery.printPage.js
+.paymentHistoryContainer{
+	border: 1px solid black;
+padding: 10px 100px 10px 100px;
+background-color: #737475;
+color: #737475;
+font-size: 20px;
+
+}
+  input[type=checkbox] {
+	width: 150px;
+	height: 20px;
+	margin-left: -55px;
+	margin-right:-55px;
+  }
+  @media only screen and (max-width: 750px) {  
+.studentResultDetailContainer{
+margin-left: -50px;
+width: 400px;
+padding: 10px 30px 10px 30px;
+
+  	}
+  	.schoolName{
+	/*text-align: center;*/
+	 font-family: 'Times new roman';
+	 font-size: 16px;
+	 background: red;
+}
+  	#reportTable{
+font-family: 'roboto';
+text-align: left;
+margin-left: -23px;
+margin-right:5px;
+border: 1;
+ width:300px;
+ font-size: 12px;
+
+}
+
+#stdResultImage{
+width: 50px; 
+height: 50px; 
+border-radius: 100%;
+margin-left: 70px;
+
+}
+#studentResultDetail{
+	width:400px;
+	 font-size: 16px;
+	 font-family: 'Times new roman';
+	 margin-bottom: 10px;
+	 margin-left: -10px;
+
+}
+.progresReport{
+	margin-top: 10px;
+	 font-family: 'Times new roman';
+	 font-size: 20px;
+	 margin-left: -5px;
+	 text-align: center;
+
+  }

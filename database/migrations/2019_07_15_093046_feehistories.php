@@ -23,7 +23,10 @@ class Feehistories extends Migration
             $table->string('item');
             $table->integer('balance');
             $table->string('status');
-            $table->string('datePaid');
+            $table->date('datePaid');
+            $table->string('receivedFrom');
+            $table->string('receivedBy');
+            $table->string('receiptNo');
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
