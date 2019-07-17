@@ -17,9 +17,10 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::middleware(['auth'])->group(function(){
-Route::get('/dashboard/home', 'DashboardController@versionone')->name('home');
+Route::get('/dashboard/home', 'DashboardController@allStudent')->name('home');
 Route::get('/dashboard/v2', 'DashboardController@versiontwo')->name('v2');
 Route::get('/dashboard/v3', 'DashboardController@versionthree')->name('v3');
+
 //admin routes
 Route::get('/add-students', 'AdminsController@getStudentForm')->name('addstudent');
 Route::post('/edit-student-profile', 'AdminsController@editStudentProfilePix')->name('editStudentProfilePix');
@@ -29,6 +30,7 @@ Route::post('/update-student-profile', 'AdminsController@updateStudentProfile')-
 Route::post('/store-student-rank', 'AdminsController@studentsResultRanking')->name('studentsRank');
 
 
+
 //class route
 Route::get('/add-class', 'ClassesController@displayClassForm');
 Route::post('/create-class', 'ClassesController@createClass')->name('createNewClass');
@@ -36,6 +38,8 @@ Route::get('/find-classteacher/{id}', 'ClassesController@findTeacher')->name('fi
 
 
 //students routes
+Route::get('/autocomplete/fetchskill', 'StudentsController@globalSearch')->name('autocomplete.fetchskill');
+route::post('/find-student','StudentsController@findStudent')->name('findStudent');
 Route::get('/add-students', 'StudentsController@getStudentForm')->name('addstudent');
 Route::get('/all-students', 'StudentsController@listStudent')->name('listAllStudent');
 Route::post('/add-student', 'StudentsController@createStudent')->name('addNewstudent');
@@ -46,6 +50,10 @@ Route::post('/exportToExcel/excel', 'StudentsController@exportToExcel')->name('e
 Route::get('/export-all-students', 'StudentsController@exportAll')->name('exportAllStudents');
 Route::get('/exportToPDF', 'StudentsController@exportAsPdf')->name('exportAsPdf');
 Route::get('/search', 'StudentsController@searchAction')->name('live_search');
+
+Route::get('/terms', 'StudentsController@displayTerm')->name('displayTerm');
+Route::get('/delete-term/{id}', 'StudentsController@deleteTerm')->name('deleteTerm');
+Route::get('/restore-term/{id}', 'StudentsController@restoreDeletedTerms')->name('restoreTerm');
 
 
 
@@ -82,13 +90,17 @@ Route::post('/add-session', 'AdminsController@addSession')->name('addNewSession'
 Route::get('/fee-settings', 'SettingsController@classSessionTerm');
 Route::post('/set-fee', 'SettingsController@feessetting')->name('setFee');
 Route::get('/view-fee-settings', 'SettingsController@viewFeSettings');
+Route::get('/general-settings', 'SettingsController@generalSettings');
+
+Route::post('/save-general-settings', 'SettingsController@saveGeneralSetting')->name('generalSetting');
+
 
 //payment route
 Route::get('/make-payment/{id}', 'PaymentController@selectStudent');
 Route::post('/store-payment', 'PaymentController@recordPayment')->name('storePamyent');
-Route::get('/get-total-fee-amt/{feeclassName}/{feesessionName}/{feeterm}', 'PaymentController@fetctFeeAmount');
+Route::get('/get-total-fee-amt/{feeclassName}/{feesessionName}/{feeterm}/{paymentiTEM}', 'PaymentController@fetctFeeAmount');
 
-Route::get('/get-fee-balance/{feeclassName}/{feesessionName}/{feeterm}/{id}', 'PaymentController@fetchFeeBal');
+Route::get('/get-fee-balance/{feeclassName}/{feesessionName}/{feeterm}/{id}/{paymentiTEM}', 'PaymentController@fetchFeeBal');
 
 Route::get('/view-student-payment-histories/{id}', 'PaymentController@studentPaymentHistory');
 Route::get('/view-payment-history/{classes}', 'PaymentController@showPaymentHistoryByClass');
@@ -100,10 +112,10 @@ Route::get('/payment-receipt/{id}', 'PaymentController@paymentReceipt');
 
 
 
-Route::get('/autocomplete/fetchskill', 'StudentsController@globalSearch')->name('autocomplete.fetchskill');
 
-route::post('/find-student','StudentsController@findStudent')->name('findStudent');
 Route::get('/home', 'HomeController@index')->name('home');
+
+
 });
 
 Auth::routes();

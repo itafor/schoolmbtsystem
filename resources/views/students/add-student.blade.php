@@ -34,21 +34,29 @@
 
                 <div class="card-tools">
                  <a href="/all-students">  <button class="btn btn-sm btn-primary">List Students</button></a>
-                  <button type="button" class="btn btn-tool" data-widget="collapse">
-                    <i class="fa fa-minus"></i>
-                  </button>
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
-                      <i class="fa fa-wrench"></i>
+                 
+               <div class="btn-group">
+                    <button type="button" class="btn  dropdown-toggle btn-primary btn-sm " data-toggle="dropdown">
+                      <i class="fa fa-upload"></i> Import students from excel
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" role="menu">
-                      <a href="#" class="dropdown-item">Add Student</a>
-                      <a href="#" class="dropdown-item">Add Staff</a>
-                      <a href="#" class="dropdown-item">Add Admin</a>
                       <a class="dropdown-divider"></a>
-                      <a href="#" class="dropdown-item">Separated link</a>
+                       <form action="{{route('importExcel')}}" method="POST" enctype="multipart/form-data" novalidate>
+       <input type="hidden" name="_token" value="{{csrf_token()}}">
+        <div class="input-group input-group-sm">
+            <input class="form-control form-control-navbar" name="select_file" type="file" placeholder="Search" aria-label="Search">
+            <div class="input-group-append">
+                <button class="btn btn-info" type="submit">
+    <i class="fa fa-upload"></i>
+  </button>
+            </div>
+        </div>
+    </form>
                     </div>
                   </div>
+                   <button type="button" class="btn btn-tool" data-widget="collapse">
+                    <i class="fa fa-minus"></i>
+                  </button>
                 </div>
               </div>
               <!-- /.card-header -->

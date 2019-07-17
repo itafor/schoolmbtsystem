@@ -3,10 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class Term extends Model
 {
-    protected $fillable = [
-        'termName'
-    ];
+	use SoftDeletes;
+	protected $table = 'terms';
+    protected $fillable = ['termName'];
+    protected $dates= ['deleted_at'];
 }

@@ -13,7 +13,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Payment history</li>
+              <li class="breadcrumb-item active">Payment receipt</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -30,10 +30,10 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h5 class="card-title">Payment history </h5>
+                <h5 class="card-title">Payment receipt </h5>
 
                 <div class="card-tools">
-                  <button onclick="printContent('paymentHistory')" class="btn btn-sm btn-warning"><i class="fa fa-print"></i> Print payment history</button>
+                  <button onclick="printContent('paymentHistory')" class="btn btn-sm btn-warning"><i class="fa fa-print"></i> Print payment receipt</button>
                  
                 </div>
               </div>
@@ -42,7 +42,7 @@
        <div class="col-md-12 paymentHistoryContainer" id="paymentHistoryContainer">         
 
 
-<div class="card-body  offset-0" style="background: white; border: 1px solid #000000; background-color: #edf0f2; border-radius: 5px;">
+<div class="card-body  offset-0" id="receiptContainer">
   <div class="letterHeading">
     
   <div class="row">
@@ -61,10 +61,10 @@
     </div>
   </div>
      <div class="row">
-      <div class="col-md-8">
-        <span> CASH RECEIPT NUMBER:</span>  <strong>{{$displayReceipt->receiptNo}}</strong> 
+      <div class="col-md-8 float-left">
+        <span id="cashNo"><strong> Cash receipt No:</strong></span>  <strong>{{$displayReceipt->receiptNo}}</strong> 
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4  float-right">
     <strong> Date:  <span style="text-decoration: underline;">{{Carbon\Carbon::parse($displayReceipt->datePaid)->format('m/d/Y')}}</span> </strong>
     </div>
   

@@ -15,7 +15,7 @@ use DB;
 use App\Term;
 use App\Subject;
 use App\Feesetting;
-
+use App\Generalsetting;
 class SettingsController extends Controller
 {
 	public function classSessionTerm(){
@@ -29,6 +29,7 @@ class SettingsController extends Controller
    	->where('sessionName',$request->sessionName)
    	->where('term',$request->term)
    	->where('feeAmount',$request->feeAmount)
+   	->where('item',$request->item)
    	->first();
    	if($checkFee){
    		return back()->withInput()->with('errors','Fee alread set, you can choose to edit');
@@ -39,6 +40,7 @@ class SettingsController extends Controller
             'sessionName' => 'required|max:255',
             'term' => 'required|max:255',
             'feeAmount' => 'required|max:255',
+            'item' => 'required|max:255',
             ]);
  		if(!$val){
  			 return back()->withInput()->with('errors',$val);
@@ -49,6 +51,7 @@ class SettingsController extends Controller
 		$setFee->sessionName = Input::get('sessionName');
 		$setFee->term = Input::get('term');
 		$setFee->feeAmount = Input::get('feeAmount');
+		$setFee->item = Input::get('item');
 		$setFee->save();
 		if($setFee){
 		  return back()->with('success','You have successfully added new fee settings');
@@ -63,4 +66,36 @@ class SettingsController extends Controller
 	return view('fees.view-fee-settings',compact(['getFeesSettings']));
 
    }
+
+   public function generalSettings(){
+   	$fetchSettings=Generalsetting::find(1);
+   	return view('fees.general-settings',['fetchSettings'=>$fetchSettings]);
+   }
+   	  public function saveGeneralSetting(Request $request)
+    {
+
+        $gSettings =DB::table('generalsettings')
+        ->update([
+            'schoolName'=>$request->schoolName == null ? ' ' : $request->input('schoolName'),
+            'pob'=>$request->pob == null ? ' ' : $request->input('pob'),
+            'email'=>$request->email == null ? ' ' : $request->input('email'),
+            'telephone'=>$request->telephone == null ? ' ' : $request->input('telephone'),
+            'cellPhone'=>$request->cellPhone == null ? ' ' :$request->input('cellPhone'),
+            'schoolAddress'=>$request->schoolAddress == null ? ' ' :$request->input('schoolAddress'),
+        ]);
+        $fileName='';
+       if($request->hasfile('schoolLogo')){
+        $fileName = $request->schoolLogo->getClientOriginalName();
+           $request->schoolLogo->move(public_path('upload'),$fileName);
+	   }
+        $updateImage =DB::table('generalsettings')
+        ->update([
+            'schoolLogo'=>$fileName == ' ' ? ' ' : $fileName
+        ]);
+	
+        if($gSettings || $fileName!=''){
+         return back()->with('success','Setting updated successfully');
+        }
+        return back()->withInput()->with('errors','setting update failed');
+    }
 }

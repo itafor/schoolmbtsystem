@@ -51,14 +51,14 @@
         <div class="form-group">
           <table class="table table-bordered">
             <div class="row">
-               <div class="d-block my-3 col-md-4">
+               <div class="d-block my-3 col-md-3">
            <label for="address2">Class Name <span class="text-muted"></span></label>
          <select name="className" class="form-control feeclassName" id="feeclassName">
            <option value="">Select class </option>
            <option value="{{$sudentdetail->studentClass}}">{{$sudentdetail->studentClass}}</option>
          </select>
              </div> 
-               <div class="d-block my-3 col-md-4">
+               <div class="d-block my-3 col-md-3">
            <label for="address2">Session Name <span class="text-muted"></span></label>
          <select name="sessionName" class="form-control feesessionName" id="feesessionName">
            <option value="">Select session</option>
@@ -67,7 +67,7 @@
            @endforeach
          </select>
          </div>
-               <div class="d-block my-3 col-md-4 ">
+               <div class="d-block my-3 col-md-3 ">
            <label for="address2">Term Name <span class="text-muted"></span></label>
           <select name="term" class="form-control feeterm" id="feeterm">
            <option value="">Select term</option>
@@ -76,30 +76,10 @@
            @endforeach
          </select>
               </div>
-  </div>
-              <div class="row">
-               <div class="d-block my-3 col-md-4 ">
-           <label for="address2">Expected Total Fee<span class="text-muted"></span></label>
-                <input type="text" name="feeAmount" class="form-control feeAmount" id="feeAmount" readonly="readonly">
-                </div>
 
-                <div class="d-block my-3 col-md-4 ">
-           <label for="address2">Amount Paid By Student<span class="text-muted"></span></label>
-                <input type="number" name="amountPaid" class="form-control amountPaid" id="amountPaid" >
-                </div>
-
-                <div class="d-block my-3 col-md-4 ">
-           <label for="address2">Balance<span class="text-muted"></span></label>
-                <input type="text" name="balance" class="form-control balance" readonly="readonly" >
-
-                </div>
-              </div>
-
-
-               <div class="row">
-               <div class="d-block my-3 col-md-4 ">
+                <div class="d-block my-3 col-md-3">
            <label for="paymentiTEM">In Payment of:<span class="text-muted"></span></label>
-             <select name="item" class="form-control paymentiTEM">
+             <select name="item" class="form-control paymentiTEM" id="paymentiTEM">
                   <option value="">select payment item</option>
                   <option value="Registration">Registration</option>
                   <option value="School fees">School fees</option>
@@ -107,6 +87,47 @@
                   <option value="Others">Others</option>
                 </select>
                </div>
+  </div>
+   <div class="row" id="otherItemDiv">
+                <div class="d-block col-md-3 ">
+               </div>
+               <div class="d-block col-md-3 ">
+               </div>
+               <div class="d-block col-md-3 ">
+               </div>
+
+               <div class="d-block col-md-3 ">
+           <label for="address2">Specify Payment Item<span class="text-muted"></span></label>
+                <input type="text" name="otherItem" class="form-control otherItem">
+               </div>
+              </div>
+
+              <div class="row">
+                <div class="d-block my-3 col-md-6 ">
+           <label for="address2">Expected Total Fee<span class="text-muted"></span></label>
+                <input type="text" name="feeAmount" class="form-control feeAmount" id="feeAmount" readonly="readonly">
+                </div>
+                
+
+                <div class="d-block my-3 col-md-6 ">
+           <label for="address2">Amount Paid By Student<span class="text-muted"></span></label>
+                <input type="number" name="amountPaid" class="form-control amountPaid" id="amountPaid" >
+                </div>
+
+
+
+              </div>
+
+ 
+               <div class="row">
+
+
+
+                <div class="d-block my-3 col-md-4 ">
+           <label for="address2">Balance<span class="text-muted"></span></label>
+                <input type="text" name="balance" class="form-control balance" readonly="readonly" >
+
+                </div>
 
 
                 <div class="d-block my-3 col-md-4 ">
@@ -121,12 +142,7 @@
                    <input type="text" name="user_id" class="form-control user_id" value="{{$sudentdetail->id}}" id="user_id" readonly="readonly">
                </div>
              </div>
-              <div class="row" id="otherItemDiv">
-                <div class="d-block col-md-4 ">
-           <label for="address2">Specify Payment Item<span class="text-muted"></span></label>
-                <input type="text" name="otherItem" class="form-control otherItem">
-               </div>
-              </div>
+          
                      <div class="row">
 
 

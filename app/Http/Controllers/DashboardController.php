@@ -3,13 +3,43 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Input;
+use App\Classes;
+use App\Admin;
+use Auth;
+use App\User;
+use Hash;
+use Excel;
+use DB;
+use App\Term;
+use App\Result;
+use App\Subject;
+use App\Session;
+use App\Rank;
+use App\Feehistory;
 class DashboardController extends Controller
 {
-    public function versionone()
-    {
-        return view('dashboard.v1');
+     public function allStudent(){
+    $getAllStudent=User::where('role','student')->get();
+    $studentCount=count($getAllStudent);
+
+         $getAllTeachingStaff=User::where('role','teacher')->get();
+    $teachingStaffCount=count($getAllTeachingStaff);
+
+    $generalpaymentHistory=Feehistory::all();
+    $paymentHistoryCount=count($generalpaymentHistory);
+
+     $studentsResult=Result::all();
+    $resultCount=count($studentsResult);
+
+    $classes=Classes::all();
+    $allClasses='All Classes';
+
+    return view('dashboard.v1',compact(['studentCount','paymentHistoryCount','teachingStaffCount','resultCount']));
     }
+
+ 
+
     public function versiontwo()
     {
         return view('dashboard.v2');
@@ -18,4 +48,7 @@ class DashboardController extends Controller
     {
         return view('dashboard.v3');
     }
+
+   
+
 }

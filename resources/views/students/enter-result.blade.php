@@ -146,7 +146,7 @@
        <input type="hidden" name="_token" value="{{csrf_token()}}">
        <div class="col-lg-12 col-sm-12">
         <div class="form-group">
-          <table class="table table-bordered">
+          <table class="table table-bordered table-responsive">
             <thead>
              
               <th>Name</th>

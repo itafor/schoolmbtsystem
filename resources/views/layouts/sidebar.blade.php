@@ -109,24 +109,7 @@
                     <p>Enter result</p>
                   </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="pages/UI/icons.html" class="nav-link">
-                    <i class="fa fa-circle-o nav-icon"></i>
-                    <p>Icons</p>
-                  </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="pages/UI/buttons.html" class="nav-link">
-                    <i class="fa fa-circle-o nav-icon"></i>
-                    <p>Buttons</p>
-                  </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="pages/UI/sliders.html" class="nav-link">
-                    <i class="fa fa-circle-o nav-icon"></i>
-                    <p>Sliders</p>
-                  </a>
-                        </li>
+                      
                     </ul>
                 </li>
                 <li class="nav-item has-treeview">
@@ -139,23 +122,12 @@
               </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
-                    <i class="fa fa-circle-o nav-icon"></i>
-                    <p>Make payment</p>
-                  </a>
-                        </li>
-                        <li class="nav-item">
                             <a href="/view-payment-history" class="nav-link">
                     <i class="fa fa-circle-o nav-icon"></i>
                     <p>Payment histories</p>
                   </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="pages/forms/editors.html" class="nav-link">
-                    <i class="fa fa-circle-o nav-icon"></i>
-                    <p>Editors</p>
-                  </a>
-                        </li>
+                      
                     </ul>
                 </li>
                 <li class="nav-item has-treeview">
@@ -174,7 +146,7 @@
                   </a>
                         </li>
                         <li class="nav-item">
-                            <a href="pages/tables/data.html" class="nav-link">
+                            <a href="/general-settings" class="nav-link">
                     <i class="fa fa-circle-o nav-icon"></i>
                     <p>General Settings</p>
                   </a>

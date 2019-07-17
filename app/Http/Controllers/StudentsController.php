@@ -319,5 +319,27 @@ $output.='<li><a href="/student-profile/'.$row->id.'">'.$row->firstName.' '.$row
 				 ->where('role','student')->first();
 	return view('students.student-profile',compact(['student','sessions','subjects','classes','terms']));
    }
+   public function displayTerm(){
+   	$getTerm=DB::table('terms')
+     ->whereNull('deleted_at')->paginate(10);
+   	 $trashedTerms=DB::table('terms')
+   	 ->whereNotNull('deleted_at')->get();
+   	return view('students.list-term',['terms'=>$getTerm,'trashedTerms'=>$trashedTerms]);
+   }
+   public function deleteTerm($id){
+   	$findTerm=Term::where('id',$id)->first();
+   	if($findTerm->delete()){
+		  return back()->with('success','Term Deleted successfully');
+   	}
+   	return back()->withInput()->with('errors','An attempt to delete the selected term failed');
+			exit;
+   }
+   public function restoreDeletedTerms($id){
+   	$restore=Term::withTrashed()->find($id)->restore();
+   	if($restore){
+		  return back()->with('success','restored successfully');
+   	}
+   	return back()->withInput()->with('errors','Restore failed');
+			exit;
+   }
 }
-// href="/student-profile/{{$row->id}}"

@@ -133,7 +133,7 @@
   <td>
   <a href="/student-profile/{{$student->id}}"><button class="btn btn-success"><i class="fa fa-eye"></i></button></a>
   <a href=""><button class="btn btn-info"><i class="fa fa-edit "></i></button></a>
-  <a href=""><button class="btn btn-danger"><i class="fa fa-remove "></i></button></a>
+  <a href="/delete-student/{{$student->id}}"><button class="btn btn-danger"><i class="fa fa-remove "></i></button></a>
 </td>
     </tr> 
    <?php $id++ ?>

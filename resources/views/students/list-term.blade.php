@@ -30,31 +30,116 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h5 class="card-title">Add new term</h5>
+                <h5 class="card-title">Terms</h5>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-widget="collapse">
                     <i class="fa fa-minus"></i>
                   </button>
-                
-                   <a href="/terms">  <button class="btn btn-sm btn-primary">List terms</button></a>
+                <a href="/show-term">  <button class="btn btn-sm btn-primary">Add term</button></a>
                   
                 </div>
               </div>
               <!-- /.card-header -->
               <div class="card-body  offset-1 col-md-12 ">
-              <!--   <div class="row col-md-12"> -->
-      <form action="{{route('addNewTerm')}}" method="POST" enctype="multipart/form-data" novalidate>
-       <input type="hidden" name="_token" value="{{csrf_token()}}">
-        <div class="mb-3 col-md-6 ">
-          <label for="address2">Term Name <span class="text-muted"></span></label>
-          <input type="text" class="form-control" id="termName" placeholder="Term" name="termName" required="required">
-        </div>
-           <hr class="mb-3 col-md-6 ">
- <div class="col-md-3 my-3">
-        <button class="btn btn-primary btn-lg btn-block" type="submit">Submit</button>
-      </div>
-      </form>
+             <div class="row col-md-12">
+               <div class="col-md-6">
+                 
+             
+            
+                     <table class="table table-hover table-responsive">
+  <thead>
+    <tr>
+      <th scope="col">S/N</th>
+      <th scope="col">Terms</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    @if(count($terms) >=1)
+    <tr>
+      <?php $id=1?>
+@foreach($terms as $tern)
+      <td colspan="1">{{$id}}</td>
+      <td>{{$tern->termName}}</td>
+      
+  <td>
+  
+  <a href=""><button class="btn btn-info"><i class="fa fa-edit "></i></button></a>
+  <a href="/delete-term/{{$tern->id}}"><button class="btn btn-danger"><i class="fa fa-remove "></i></button></a>
+</td>
+    </tr> 
+   <?php $id++ ?>
+    @endforeach
+
+   @else
+     <tr>
+   <td colspan="10">
+   <h5>
+     No Term found
+   </h5>
+   @endif
+   </td>
+    </tr>
+    <tr  rowspan="10">
+     <td>
+        <span class="pagination">{{$terms->links()}}</span>
+     </td>
+   </tr>
+  </tbody>
+ 
+</table>
+
+  </div>
+             <div class="col-md-6">
+                 
+             <h3>Trashed Terms</h3>
+            
+                     <table class="table table-hover table-responsive">
+  <thead>
+    <tr>
+      <th scope="col">S/N</th>
+      <th scope="col">Terms</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    @if(count($trashedTerms) >=1)
+    <tr>
+      <?php $id=1?>
+@foreach($trashedTerms as $term)
+      <td colspan="1">{{$id}}</td>
+      <td>{{$term->termName}}</td>
+      
+  <td>
+  
+  <a href="/restore-term/{{$term->id}}"><button class="btn btn-primary">Restore</button></a>
+</td>
+    </tr> 
+   <?php $id++ ?>
+    @endforeach
+
+   @else
+     <tr>
+   <td colspan="10">
+   <h5>
+     No Trashed Term found
+   </h5>
+   @endif
+   </td>
+    </tr>
+    <tr  rowspan="10">
+     <td>
+       
+     </td>
+   </tr>
+  </tbody>
+ 
+</table>
+
+  </div>
+ </div>
+     
                 </div>
                 <!-- /.row -->
               </div>

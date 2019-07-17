@@ -9,6 +9,7 @@
     </ul>
 
     <!-- SEARCH FORM -->
+    <span> Search students here  <i class="fa fa-arrow-circle-right"></i>  </span>
  <form action="{{route('findStudent')}}" method="post" id="searchSkillForm"> 
    <input type="hidden" name="_token" value="{{csrf_token()}}">
         <div class="input-group input-group-sm">
@@ -25,7 +26,7 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
         <!-- Messages Dropdown Menu -->
-            <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
+            <a class="dropdown-item" href="{{ route('logout') }}"></a>
         
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">

@@ -28,22 +28,24 @@ class PaymentController extends Controller
 	return view('fees.paymenthistory',compact(['sessions','classes','terms','sudentdetail']));
 }
 
-public function fetctFeeAmount($feeclassName,$feesessionName,$feeterm){
+public function fetctFeeAmount($feeclassName,$feesessionName,$feeterm,$paymentiTEM){
 		$feeAMT=Feesetting::where('className',$feeclassName) 
 				->where('sessionName',$feesessionName)
-				->where('term',$feeterm)
+        ->where('term',$feeterm)
+				->where('item',$paymentiTEM)
 				->first();
 				if($feeAMT){
 					return $feeAMT;
 				}
 				return '';
 }
-public function fetchFeeBal($feeclassName,$feesessionName,$feeterm,$id){
+public function fetchFeeBal($feeclassName,$feesessionName,$feeterm,$id,$paymentItem){
 		$bal=Feehistory::where('className',$feeclassName) 
 				->where('sessionName',$feesessionName)
 				->where('term',$feeterm)
-				->where('user_id',$id)
- 			    ->orderBy('datePaid','DESC')->first();
+        ->where('user_id',$id)
+				->where('item',$paymentItem)
+ 			  ->orderBy('created_at','DESC')->first();
 				if($bal){
 					return $bal;
 				}
@@ -64,7 +66,8 @@ public function recordPayment(Request $request){
    	->where('sessionName',$request->sessionName)
    	->where('term',$request->term)
    	->where('amountPaid',$request->amountPaid)
-   	->where('user_id',$request->user_id)
+    ->where('user_id',$request->user_id)
+   	->where('item',$request->item)
    	->first();
    	if($checkFeehistory){
    		return back()->withInput()->with('errors','Payment already recorded, you can choose to edit');

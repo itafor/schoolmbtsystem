@@ -79,7 +79,16 @@
            @endforeach
          </select>
         </div>
-
+          <div class="d-block my-3 col-md-6">
+           <label for="paymentiTEM">In Payment of:<span class="text-muted"></span></label>
+             <select name="item" class="form-control paymentiTEM">
+                  <option value="">select payment item</option>
+                  <option value="Registration">Registration</option>
+                  <option value="School fees">School fees</option>
+                  <option value="Library fund">Library fund</option>
+                  <option value="Others">Others</option>
+                </select>
+               </div>
            <div class="mb-3 col-md-6 ">
           <label for="address2">Total fee amount <span class="text-muted"></span></label>
           <input type="text" class="form-control" id="feeAmount" placeholder="fee amount" name="feeAmount" required="required">

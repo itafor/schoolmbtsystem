@@ -51,6 +51,7 @@
       <th scope="col">Session</th>
       <th scope="col">Term</th>
       <th scope="col">Amount</th>
+      <th scope="col">Fee Type</th>
       <th scope="col">Action</th>
     </tr>
   </thead>
@@ -64,6 +65,7 @@
       <td>{{$feesetting->sessionName}}</td>
       <td>{{$feesetting->term}}</td>
       <td>{{$feesetting->feeAmount}}</td>
+      <td>{{$feesetting->item}}</td>
   <td colspan="">
   <a href=""><button class="btn btn-info"><i class="fa fa-edit "></i></button></a>
   <a href=""><button class="btn btn-danger"><i class="fa fa-remove"></i></button></a>

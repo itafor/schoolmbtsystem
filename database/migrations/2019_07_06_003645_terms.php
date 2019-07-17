@@ -6,6 +6,8 @@ use Illuminate\Database\Migrations\Migration;
 
 class Terms extends Migration
 {
+   
+    
     /**
      * Run the migrations.
      *
@@ -17,6 +19,7 @@ class Terms extends Migration
             $table->increments('id');
             $table->string('termName');
             $table->timestamps();
+            $table->time('deleted_at')->nullable();
         });
     }
 

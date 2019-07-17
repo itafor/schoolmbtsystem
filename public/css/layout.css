@@ -79,18 +79,57 @@ font-size: 20px;
 	margin-left: -55px;
 	margin-right:-55px;
   }
-  @media only screen and (max-width: 750px) {  
-.studentResultDetailContainer{
-margin-left: -50px;
-width: 400px;
-padding: 10px 30px 10px 30px;
+#receiptContainer{
+  background: white; 
+  border: 1px solid #000000; 
+  background-color: #edf0f2; 
+  border-radius: 5px;
+}
+  @media only screen and (max-width: 750px) {
+  .letterHeading{
+	padding: 5px;
+	margin-left: 30px;
+	
+}  
+.pobox,.schollPhones,.schoolEmails{
+	text-align: center;
+	 font-family: roboto;
+	 font-size: 12px;
+	 margin-left: -30px;
 
-  	}
+}
+.schoolName{
+	text-align: center;
+	 font-family: 'Times new roman';\
+	 font-size: 16px;
+	 margin-left: -20px;
+
+}
+  	.theResult{
+	/*background: blue;*/
+	padding: 10px 50px 10px 10px;
+margin-top: 20px; 
+}
+  	.paymentHistoryContainer{
+	border: 1px solid black;
+padding: 10px 10px 10px 5px;
+background-color: #737475;
+color: #737475;
+font-size: 20px;
+
+}
+.studentResultDetailContainer{
+border: 1px solid #000000;
+padding: 10px 10px 10px 25px;
+margin-left: 5px;
+margin-right: 10px;
+width: 390px;
+}
+
   	.schoolName{
 	/*text-align: center;*/
 	 font-family: 'Times new roman';
 	 font-size: 16px;
-	 background: red;
 }
   	#reportTable{
 font-family: 'roboto';
@@ -107,7 +146,7 @@ border: 1;
 width: 50px; 
 height: 50px; 
 border-radius: 100%;
-margin-left: 70px;
+margin-left: 50px;
 
 }
 #studentResultDetail{
@@ -126,3 +165,29 @@ margin-left: 70px;
 	 text-align: center;
 
   }
+  #receiptContainer{
+  background: white; 
+  border: 1px solid #000000; 
+  background-color: #edf0f2; 
+  border-radius: 5px;
+  font-size: 12px;
+}
+#cashNo{
+	font-size: 12px;
+	font-family: serif;
+}
+
+  input[type=checkbox] {
+	width: 30px;
+	height: 10px;
+	margin-left: -9px;
+	margin-right:-9px;
+  }
+  #resultFooter{
+  	margin-top: 10px;
+  	font-size: 12px;
+  	margin-left: -20px;
+  	padding: 5px;
+  	width: 400px;
+  }
+}

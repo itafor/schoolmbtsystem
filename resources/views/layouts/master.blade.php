@@ -328,42 +328,46 @@ $('.paymentiTEM').on('change',function(event){
   console.log(item)
   if(item ==='Others'){
 $('#otherItemDiv').show();
-  }else if(item =='School Fee' || item ==''){
+  }else if(item =='School fees' || item =='Registration' || item =='Library fund' || item ==''){
 $('#otherItemDiv').hide();
+$('.otherItem').val('');
   }
 })
-document.getElementById("feeterm").disabled = true;
-var feeClassName='';
-$('.feeclassName,.feesessionName').on('change',function(clasName){
-  feeclassName =clasName.target.value;
-  if(feeclassName ==''){
-document.getElementById("feeterm").disabled = true;
-$('.feeterm').val(0);
-  }else{
-document.getElementById("feeterm").disabled = false;
-  }
-console.log(feeclassName)
-});
+// document.getElementById("feeterm").disabled = true;
+// var feeClassName='';
+// $('.feeclassName,.feesessionName').on('change',function(clasName){
+//   feeclassName =clasName.target.value;
+//   if(feeclassName ==''){
+// document.getElementById("feeterm").disabled = true;
+// $('.feeterm').val(0);
+//   }else{
+// document.getElementById("feeterm").disabled = false;
+//   }
+// console.log(feeclassName)
+// });
 
 getBalance();
 
 function getBalance(){
- $('body').delegate('.feeterm','change',function(){
+ $('body').delegate('.paymentiTEM','change',function(){
   let tr=$(this).parent().parent();
   var feeclassName=tr.find('.feeclassName').val();
   var feesessionName=tr.find('.feesessionName').val();
   var feeterm=tr.find('.feeterm').val();
-
-
+  var paymentiTEM = tr.find('.paymentiTEM').val();
+    $('.amountPaid').val('');
+   
 var studentName=document.getElementById("stdName").textContent;
 
   var feeterm=tr.find('.feeterm').val();
-$.get('/get-fee-balance/' + feeclassName + '/' + feesessionName + '/' + feeterm + '/' +studentId, function(data){
-   console.log(data.balance);
+$.get('/get-fee-balance/' + feeclassName + '/' + feesessionName + '/' + feeterm + '/' +studentId + '/' + paymentiTEM, function(data){
+    console.log('Bal', data.balance);
 
   if(data ==''){
     
-$.get('/get-total-fee-amt/' + feeclassName + '/' + feesessionName + '/' + feeterm, function(data){
+$.get('/get-total-fee-amt/' + feeclassName + '/' + feesessionName + '/' + feeterm + '/' + paymentiTEM, function(data){
+console.log('Fee AMOUNT', data.feeAmount);
+
   if(data ==''){
     alert('You have not set TOTAL FEE AMOUNT for the selected Term, Session and Class');
     $('.feeAmount').val('');
@@ -397,16 +401,19 @@ $.get('/get-total-fee-amt/' + feeclassName + '/' + feesessionName + '/' + feeter
  if(data.balance == 0){
     $('#message').show();
     $("#message").css({"background-color": "green", "font-size": "20px", "font-family": "roboto", "margin-left": "20px","padding": "10px","border-radius": "5px","width": "auto","color": "white"});
-    $('#message').html( studentName + ' is Cleared for the selected Term and Session');
+    $('#message').html( studentName + ' is Cleared for the selected Term, Session and Payment Type');
+     $('.balance').val(0);
 
-}else{
-    $('#message').hide();
+  $('.paymentiTEM').on('change',function(e){
+     $('#message').hide();
+  })
+   
 }
 
     $('.amountPaid').on('keyup',function(e){
   var amountPaid=e.target.value;
   var mainBal=data.balance;
-  var bal=mainBal- Number(amountPaid);
+  var bal= $('.feeAmount').val() - Number(amountPaid);
     $('.balance').val(bal);
     if(bal === 0){
       $('.feestatus').val('Cleared');
@@ -416,7 +423,7 @@ $.get('/get-total-fee-amt/' + feeclassName + '/' + feesessionName + '/' + feeter
 
     if(bal <=-1){
   alert('Invalid digit detected in balance, Amount Paid must not be more than Fee Amount');
-    $('.balance').val(0);
+    $('.balance update').val(0);
     }
     });
 

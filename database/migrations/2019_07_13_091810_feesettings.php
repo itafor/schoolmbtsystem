@@ -18,6 +18,7 @@ class Feesettings extends Migration
             $table->string('className')->default('form1');
             $table->string('sessionName')->default('2019');
             $table->string('term')->default('First Term');
+            $table->string('item')->default('2000');
             $table->integer('feeAmount')->default('2000');
             $table->timestamps();
         });

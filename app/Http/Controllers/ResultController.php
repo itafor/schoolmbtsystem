@@ -428,15 +428,14 @@ $updateResult = DB::table('results')->whereIn('user_id', $array_of_ids)
 
    }
 
+			 $sessions=Session::all();
+			 $subjects=Subject::all();
+			 $terms=Term::all();
+			 $classes=Classes::all();
 
-if($updateResult){
-	$this->getTermSessionSubject();
-	exit();
+	return view('students.update-result',compact(['classes','terms','sessions','subjects']));
+		 
+
+   
 }
-		//return redirect()->route('update-result');
-		  //return back()->with('success','Subjects uploaded successfully');
-	
-
-   }
-
 }
