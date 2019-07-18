@@ -4,7 +4,7 @@
 <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    @if(isset($student))
+    @if(auth::user()->role =='admin' || auth::user()->role =='teacher')
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
@@ -15,7 +15,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">{{$student->firstName}}</li>
+              <li class="breadcrumb-item active">name</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -33,7 +33,7 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                 <h5 class="m-0 text-dark">{{$student->firstName}} {{$student->lastName}}'s Profile
+                 <h5 class="m-0 text-dark">staff's Profile
                
               </h5>
                   
@@ -47,17 +47,14 @@
                       <i class="fa fa-wrench"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" role="menu">
-                     @if(Auth::user()->role =='admin')
+                     
                                         <a class="dropdown-divider"></a>
-                      <a href="/make-payment/{{$student->id}}" class="dropdown-item">Make payment</a>
-
-                       <a class="dropdown-divider"></a>
-                      <a href="/all-students" class="dropdown-item">List students</a>
-                      @endif
+                      <a href="/" class="dropdown-item">Make payment</a>
                      
                       <a class="dropdown-divider"></a>
-                      <a href="/view-student-payment-histories/{{$student->id}}" class="dropdown-item">Payment history</a>
-                      
+                      <a href="/view-student-payment-histories/{{auth::user()->id}}" class="dropdown-item">Payment history</a>
+                       <a class="dropdown-divider"></a>
+                      <a href="/all-students" class="dropdown-item">List students</a>
                     </div>
                   </div>
                 </div>
@@ -73,7 +70,7 @@
 </button> 
   </div>
   <div>
-    <img class="card-img-top" src="/upload/{{$student->photo == '' && $student->gender =='Female' ? 'female.png':$student->photo == '' && $student->gender =='Male' ?'male.png' : $student->photo}}" id="studentProfileImage">
+    <img class="card-img-top" src="/upload/{{auth::user()->photo == '' && auth::user()->gender =='Female' ? 'female.png':auth::user()->photo == '' && auth::user()->gender =='Male' ?'male.png' : auth::user()->photo}}" id="studentProfileImage">
   </div>
   <div>
     <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#editStudentPixModal" id="updateStudentPixBtn">
@@ -95,12 +92,11 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-body">
-                <div class="row">
-                  <div class="col-md-8">
+              
+               
 
-                     <table id="profiledetail">
+                    <table id="profiledetail">
                       <tbody>
-                         
                         <tr>
                           <td>  <h3 class="studentDeatilTitle">First Name:</h3></td>
                           <td>  <span class="studentDeatil">{{$student->firstName}}</span></td>
@@ -109,14 +105,7 @@
                           <td>  <h3 class="studentDeatilTitle">Last Name:</h3></td>
                           <td>  <span class="studentDeatil">{{$student->lastName}}</span></td>
                         </tr>
-                         <tr>
-                          <td>  <h3 class="studentDeatilTitle">Reg. Number:</h3></td>
-                          <td>  <span class="studentDeatil">{{$student->studentRegNumber}}</span></td>
-                        </tr>
-                         <tr>
-                          <td>  <h3 class="studentDeatilTitle">Class:</h3></td>
-                          <td>  <span class="studentDeatil">{{$student->studentClass}}</span></td>
-                        </tr>
+                        
                          <tr>
                           <td>  <h3 class="studentDeatilTitle">Username:</h3></td>
                           <td>  <span class="studentDeatil">{{$student->username}}</span></td>
@@ -125,7 +114,7 @@
                           <td>  <h3 class="studentDeatilTitle">Gender:</h3></td>
                           <td>  <span class="studentDeatil">{{$student->gender}}</span></td>
                         </tr>
-                         <tr>
+                           <tr>
                           <td>  <h3 class="studentDeatilTitle">Role:</h3></td>
                           <td>  <span class="studentDeatil">{{$student->role}}</span></td>
                         </tr>
@@ -147,96 +136,16 @@
                         </tr>
                       </tbody>
                     </table>
-                  </div>
 
+
+
+
+                 
                   <!-- /.col -->
-                  <div class="col-md-4">
-                    <p class="text-center">
-                      <strong>Check Result</strong>
-                    </p>
- <form action="{{route('checkStudentResult')}}" method="GET" name="initCheckResult" onsubmit="return validateForm()">
-       <input type="hidden" name="_token" value="{{csrf_token()}}">
-       <input type="hidden" name="studentRegNumber" value="{{$student->studentRegNumber}}"  class="form-control">
-                    <div class="form-group">
-                      <input type="hidden" name="studentClass" class="form-control studentClass" value="{{$student->studentClass}}">
-                    </div>
-                    <!-- /.progress-group -->
-
-                    <div class="form-group">
-                      <select name="term" id="term" class="form-control">
-           <option value=" ">Select term</option>
-           @if(count($terms) >=1)
-           @foreach($terms as $term)
-           <option value="{{$term->termName}}">{{$term->termName}}</option>
-           @endforeach
-           @endif
-         </select>
-                    </div>
-
-                    <!-- /.progress-group -->
-                    <div class="form-group">
-                       <select name="sessionName" id="term" class="form-control sessionName">
-           <option value=" ">Select session</option>
-           @if(count($sessions) >=1)
-           @foreach($sessions as $session)
-           <option value="{{$session->sessionName}}">{{$session->sessionName}}</option>
-           @endforeach
-           @endif
-         </select>
-                    </div>
-
-              <div class="col-sm-2 mb-3">
-        <input class="btn btn-info btn-sm" type="submit" value="Submit">
-      </div>
-
-                    <!-- /.progress-group -->
-                  </form>
-                  </div>
-                  <!-- /.col -->
-                </div>
+               
                 <!-- /.row -->
               </div>
-              <!-- ./card-body -->
-              <div class="card-footer">
-                <div class="row">
-                  <div class="col-sm-3 col-6">
-                    <div class="description-block border-right">
-                      <span class="description-percentage text-success"><i class="fa fa-caret-up"></i> 17%</span>
-                      <h5 class="description-header">$35,210.43</h5>
-                      <span class="description-text">TOTAL REVENUE</span>
-                    </div>
-                    <!-- /.description-block -->
-                  </div>
-                  <!-- /.col -->
-                  <div class="col-sm-3 col-6">
-                    <div class="description-block border-right">
-                      <span class="description-percentage text-warning"><i class="fa fa-caret-left"></i> 0%</span>
-                      <h5 class="description-header">$10,390.90</h5>
-                      <span class="description-text">TOTAL COST</span>
-                    </div>
-                    <!-- /.description-block -->
-                  </div>
-                  <!-- /.col -->
-                  <div class="col-sm-3 col-6">
-                    <div class="description-block border-right">
-                      <span class="description-percentage text-success"><i class="fa fa-caret-up"></i> 20%</span>
-                      <h5 class="description-header">$24,813.53</h5>
-                      <span class="description-text">TOTAL PROFIT</span>
-                    </div>
-                    <!-- /.description-block -->
-                  </div>
-                  <!-- /.col -->
-                  <div class="col-sm-3 col-6">
-                    <div class="description-block">
-                      <span class="description-percentage text-danger"><i class="fa fa-caret-down"></i> 18%</span>
-                      <h5 class="description-header">1200</h5>
-                      <span class="description-text">GOAL COMPLETIONS</span>
-                    </div>
-                    <!-- /.description-block -->
-                  </div>
-                </div>
-                <!-- /.row -->
-              </div>
+              
               <!-- /.card-footer -->
             </div>
             <!-- /.card -->
@@ -293,7 +202,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="changeProfilePix">Edit Student Profile</h5>
+        <h5 class="modal-title" id="changeProfilePix">Edit Profile</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -368,11 +277,9 @@
           <label for="address">Class  <span style="color: red;">*</span></label>
          <select name="studentClass" class="form-control">
            <option value="{{$student->studentClass}}">{{$student->studentClass}}</option>
-           @if(count($classes) >=1)
-           @foreach($classes as $class)
-           <option value="{{$class->className}}">{{$class->className}}</option>
-           @endforeach
-           @endif
+          
+         
+
          </select>
         </div>
 </div>
@@ -410,7 +317,7 @@
   </div>
 </div>
 @else
-<h3>The selected user is not a student</h3>
+<h3>Ooops! You don't have permission to access this page</h3>
  @endif
     </section>
     <!-- /.content -->

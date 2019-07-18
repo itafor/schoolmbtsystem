@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Input;
 use App\Classes;
 use Session;
 use App\User;
+use App\Generalsetting;
+use Auth;
 class ClassesController extends Controller
 {
   public function listAll()
@@ -15,8 +17,13 @@ class ClassesController extends Controller
 	}
 
 	public function displayClassForm(){
+if(auth::user()->role != "admin") {
+			abort(404,'Not allowed');
+			}
 		$getClassTeacher=User::where('role','teacher')->get();
-        return view('classes.add-class',compact(['getClassTeacher']));
+	   $fetchSettings=Generalsetting::find(1);
+
+        return view('classes.add-class',compact(['getClassTeacher','fetchSettings']));
 	}
 
 	public function createClass(Request $request){

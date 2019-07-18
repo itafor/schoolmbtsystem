@@ -47,17 +47,17 @@
     
   <div class="row">
     <div class="col schoolName">
-   <h5> <strong style="font-family: 'Fira Sans', sans-serif;">CHILICHAO ACADEMY</strong> </h5>
+   <h5> <strong style="font-family: 'Fira Sans', sans-serif;">{{$fetchSettings->schoolName}}</strong> </h5>
     </div>
   </div>
   <div class="row">
     <div class="col pobox">
-   <strong> P.O. BOX 40, NSANJE</strong>
+   <strong> {{$fetchSettings->pob}} </strong>
     </div>
   </div>
    <div class="row">
     <div class="col schollPhones">
-    <strong> CELL: 888 19 44 67/0 999 27 14 28</strong>
+    <strong>{{$fetchSettings->cellPhone}}</strong>
     </div>
   </div>
      <div class="row">

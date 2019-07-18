@@ -10,12 +10,18 @@ use Session;
 use Auth;
 use App\User;
 use Hash;
+use App\Generalsetting;
+
 class TeachersController extends Controller
 {
     
     public function getTeacherForm(){
-    //	$classes=Classes::all();
-        return view('teachers.add-teacher');
+    	if(auth::user()->role != "admin") {
+			abort(404,'Not allowed');
+			}
+  	$fetchSettings=Generalsetting::find(1);
+
+        return view('teachers.add-teacher',compact('fetchSettings'));
     }
 
     	public function createTeacher(Request $request){
@@ -77,5 +83,16 @@ class TeachersController extends Controller
 		}
 		
 	}
+
+	public function staffProfile(){
+	$userId=Auth::user()->id;
+	$fetchSettings=Generalsetting::find(1);
+	$student=User::where('id',$userId)
+	->first();
+	// ->Where('role','admin')
+	
+	return view('teachers.my-profile',compact(['student','fetchSettings']));
+}
+
 
 }

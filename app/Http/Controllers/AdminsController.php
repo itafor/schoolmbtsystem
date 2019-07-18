@@ -16,11 +16,17 @@ use App\Result;
 use App\Subject;
 use App\Session;
 use App\Rank;
+use App\Generalsetting;
+
 class AdminsController extends Controller
 {
 
 	public function displaySession(){
-		return view('/students.add-session');
+			if(auth::user()->role != "admin") {
+			abort(404,'Not allowed');
+			}
+	$fetchSettings=Generalsetting::find(1);
+		return view('/students.add-session',compact(['fetchSettings']));
 	}
 
 	public function addSession(Request $request){
@@ -61,10 +67,10 @@ public function displayStudentDetail($id){
   	$subjects=Subject::all();
 	$classes=Classes::all();
 	$terms=Term::all();
-
+	$fetchSettings=Generalsetting::find(1);
 	$student=User::where('id',$id)
 				 ->where('role','student')->first();
-	return view('students.student-profile',compact(['student','sessions','subjects','classes','terms']));
+	return view('students.student-profile',compact(['student','sessions','subjects','classes','terms','fetchSettings']));
 }
 public function editStudentProfilePix(Request $request){
 
@@ -133,8 +139,11 @@ $studentDetails = User::join('results','users.studentRegNumber','=','results.stu
 				->where('term',$request->term)
 				->where('session',$request->sessionName)
 				->get();
+	$fetchSettings=Generalsetting::find(1);
+
 				if($fetchResults && $studentDetails){
-					return view('students.result',compact(['fetchResults','studentDetails','score_board_list','position','numberOfStudent']));
+
+					return view('students.result',compact(['fetchResults','studentDetails','score_board_list','position','numberOfStudent','fetchSettings']));
 				}
 				return back()->withInput()->with('errors','No result found for the selected term or session');
         exit;

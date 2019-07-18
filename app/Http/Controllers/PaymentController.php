@@ -17,15 +17,20 @@ use App\Subject;
 use App\Feesetting;
 use App\Feehistory;
 use Carbon\Carbon;
-
+use App\Generalsetting;
 class PaymentController extends Controller
 {
    public function selectStudent($id){
+    if(auth::user()->role != "admin") {
+      abort(404,'Not allowed');
+      }
 	$sessions=Session::all();
 	$classes=Classes::all();
 	$terms=Term::all();
 	$sudentdetail=User::where('id',$id)->first();
-	return view('fees.paymenthistory',compact(['sessions','classes','terms','sudentdetail']));
+  $fetchSettings=Generalsetting::find(1);
+
+	return view('fees.paymenthistory',compact(['sessions','classes','terms','sudentdetail','fetchSettings']));
 }
 
 public function fetctFeeAmount($feeclassName,$feesessionName,$feeterm,$paymentiTEM){
@@ -116,11 +121,15 @@ public function recordPayment(Request $request){
    	$studentPaymentHistories=Feehistory::where('user_id',$id)
    	->orderBy('datePaid','ASC')->paginate(20);
    	$studentDetail=User::where('id',$id)->first();
-	return view('fees.student-payment-history',compact(['studentPaymentHistories','studentDetail']));
+  $fetchSettings=Generalsetting::find(1);
+
+	return view('fees.student-payment-history',compact(['studentPaymentHistories','studentDetail','fetchSettings']));
    }
 
  public function showPaymentHistoryByClass($classes){
-
+if(auth::user()->role != "admin") {
+      abort(404,'Not allowed');
+      }
   	$generalpaymentHistory=User::join('feehistories','users.id','=','feehistories.user_id')
         ->selectRaw('users.firstName, users.id, users.lastName, users.gender,users.phoneNo,users.address,users.photo,users.email,feehistories.term,feehistories.sessionName, feehistories.className,feehistories.feeAmount,feehistories.amountPaid,feehistories.item,feehistories.balance,feehistories.status,feehistories.datePaid,feehistories.user_id, feehistories.created_at,feehistories.id
         ')
@@ -135,6 +144,9 @@ public function recordPayment(Request $request){
    }
 
   public function allPaymentHistory(){
+    if(auth::user()->role != "admin") {
+      abort(404,'Not allowed');
+      }
   	$generalpaymentHistory=User::join('feehistories','users.id','=','feehistories.user_id')
         ->selectRaw('users.firstName, users.id, users.lastName, users.gender,users.phoneNo,users.address,users.photo,users.email,feehistories.term,feehistories.sessionName, feehistories.className,feehistories.feeAmount,feehistories.amountPaid,feehistories.item,feehistories.balance,feehistories.status,feehistories.datePaid,feehistories.user_id, feehistories.created_at,feehistories.id,feehistories.receiptNo,feehistories.receivedBy,feehistories.receivedFrom
         ')
@@ -142,7 +154,9 @@ public function recordPayment(Request $request){
    ->paginate(20);
   	$classes=Classes::all();
   	$allClasses='All Classes';
-	return view('fees.view-payment-history',compact(['generalpaymentHistory','classes','allClasses']));
+  $fetchSettings=Generalsetting::find(1);
+
+	return view('fees.view-payment-history',compact(['generalpaymentHistory','classes','allClasses','fetchSettings']));
 
    }
    public function paymentReceipt($id){
@@ -150,6 +164,8 @@ public function recordPayment(Request $request){
         ->selectRaw('users.firstName, users.id, users.lastName, users.gender,users.phoneNo,users.address,users.photo,users.email,feehistories.term,feehistories.sessionName, feehistories.className,feehistories.feeAmount,feehistories.amountPaid,feehistories.item,feehistories.balance,feehistories.status,feehistories.datePaid,feehistories.user_id, feehistories.created_at,feehistories.id,feehistories.receiptNo,feehistories.receivedBy,feehistories.receivedFrom
         ')
         ->where('feehistories.id',$id)->first();
-   	return view('fees.receipt',compact(['displayReceipt']));
+        $fetchSettings=Generalsetting::find(1);
+
+   	return view('fees.receipt',compact(['displayReceipt','fetchSettings']));
    }
 }

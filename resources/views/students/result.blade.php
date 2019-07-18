@@ -55,8 +55,9 @@ hr:after {
  <h5 class="card-title"></h5>
                 <div class="card-tools" >
                   <a>  <button onclick="printContent('theResult')" class="btn btn-sm btn-warning"> <i class="fa fa-print"></i> Print result</button></a>
-                  <a  href="/all-students" >  <button onclick="printContent('theResult')" class="btn btn-sm  btn-info btn-tool"> List students</button></a>
-
+                 @if(Auth::User() =='admin')
+                  <a  href="/all-students" >  <button class="btn btn-sm  btn-info btn-tool"> List students</button></a>
+                  @endif
                     <button type="button" class="btn btn-tool btn-info">
                    <a href="/student-profile/{{$studentDetails->id}}">Back to {{$studentDetails->firstName}}'s profile</a>
                   </button>

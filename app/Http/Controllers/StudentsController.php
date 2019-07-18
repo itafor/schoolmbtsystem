@@ -15,16 +15,22 @@ use Excel;
 use DB;
 use App\Term;
 use App\Subject;
+use App\Generalsetting;
+
 class StudentsController extends Controller
 {
 
 public function listStudent(){
+		if(auth::user()->role != "admin" || auth::user()->role != "teacher") {
+			abort(404,'Not allowed');
+			}
 	$classes=Classes::all();
 	$students_count=User::where('role','student')->get();
 	$total=count($students_count);
 	$students=User::where('role','student')->paginate(10);
+  	$fetchSettings=Generalsetting::find(1);
 	
-	return view('students.list-students',compact(['students','total','classes']));
+	return view('students.list-students',compact(['students','total','classes','fetchSettings']));
 }
 
 public function searchAction(Request $request){
@@ -37,20 +43,26 @@ public function searchAction(Request $request){
          ->orWhere('studentRegNumber', 'like', '%'.$query.'%')
          ->orWhere('studentClass', 'like', '%'.$query.'%')
          ->paginate(10);
-	return view('students.list-students',compact(['students','total','classes']));
+  	$fetchSettings=Generalsetting::find(1);
+
+	return view('students.list-students',compact(['students','total','classes','fetchSettings']));
 
 }
 
     public function getStudentForm(){
+
+    	if(auth::user()->role != "admin") {
+			abort(404,'Not allowed');
+			}
     	$classes=Classes::all();
-        return view('students.add-student',compact(['classes']));
+  	$fetchSettings=Generalsetting::find(1);
+        return view('students.add-student',compact(['classes','fetchSettings']));
     }
 
     	public function createStudent(Request $request){
-		// if(auth::user()->role != "admin") {
-		// 	 return back()->withInput()->with('errors','Forbiden only admin can');
-		// 	exit;
-		// 	}
+		if(auth::user()->role != "admin") {
+			abort(404,'Not allowed');
+			}
 
 		if(User::where('username',trim(Input::get('username')))->count() >=1){
        return back()->withInput()->with('errors','The username you entered already exist');
@@ -259,7 +271,12 @@ return $pdf->download('invoice.pdf');
 		}
 
 		public function getTermForm(){
-			return view('students.term');
+			if(auth::user()->role != "admin") {
+			abort(404,'Not allowed');
+			}
+  	$fetchSettings=Generalsetting::find(1);
+
+			return view('students.term',compact('fetchSettings'));
 		}
 
 		public function createTerm(Request $request){
@@ -317,16 +334,23 @@ $output.='<li><a href="/student-profile/'.$row->id.'">'.$row->firstName.' '.$row
 
 	$student=User::where('studentRegNumber',$request->regNo)
 				 ->where('role','student')->first();
-	return view('students.student-profile',compact(['student','sessions','subjects','classes','terms']));
+  	$fetchSettings=Generalsetting::find(1);
+
+	return view('students.student-profile',compact(['student','sessions','subjects','classes','terms','fetchSettings']));
    }
    public function displayTerm(){
    	$getTerm=DB::table('terms')
      ->whereNull('deleted_at')->paginate(10);
    	 $trashedTerms=DB::table('terms')
    	 ->whereNotNull('deleted_at')->get();
-   	return view('students.list-term',['terms'=>$getTerm,'trashedTerms'=>$trashedTerms]);
+  	$fetchSettings=Generalsetting::find(1);
+   	 
+   	return view('students.list-term',['terms'=>$getTerm,'trashedTerms'=>$trashedTerms,'fetchSettings'=>$fetchSettings]);
    }
    public function deleteTerm($id){
+   	if(auth::user()->role != "admin") {
+			abort(404,'Not allowed');
+			}
    	$findTerm=Term::where('id',$id)->first();
    	if($findTerm->delete()){
 		  return back()->with('success','Term Deleted successfully');
@@ -335,6 +359,9 @@ $output.='<li><a href="/student-profile/'.$row->id.'">'.$row->firstName.' '.$row
 			exit;
    }
    public function restoreDeletedTerms($id){
+   	if(auth::user()->role != "admin") {
+			abort(404,'Not allowed');
+			}
    	$restore=Term::withTrashed()->find($id)->restore();
    	if($restore){
 		  return back()->with('success','restored successfully');

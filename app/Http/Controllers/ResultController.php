@@ -14,6 +14,7 @@ use App\Result;
 use App\Subject;
 use App\Session;
 use Illuminate\Http\Request;
+use App\Generalsetting;
 
 class ResultController extends Controller
 {
@@ -27,6 +28,9 @@ public function __construct(){
 
 
   public function listStudents(){
+  		if(Auth::user()->role != "admin" && Auth::user()->role != "teacher") {
+			abort(404,'Not allowed');
+			}
   	$sessions=Session::all();
   	$subjects=Subject::all();
 	$students=User::where('role','student')->get();
@@ -37,7 +41,9 @@ public function __construct(){
 	$usedClass = '';
 	$subj='';
 	$section='';
-	return view('students.enter-result',compact(['students','classes','terms','byClasses','usedClass','sessions','subjects','section','subj']));
+  $fetchSettings=Generalsetting::find(1);
+
+	return view('students.enter-result',compact(['students','classes','terms','byClasses','usedClass','sessions','subjects','section','subj','fetchSettings']));
 }
 
 public function ressultFormData(Request $request){
@@ -73,7 +79,9 @@ public function ressultFormData(Request $request){
     $terminal =$termi->termName;
     
 	$byClasses=User::where('studentclass',$request->studentClass)->get();
-	return view('students.enter-result',compact(['students','usedClass','classes','terminal','terms','byClasses','sessions','subjects','subj','section','theSession','theSubject','theTerm','theClass']));
+  $fetchSettings=Generalsetting::find(1);
+
+	return view('students.enter-result',compact(['students','usedClass','classes','terminal','terms','byClasses','sessions','subjects','subj','section','theSession','theSubject','theTerm','theClass','fetchSettings']));
 }
 
 }
@@ -228,7 +236,12 @@ public  function arrayUniqe($arr)
 }
 
 public function displaySubform(){
-		return view('/students.add-subject');
+		if(auth::user()->role != "admin") {
+			abort(404,'Not allowed');
+			}
+  $fetchSettings=Generalsetting::find(1);
+
+		return view('/students.add-subject',compact('fetchSettings'));
 	}
 
 	public function addSubject(Request $request){
@@ -355,7 +368,9 @@ public function importResultAsExcelFile(Request $request){
 			 $subjects=Subject::all();
 			 $terms=Term::all();
 			 $classes=Classes::all();
-	return view('students.update-result',compact(['classes','terms','sessions','subjects']));
+  $fetchSettings=Generalsetting::find(1);
+
+	return view('students.update-result',compact(['classes','terms','sessions','subjects','fetchSettings']));
 
 		}
 
@@ -388,7 +403,9 @@ $getRelatedResult=Result::join('Users','results.studentRegNumber','=','users.stu
 						->where('results.session',$theSession)
 						->where('results.subject',$theSubject)
 						->get();
-	return view('students.update-result',compact(['getRelatedResult','theSession','theSubject','theTerm','theClass','classes','terms','sessions','subjects']));
+  					$fetchSettings=Generalsetting::find(1);
+
+	return view('students.update-result',compact(['getRelatedResult','theSession','theSubject','theTerm','theClass','classes','terms','sessions','subjects','fetchSettings']));
 
   
 }
@@ -432,8 +449,9 @@ $updateResult = DB::table('results')->whereIn('user_id', $array_of_ids)
 			 $subjects=Subject::all();
 			 $terms=Term::all();
 			 $classes=Classes::all();
+  			$fetchSettings=Generalsetting::find(1);
 
-	return view('students.update-result',compact(['classes','terms','sessions','subjects']));
+	return view('students.update-result',compact(['classes','terms','sessions','subjects','fetchSettings']));
 		 
 
    

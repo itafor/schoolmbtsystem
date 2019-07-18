@@ -21,6 +21,8 @@ Route::get('/dashboard/home', 'DashboardController@allStudent')->name('home');
 Route::get('/dashboard/v2', 'DashboardController@versiontwo')->name('v2');
 Route::get('/dashboard/v3', 'DashboardController@versionthree')->name('v3');
 
+Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
+
 //admin routes
 Route::get('/add-students', 'AdminsController@getStudentForm')->name('addstudent');
 Route::post('/edit-student-profile', 'AdminsController@editStudentProfilePix')->name('editStudentProfilePix');
@@ -61,6 +63,8 @@ Route::get('/restore-term/{id}', 'StudentsController@restoreDeletedTerms')->name
 //Teachers route
 Route::get('/add-teacher', 'TeachersController@getTeacherForm');
 Route::post('/create-teacher', 'TeachersController@createTeacher')->name('addNewTeacher');
+Route::get('/my-profile', 'TeachersController@staffProfile');
+
 
 //result controller
 Route::get('/enter-result', 'ResultController@listStudents')->name('listAllStudents');

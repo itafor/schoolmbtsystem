@@ -22,7 +22,9 @@ class SettingsController extends Controller
 	$sessions=Session::all();
 	$classes=Classes::all();
 	$terms=Term::all();
-	return view('fees.add-fee-amount',compact(['sessions','classes','terms']));
+  			$fetchSettings=Generalsetting::find(1);
+
+	return view('fees.add-fee-amount',compact(['sessions','classes','terms','fetchSettings']));
 }
    public function feessetting(Request $request){
    	$checkFee=Feesetting::where('className',$request->className)
@@ -63,7 +65,9 @@ class SettingsController extends Controller
 
    public function viewFeSettings(){
    	$getFeesSettings=DB::table('feesettings')->orderBy('className','desc')->paginate(10);
-	return view('fees.view-fee-settings',compact(['getFeesSettings']));
+  	$fetchSettings=Generalsetting::find(1);
+
+	return view('fees.view-fee-settings',compact(['getFeesSettings','fetchSettings']));
 
    }
 

@@ -17,6 +17,7 @@ use App\Subject;
 use App\Session;
 use App\Rank;
 use App\Feehistory;
+use App\Generalsetting;
 class DashboardController extends Controller
 {
      public function allStudent(){
@@ -34,8 +35,8 @@ class DashboardController extends Controller
 
     $classes=Classes::all();
     $allClasses='All Classes';
-
-    return view('dashboard.v1',compact(['studentCount','paymentHistoryCount','teachingStaffCount','resultCount']));
+   $fetchSettings=Generalsetting::find(1);
+    return view('dashboard.v1',compact(['studentCount','paymentHistoryCount','teachingStaffCount','resultCount','fetchSettings']));
     }
 
  
