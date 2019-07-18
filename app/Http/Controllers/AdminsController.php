@@ -233,5 +233,13 @@ $ranks=Rank::all();
 	
 }
 
-
+  public function getTrachedRecords(){
+   	$getTerm=DB::table('terms')
+     ->whereNull('deleted_at')->paginate(10);
+   	 $trashedTerms=DB::table('terms')
+   	 ->whereNotNull('deleted_at')->get();
+  	$fetchSettings=Generalsetting::find(1);
+   	 
+   	return view('admin.trashed-records',['terms'=>$getTerm,'trashedTerms'=>$trashedTerms,'fetchSettings'=>$fetchSettings]);
+   }
 }

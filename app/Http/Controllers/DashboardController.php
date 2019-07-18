@@ -36,20 +36,30 @@ class DashboardController extends Controller
     $classes=Classes::all();
     $allClasses='All Classes';
    $fetchSettings=Generalsetting::find(1);
-    return view('dashboard.v1',compact(['studentCount','paymentHistoryCount','teachingStaffCount','resultCount','fetchSettings']));
-    }
+    $userId=Auth::user()->id;
+    $getClassTeacher=Classes::where('classTeacher',$userId)->first();
 
- 
+    $getStudents = '';
+    if(isset($getClassTeacher)){
+    $getStudents=User::where('studentClass',$getClassTeacher->className)->get();
+        }
+    return view('dashboard.v1',compact(['studentCount','paymentHistoryCount','teachingStaffCount','resultCount','fetchSettings','getClassTeacher','getStudents']));
+    
+
+    
+}
 
     public function versiontwo()
     {
-        return view('dashboard.v2');
-    }
-    public function versionthree()
-    {
-        return view('dashboard.v3');
+   $fetchSettings=Generalsetting::find(1);
+   $schoolName=$fetchSettings->schoolName;
+        return view('footer',['schoolName']);
     }
 
-   
+//     public function homePage()
+//     {
+//        $fetchSettings=Generalsetting::find(1);
+//     return view('welcome',['fetchSettings'=>$fetchSettings]);
 
+// }
 }

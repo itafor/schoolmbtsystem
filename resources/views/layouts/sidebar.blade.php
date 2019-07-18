@@ -1,7 +1,7 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="/dashboard/home" class="brand-link">
     <img src="/upload/{{$fetchSettings->schoolLogo =='' ? 'logo.png' : $fetchSettings->schoolLogo}}" alt="School Logo" class="brand-image img-circle elevation-3"
    style="opacity: .8">
 <span class="brand-text font-weight-light">{{$fetchSettings->schoolName}}</span>
@@ -34,7 +34,7 @@
                <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
                  Dashboard
-                  <span class="right badge badge-danger">New</span>
+                  <span class="right badge badge-danger"></span>
                 </p>
               </a>
                 </li>
@@ -154,6 +154,44 @@
                             <a href="/general-settings" class="nav-link">
                     <i class="fa fa-circle-o nav-icon"></i>
                     <p>General Settings</p>
+                  </a>
+                        </li>
+                           <li class="nav-item">
+                            <a href="/trash-bin" class="nav-link">
+                    <i class="fa fa-circle-o nav-icon"></i>
+                    <p>Trash Bin</p>
+                  </a>
+                        </li>
+                    </ul>
+                </li>
+                @endif
+                @if(Auth::user()->role =='student' )
+                 <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                <i class="nav-icon fa fa-cog"></i>
+                <p>
+               Student
+                  <i class="fa fa-angle-left right"></i>
+                </p>
+              </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/view-student-payment-histories/{{auth::user()->id}}" class="nav-link">
+                    <i class="fa fa-circle-o nav-icon"></i>
+                    <p>Payment histories</p>
+                  </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/student-profile/{{auth::user()->id}}" class="nav-link">
+                    <i class="fa fa-circle-o nav-icon"></i>
+                    <p>My profile</p>
+                  </a>
+                        </li>
+
+                          <li class="nav-item">
+                            <a  href="{{ route('logout') }}" class="nav-link">
+                    <i class="fa fa-lock mr-2"></i> 
+                    <p>Logout</p>
                   </a>
                         </li>
                     </ul>

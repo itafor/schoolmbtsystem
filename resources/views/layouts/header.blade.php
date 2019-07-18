@@ -7,7 +7,7 @@
         </li>
 
     </ul>
- @if(auth::user()->role =='admin' || auth::user()->role =='teacher')
+ @if(auth::user()->role =='admin')
     <!-- SEARCH FORM -->
     <span> Search students here  <i class="fa fa-arrow-circle-right"></i>  </span>
  <form action="{{route('findStudent')}}" method="post" id="searchSkillForm"> 
@@ -58,9 +58,7 @@
   </a>
   @endif
                 <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-    <i class="fa fa-users mr-2"></i> 8 friend requests
-  </a>
+    
                 <div class="dropdown-divider"></div>
 
      <a class="dropdown-item" href="{{ route('logout') }}">

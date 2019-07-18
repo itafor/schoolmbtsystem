@@ -91,53 +91,7 @@
 </table>
 
   </div>
-             <div class="col-md-6">
-                 
-             <h3>Trashed Terms</h3>
-            
-                     <table class="table table-hover table-responsive">
-  <thead>
-    <tr>
-      <th scope="col">S/N</th>
-      <th scope="col">Terms</th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    @if(count($trashedTerms) >=1)
-    <tr>
-      <?php $id=1?>
-@foreach($trashedTerms as $term)
-      <td colspan="1">{{$id}}</td>
-      <td>{{$term->termName}}</td>
-      
-  <td>
-  
-  <a href="/restore-term/{{$term->id}}"><button class="btn btn-primary">Restore</button></a>
-</td>
-    </tr> 
-   <?php $id++ ?>
-    @endforeach
-
-   @else
-     <tr>
-   <td colspan="10">
-   <h5>
-     No Trashed Term found
-   </h5>
-   @endif
-   </td>
-    </tr>
-    <tr  rowspan="10">
-     <td>
-       
-     </td>
-   </tr>
-  </tbody>
  
-</table>
-
-  </div>
  </div>
      
                 </div>

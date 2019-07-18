@@ -60,7 +60,7 @@
                 </div>
               </div>
               <!-- /.card-header -->
-              <div class="card-body  offset-1">
+              <div class="card-body">
                
         <form action="{{route('addNewstudent')}}" method="POST" enctype="multipart/form-data" novalidate>
        <input type="hidden" name="_token" value="{{csrf_token()}}">

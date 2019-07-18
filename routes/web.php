@@ -10,10 +10,14 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\Generalsetting;
 
 Route::get('/', function () {
-    return view('welcome');
+	$fetchSettings=Generalsetting::find(1);
+    return view('welcome',['fetchSettings'=>$fetchSettings]);
 });
+
+
 
 Auth::routes();
 Route::middleware(['auth'])->group(function(){
@@ -30,6 +34,8 @@ Route::get('/check-student-result', 'AdminsController@checkStudentResult')->name
 Route::get('/student-profile/{id}', 'AdminsController@displayStudentDetail')->name('studentProfile');
 Route::post('/update-student-profile', 'AdminsController@updateStudentProfile')->name('updateStudentProfile');
 Route::post('/store-student-rank', 'AdminsController@studentsResultRanking')->name('studentsRank');
+
+Route::get('/trash-bin', 'AdminsController@getTrachedRecords')->name('trashedRecords');
 
 
 

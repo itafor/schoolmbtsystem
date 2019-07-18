@@ -1,9 +1,9 @@
 @extends('layouts.master') 
 @section('content')
+@include('layouts.navbar')
+
 <div class="login-box">
-    <div class="login-logo">
-        Laravel Starter
-    </div>
+    
     <div class="card">
         <div class="card-body login-card-body">
             <p class="login-box-msg">{{ __('Login') }}</p>
@@ -44,23 +44,10 @@
                 </div>
             </form>
 
-            <div class="social-auth-links text-center mb-3">
-                <p>- OR -</p>
-                <a href="#" class="btn btn-block btn-primary">
-          <i class="fab fa-facebook-f mr-2"></i> Sign in using Facebook
-        </a>
-                <a href="#" class="btn btn-block btn-danger">
-          <i class="fab fa-google-plus-g mr-2"></i> Sign in using Google+
-        </a>
-            </div>
-            <!-- /.social-auth-links -->
-
             <p class="mb-1">
                 <a href="#">I forgot my password</a>
             </p>
-            <p class="mb-0">
-                <a href="{{route('register')}}" class="text-center">Register a new membership</a>
-            </p>
+           
         </div>
         <!-- /.login-card-body -->
     </div>

@@ -21,7 +21,7 @@ class StudentsController extends Controller
 {
 
 public function listStudent(){
-		if(auth::user()->role != "admin" || auth::user()->role != "teacher") {
+		if(auth::user()->role != "admin") {
 			abort(404,'Not allowed');
 			}
 	$classes=Classes::all();

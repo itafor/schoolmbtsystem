@@ -34,8 +34,7 @@
 
                 <div class="card-tools">
                   <button onclick="printContent('paymentHistory')" class="btn btn-sm btn-warning"><i class="fa fa-print"></i> Print payment history</button>
-                  <a  href="/student-profile/">  <button class="btn btn-sm btn-primary"> Back to </button></a>
-
+                 
                   <div class="btn-group">
                     <button type="button" class="btn btn-tool dropdown-toggle btn-info text-dark" data-toggle="dropdown">
                       Show payment history by class

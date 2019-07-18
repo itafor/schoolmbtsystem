@@ -28,6 +28,7 @@
   <section class="content">
     <div class="container-fluid">
       <!-- Small boxes (Stat box) -->
+      @if(Auth::user()->role == 'admin' || Auth::user()->role == 'teacher' )
       <div class="row">
         <div class="col-lg-3 col-6">
           <!-- small box -->
@@ -92,16 +93,21 @@
         </div>
         <!-- ./col -->
       </div>
+      @endif
       <!-- /.row -->
       <!-- Main row -->
       <div class="row">
         <!-- Left col -->
         <section class="col-lg-7 connectedSortable">
           <!-- Custom tabs (Charts with tabs)-->
+          @if(Auth::user()->role =='teacher' && $getClassTeacher !='')
           <div class="card">
             <div class="card-header d-flex p-0">
               <h3 class="card-title p-3">
-                <i class="fa fa-event mr-1"></i> Events
+                <i class="fa fa-event mr-1"></i> 
+                @if(isset($getClassTeacher)) you are 
+                {{$getClassTeacher->className}}'s class teacher
+                @endif
               </h3>
               <ul class="nav nav-pills ml-auto p-2">
                 <li class="nav-item">
@@ -114,19 +120,152 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-              <div class="tab-content p-0">
-                <!-- Morris chart - Sales -->
-                <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;"></div>
-                <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;"></div>
-              </div>
+
+
+
+               <table class="table table-hover table-responsive">
+  <thead>
+    <tr>
+      <th scope="col">S/N</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Gender</th>
+      <th scope="col">Class</th>
+      <th scope="col">Reg. No</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+ @if(isset($getStudents) && $getStudents !='')
+    <tr>
+      <?php $id=1?>
+      @foreach($getStudents as $student)
+      <td colspan="1">{{$id}}</td>
+      <td>{{$student->firstName}}</td>
+      <td>{{$student->lastName}}  </td>
+      <td>{{$student->gender}}</td>
+      <td>{{$student->studentClass}}</td>
+      <td>{{$student->studentRegNumber}}</td>
+  <td>
+  <a href="/student-profile/{{$student->id}}"><button class="btn btn-success"><i class="fa fa-eye"></i></button></a>
+</td>
+    </tr> 
+   <?php $id++ ?>
+    @endforeach
+
+   @else
+     <tr>
+   <td colspan="10">
+   <h5>
+     No student found
+   </h5>
+   @endif
+   </td>
+    </tr>
+   
+  </tbody>
+ 
+</table>
+               
+             
             </div>
             <!-- /.card-body -->
           </div>
+          @endif
           <!-- /.card -->
-
+@if(Auth::user()->role =='student')
          
-          
-          <!-- /.card -->
+            <div class="card">
+              <div class="card-header">
+                <h5 class="card-title">Monthly Recap Report</h5>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-widget="collapse">
+                    <i class="fa fa-minus"></i>
+                  </button>
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
+                      <i class="fa fa-wrench"></i>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right" role="menu">
+                      <a href="#" class="dropdown-item">Action</a>
+                      <a href="#" class="dropdown-item">Another action</a>
+                      <a href="#" class="dropdown-item">Something else here</a>
+                      <a class="dropdown-divider"></a>
+                      <a href="#" class="dropdown-item">Separated link</a>
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-tool" data-widget="remove">
+                    <i class="fa fa-times"></i>
+                  </button>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-8">
+                    <p class="text-center">
+                      <strong>Sales: 1 Jan, 2014 - 30 Jul, 2014</strong>
+                    </p>
+
+                    <div class="chart">
+                      <!-- Sales Chart Canvas -->
+                      <canvas id="salesChart" height="180" style="height: 180px;"></canvas>
+                    </div>
+                    <!-- /.chart-responsive -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-md-4">
+                    <p class="text-center">
+                      <strong>Goal Completion</strong>
+                    </p>
+
+                    <div class="progress-group">
+                      Add Products to Cart
+                      <span class="float-right"><b>160</b>/200</span>
+                      <div class="progress progress-sm">
+                        <div class="progress-bar bg-primary" style="width: 80%"></div>
+                      </div>
+                    </div>
+                    <!-- /.progress-group -->
+
+                    <div class="progress-group">
+                      Complete Purchase
+                      <span class="float-right"><b>310</b>/400</span>
+                      <div class="progress progress-sm">
+                        <div class="progress-bar bg-danger" style="width: 75%"></div>
+                      </div>
+                    </div>
+
+                    <!-- /.progress-group -->
+                    <div class="progress-group">
+                      <span class="progress-text">Visit Premium Page</span>
+                      <span class="float-right"><b>480</b>/800</span>
+                      <div class="progress progress-sm">
+                        <div class="progress-bar bg-success" style="width: 60%"></div>
+                      </div>
+                    </div>
+
+                    <!-- /.progress-group -->
+                    <div class="progress-group">
+                      Send Inquiries
+                      <span class="float-right"><b>250</b>/500</span>
+                      <div class="progress progress-sm">
+                        <div class="progress-bar bg-warning" style="width: 50%"></div>
+                      </div>
+                    </div>
+                    <!-- /.progress-group -->
+                  </div>
+                  <!-- /.col -->
+                </div>
+                <!-- /.row -->
+              </div>
+              <!-- ./card-body -->
+              
+              <!-- /.card-footer -->
+            </div>
+            <!-- /.card -->
+       @endif 
         </section>
         <!-- /.Left col -->
         <!-- right col (We are only adding the ID to make the widgets sortable)-->
@@ -174,46 +313,8 @@
               <!-- /.row -->
             </div>
           </div>
-          <!-- /.card -->
-
         
 
-          <!-- Calendar -->
-          <div class="card bg-success-gradient">
-            <div class="card-header no-border">
-
-              <h3 class="card-title">
-                <i class="fa fa-calendar"></i> Calendar
-              </h3>
-              <!-- tools card -->
-              <div class="card-tools">
-                <!-- button with a dropdown -->
-                <div class="btn-group">
-                  <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown">
-                    <i class="fa fa-bars"></i></button>
-                  <div class="dropdown-menu float-right" role="menu">
-                    <a href="#" class="dropdown-item">Add new event</a>
-                    <a href="#" class="dropdown-item">Clear events</a>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">View calendar</a>
-                  </div>
-                </div>
-                <button type="button" class="btn btn-success btn-sm" data-widget="collapse">
-                  <i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-success btn-sm" data-widget="remove">
-                  <i class="fa fa-times"></i>
-                </button>
-              </div>
-              <!-- /. tools -->
-            </div>
-            <!-- /.card-header -->
-            <div class="card-body p-0">
-              <!--The calendar -->
-              <div id="calendar" style="width: 100%"></div>
-            </div>
-            <!-- /.card-body -->
-          </div>
           <!-- /.card -->
         </section>
         <!-- right col -->
