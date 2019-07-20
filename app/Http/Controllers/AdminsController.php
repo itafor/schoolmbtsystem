@@ -150,10 +150,22 @@ $studentDetails = User::join('results','users.studentRegNumber','=','results.stu
 }
 
 public function updateStudentProfile(Request $request){
-	if(User::where('email',$request->email)->first()){
-}
-var_dump('email');
-exit();
+  
+        $users = User::WHERE('id', $request->id)
+        ->update([
+            'firstName'=>$request->input('firstName'),
+            'lastName'=>$request->input('lastName'),
+            'gender'=>$request->input('gender'),
+            'studentClass'=>$request->input('studentClass'),
+            'address'=>$request->input('address'),
+            'phoneNo'=>$request->input('phoneNo'),
+            'birthday'=>$request->input('birthday')
+        ]);
+
+        if($users){
+         return back()->with('success','Profile updated successfully');
+        }
+        return back()->withInput()->with('errors','Profile update failed');
 	}	
 
 
@@ -242,4 +254,47 @@ $ranks=Rank::all();
    	 
    	return view('admin.trashed-records',['terms'=>$getTerm,'trashedTerms'=>$trashedTerms,'fetchSettings'=>$fetchSettings]);
    }
+
+   public function changePawword(Request $req){
+    $fetchSettings=Generalsetting::find(1);
+    return view('admin.change-password',compact('fetchSettings'));
+   }
+    public function saveChangedPawword(Request $req){
+      $validate=$this->validate($req,[
+        'oldpassword'=>'required',
+        'newpassword' =>'required'
+      ]);
+      
+      if(!$validate){
+         return back()->withInput()->with('errors',$validate);
+      exit;
+      }
+
+    $oldPassword=$req->oldpassword;
+    $newPassword=$req->newpassword;
+    $hashPassword=Hash::make($oldPassword);
+    $userId=Auth::user()->id;
+
+    $selectUser=User::where('id',$userId)
+      ->first();
+      if($selectUser){
+     if (Hash::check($oldPassword, $selectUser->password)) {
+       $changePass=User::where('id',$userId)
+      ->update([
+        'password'=>Hash::make($newPassword)
+              ]);
+
+          if($changePass){
+      return back()->with('success','Password changed successfully');
+        }
+          return back()->withInput()->with('errors','Password change failed');
+      exit;
+
+}else{
+ return back()->withInput()->with('errors','Passwords mismatched');
+      exit;
+}
+   }
+}
+
 }

@@ -9,7 +9,7 @@
     </ul>
  @if(auth::user()->role =='admin')
     <!-- SEARCH FORM -->
-    <span> Search students here  <i class="fa fa-arrow-circle-right"></i>  </span>
+   
  <form action="{{route('findStudent')}}" method="post" id="searchSkillForm"> 
    <input type="hidden" name="_token" value="{{csrf_token()}}">
         <div class="input-group input-group-sm">
@@ -60,10 +60,13 @@
                 <div class="dropdown-divider"></div>
     
                 <div class="dropdown-divider"></div>
-
-     <a class="dropdown-item" href="{{ route('logout') }}">
-          <i class="fa fa-lock mr-2"></i> Logout
+        <a class="dropdown-item" href="/change-pawword">
+          <i class="fa fa-lock mr-2"></i> Change password
      </a>
+     <a class="dropdown-item" href="{{ route('logout') }}">
+          <i class="fa fa-sign-out  mr-2"></i> Logout
+     </a>
+
                 <div class="dropdown-divider"></div>
 
             </div>

@@ -261,6 +261,7 @@
       <div class="modal-body">
       <form action="{{route('updateStudentProfile')}}" method="POST" enctype="multipart/form-data" novalidate>
        <input type="hidden" name="_token" value="{{csrf_token()}}">
+       <input type="hidden" name="id"  value="{{$student->id}}">
         <div class="row">
           <div class="col-md-6 mb-3">
             <label for="firstName">First name </label>
@@ -285,8 +286,8 @@
             <div class="input-group-prepend">
               <span class="input-group-text">@</span>
             </div>
-            <input type="text" name="username" class="form-control" id="username" placeholder="Username" value="{{$student->username}}" required>
-            <div class="invalid-feedback" style="width: 100%;">
+            <input type="text" name="username" class="form-control" id="username" placeholder="Username" value="{{$student->username}}" readonly="readonly">
+            <div class="invalid-feedback" style="width: 100%;" >
               Your username is required.
             </div>
           </div>
@@ -294,7 +295,7 @@
 
         <div class="col-md-6 mb-3">
           <label for="email">Email</label>
-          <input type="email" name="email" class="form-control" id="email" placeholder="you@example.com" value="{{$student->email}}">
+          <input type="email" name="email" class="form-control" id="email" placeholder="you@example.com" value="{{$student->email}}" readonly="readonly">
           <div class="invalid-feedback">
             Please enter a valid email address for shipping updates.
           </div>
@@ -303,14 +304,14 @@
 <div class="row">
    <div class="col-md-6 mb-3">
             <label for="cc-cvv">Phone Number</label>
-            <input type="text" name="phoneNo" class="form-control" id="cc-cvv"  value="{{$student->phoneNo}}">
-            <div class="invalid-feedback">
+            <input type="text" name="phoneNo" class="form-control" id="cc-cvv"  value="{{$student->phoneNo}}" readonly="readonly">
+            <div class="invalid-feedback" >
               Security code required
             </div>
           </div>
          <div class="col-md-6 mb-3">
           <label for="address2">Registration Number  <span style="color: red;">*</span></label>
-          <input type="text" name="studentRegNumber" class="form-control" id="regNumber"  value="{{$student->studentRegNumber}}">
+          <input type="text" name="studentRegNumber" class="form-control" id="regNumber"  value="{{$student->studentRegNumber}}" readonly="readonly">
         </div>
 </div>
 

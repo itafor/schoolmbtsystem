@@ -37,6 +37,8 @@ Route::post('/store-student-rank', 'AdminsController@studentsResultRanking')->na
 
 Route::get('/trash-bin', 'AdminsController@getTrachedRecords')->name('trashedRecords');
 
+Route::get('/change-pawword', 'AdminsController@changePawword');
+Route::post('/saveChangedPawword', 'AdminsController@saveChangedPawword')->name('changePassword');
 
 
 //class route

@@ -37,6 +37,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <meta name="csrf-token" content="{{ csrf_token() }}">
      <link href="{{ asset('css/layout.css') }}" rel="stylesheet">
      <link href="https://fonts.googleapis.com/css?family=Fira+Sans|Quattrocento+Sans|Quicksand&display=swap" rel="stylesheet">
+
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -54,7 +55,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </div>
     <!-- ./wrapper -->
     @endguest @yield('javascript')
-    
+      
 </body>
 
 
@@ -236,8 +237,7 @@ if(total <=0 || total <=39){
 }
 });
 
-</script>
-<script>
+
 $(document).ready(function(){
 
  fetch_customer_data();
@@ -333,18 +333,7 @@ $('#otherItemDiv').hide();
 $('.otherItem').val('');
   }
 })
-// document.getElementById("feeterm").disabled = true;
-// var feeClassName='';
-// $('.feeclassName,.feesessionName').on('change',function(clasName){
-//   feeclassName =clasName.target.value;
-//   if(feeclassName ==''){
-// document.getElementById("feeterm").disabled = true;
-// $('.feeterm').val(0);
-//   }else{
-// document.getElementById("feeterm").disabled = false;
-//   }
-// console.log(feeclassName)
-// });
+
 
 getBalance();
 
@@ -435,6 +424,7 @@ console.log('Fee AMOUNT', data.feeAmount);
 
 </script>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-<script type="text/javascript" src="http://www.position-absolute.com/creation/print/jquery.printPage.js"></script>
+<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.js"></script>
 </html>
