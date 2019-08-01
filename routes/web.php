@@ -119,12 +119,12 @@ Route::get('/view-payment-history/{classes}', 'PaymentController@showPaymentHist
 Route::get('/view-payment-history', 'PaymentController@allPaymentHistory');
 
 Route::get('/payment-receipt/{id}', 'PaymentController@paymentReceipt');
-
-
-
-
-
-
+Route::post('send-notification','NotificationController@sendNotification')->name('notification.send');
+Route::get('new-notification','NotificationController@newNotification');
+Route::get('read-notifcation/{id}','NotificationController@viewNotification');
+Route::get('mark-all-as-read','NotificationController@markAsRead')->name('markas.read');
+Route::get('delete-notification/{id}','NotificationController@deleteNotification')->name('delete.notification');
+Route::get('all-notifications/{id}','NotificationController@allNotification')->name('all.notification');
 Route::get('/home', 'HomeController@index')->name('home');
 
 

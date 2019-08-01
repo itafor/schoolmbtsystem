@@ -92,10 +92,18 @@
                     <p>Add Session</p>
                   </a>
                         </li>
-                       
+                      
                     </ul>
                 </li>
+
+                 <li class="nav-item">
+                            <a href="/new-notification" class="nav-link">
+                    <i class="fa fa-bell nav-icon"></i>
+                    <p>Send Notification</p>
+                  </a>
+                        </li>
                 @endif
+                
                  @if(Auth::user()->role =='admin' || Auth::user()->role =='teacher')
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
@@ -112,7 +120,13 @@
                     <p>Enter result</p>
                   </a>
                         </li>
-                      
+
+                          <li class="nav-item">
+                            <a href="/update-result" class="nav-link">
+                    <i class="fa fa-circle-o nav-icon"></i>
+                    <p>Update result</p>
+                  </a>
+                        </li>
                     </ul>
                 </li>
                  @endif

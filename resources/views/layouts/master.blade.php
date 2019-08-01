@@ -420,7 +420,20 @@ console.log('Fee AMOUNT', data.feeAmount);
 })
  });
   }
-
+mark_as_read();
+ function mark_as_read()
+ {
+  $.ajax({
+   url:"{{ route('markas.read') }}",
+   method:'GET',
+   // data:{query:query},
+   dataType:'json',
+   success:function(data)
+   {
+    $('#markAsRead-done').text('Notification successfully marked as read');
+   }
+  })
+ }
 
 </script>
 
