@@ -116,6 +116,18 @@
             </div>
         </li>
 
+
+
+       <!-- Cart count -->
+       
+        <li class="nav-item dropdown">
+            <a class="nav-link"  href="{{route('cart.index')}}">
+  <i class="fa fa-shopping-cart"></i>&nbsp;
+  @if(Cart::instance('default')->count() > 0)
+  <span class="badge badge-warning navbar-badge">{{Cart::instance('default')->count()}}</span>
+  @endif
+</a>
+        </li>
     </ul>
 </nav>
 <!-- /.navbar -->

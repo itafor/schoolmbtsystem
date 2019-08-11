@@ -111,14 +111,18 @@ Route::post('/save-general-settings', 'SettingsController@saveGeneralSetting')->
 Route::get('/make-payment/{id}', 'PaymentController@selectStudent');
 Route::post('/store-payment', 'PaymentController@recordPayment')->name('storePamyent');
 Route::get('/get-total-fee-amt/{feeclassName}/{feesessionName}/{feeterm}/{paymentiTEM}', 'PaymentController@fetctFeeAmount');
-
 Route::get('/get-fee-balance/{feeclassName}/{feesessionName}/{feeterm}/{id}/{paymentiTEM}', 'PaymentController@fetchFeeBal');
 
 Route::get('/view-student-payment-histories/{id}', 'PaymentController@studentPaymentHistory');
 Route::get('/view-payment-history/{classes}', 'PaymentController@showPaymentHistoryByClass');
 Route::get('/view-payment-history', 'PaymentController@allPaymentHistory');
-
 Route::get('/payment-receipt/{id}', 'PaymentController@paymentReceipt');
+
+Route::get('/make-payment', 'PaymentController@showPaystackButton');
+Route::post('/pay', 'PaymentController@redirectToGateway')->name('pay'); 
+Route::get('/payment/callback', 'PaymentController@handleGatewayCallback');
+
+//notification routes
 Route::post('send-notification','NotificationController@sendNotification')->name('notification.send');
 Route::get('new-notification','NotificationController@newNotification');
 Route::get('read-notifcation/{id}','NotificationController@viewNotification');
@@ -127,7 +131,22 @@ Route::get('delete-notification/{id}','NotificationController@deleteNotification
 Route::get('all-notifications/{id}','NotificationController@allNotification')->name('all.notification');
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/cart','CartController@index')->name('cart.index');
+Route::post('/cart/store','CartController@store')->name('cart.store');
+Route::delete('/cart/{product}','CartController@destroy')->name('cart.destroy');
+Route::post('/cart/switchToSaveForLater/{product}','CartController@switchToSaveForLater')->name('cart.switchToSaveForLater');
+
+Route::delete('/saveForLater/{product}','SaveforlaterController@destroy')->name('saveForLater.destroy');
+Route::post('/cart/switchToCart/{product}','SaveforlaterController@switchToCart')->name('saveforlater.store');
+
+
+Route::get('/empty-cart','CartController@emptyCart');
+Route::get('/empty-saved-later','CartController@emptyItemSavedForLater')->name('cart.emptyItemSavedForLater');
+
+Route::get('/product/add','ProductController@ShowProductForm');
+Route::post('/product/store','ProductController@store')->name('product.store');
 
 });
+Route::get('/products','ProductController@index');
 
 Auth::routes();

@@ -2,22 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Admin;
+use App\Classes;
+use App\Events\PaystackEvent;
+use App\Feehistory;
+use App\Feesetting;
+use App\Generalsetting;
+use App\Http\Requests;
+use App\Session;
+use App\Subject;
+use App\Term;
+use App\User;
+use Auth;
+use Carbon\Carbon;
+use DB;
+use Excel;
+use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
-use App\Classes;
-use App\Admin;
-use App\Session;
-use Auth;
-use App\User;
-use Hash;
-use Excel;
-use DB;
-use App\Term;
-use App\Subject;
-use App\Feesetting;
-use App\Feehistory;
-use Carbon\Carbon;
-use App\Generalsetting;
+use Unicodeveloper\Paystack\Facades\Paystack;
 class PaymentController extends Controller
 {
    public function selectStudent($id){
@@ -168,4 +171,33 @@ if(auth::user()->role != "admin") {
 
    	return view('fees.receipt',compact(['displayReceipt','fetchSettings']));
    }
+
+public function showPaystackButton(){
+  return view('fees.paystackform');
+}
+
+    /**
+     * Redirect the User to Paystack Payment Page
+     * @return Url
+     */
+    public function redirectToGateway()
+    {
+        return Paystack::getAuthorizationUrl()->redirectNow();
+    }
+
+    /**
+     * Obtain Paystack payment information
+     * @return void
+     */
+    public function handleGatewayCallback()
+    {
+        $paymentDetails = Paystack::getPaymentData();
+        $user =  Auth::user();
+          event(new PaystackEvent($paymentDetails, $user));
+
+        //dd($paymentDetails);
+        // Now you have the payment details,
+        // you can store the authorization_code in your db to allow for recurrent subscriptions
+        // you can then redirect or do whatever you want
+    }
 }

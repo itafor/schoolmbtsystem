@@ -161,7 +161,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        Laravel\Scout\ScoutServiceProvider::class,
+        Unicodeveloper\Paystack\PaystackServiceProvider::class,
     ],
 
     /*
@@ -213,6 +214,7 @@ return [
         
          'Excel' => Maatwebsite\Excel\Facades\Excel::class,
          'PDF' => Barryvdh\DomPDF\Facade::class,
+         'Paystack' => Unicodeveloper\Paystack\Facades\Paystack::class,
     ],
 
 ];

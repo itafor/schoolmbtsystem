@@ -146,6 +146,15 @@
                     <p>Payment histories</p>
                   </a>
                         </li>
+
+                          <li class="nav-item">
+                            <a href="/make-payment" class="nav-link">
+                    <i class="fa fa-circle-o nav-icon"></i>
+                    <p>Pay Online</p>
+                  </a>
+                        </li>
+
+                     
                       
                     </ul>
                 </li>

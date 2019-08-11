@@ -221,10 +221,11 @@ padding-left: 20px;
 @endif
   </h5>
   <nav class="my-2 my-md-0 mr-md-3">
+
     <a class="p-2 text-dark" href="/">Home</a>
     <a class="p-2 text-dark" href="#">About</a>
     <a class="p-2 text-dark" href="#">Events</a>
-    <a class="p-2 text-dark" href="#">Contact Us</a>
+    <a class="p-2 text-dark" href="/products">Shop Now</a>
   </nav>
   <a class="btn btn-outline-primary"  href="{{ route('login') }}">Login</a>
 </div>
