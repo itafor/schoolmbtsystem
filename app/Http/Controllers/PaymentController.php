@@ -130,6 +130,7 @@ public function recordPayment(Request $request){
    }
 
  public function showPaymentHistoryByClass($classes){
+	$fetchSettings=Generalsetting::find(1);
 if(auth::user()->role != "admin") {
       abort(404,'Not allowed');
       }
@@ -143,7 +144,7 @@ if(auth::user()->role != "admin") {
    	$theClass=Feehistory::where('className',$classes)
    ->first();
    	$classes=Classes::all();
-	return view('fees.view-payment-history',compact(['generalpaymentHistory','classes','theClass']));
+	return view('fees.view-payment-history',compact(['generalpaymentHistory','classes','theClass','fetchSettings']));
    }
 
   public function allPaymentHistory(){

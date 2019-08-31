@@ -43,4 +43,12 @@ class User extends Authenticatable
     {
         return 'firstName';
     }
+
+    public function isVerified(){
+        return (bool) $this->email_verified_at;
+    }
+
+     public function notVerified(){
+        return (bool) !$this->email_verified_at;
+    }
 }
